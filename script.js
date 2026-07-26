@@ -79,21 +79,27 @@ if(loginForm){
 
 
 
-        // Temporary authentication message
-        // Real Apps Script authentication will be connected here
+       // Login loading state
+// Real Apps Script authentication will be connected here
 
-        message.textContent = "Authenticating...";
-        message.style.color = "#0B57D0";
+const loginButton = loginForm.querySelector("button");
 
+loginButton.textContent = "Authenticating...";
+loginButton.disabled = true;
 
-
-        setTimeout(function(){
-
-            message.textContent = "Authentication system ready.";
-            message.style.color = "green";
+message.textContent = "Connecting securely...";
+message.style.color = "#0B57D0";
 
 
-        },1500);
+setTimeout(function(){
+
+    loginButton.textContent = "LOGIN";
+    loginButton.disabled = false;
+
+    message.textContent = "Authentication system ready.";
+    message.style.color = "green";
+
+},1500);
 
 
 
