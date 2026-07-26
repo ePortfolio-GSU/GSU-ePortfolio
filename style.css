@@ -35,7 +35,7 @@ body {
 
 .header {
     text-align: center;
-    background: #E9EEF5;
+    background: #343A40;
     padding: 25px 15px;
     border-radius: 12px 12px 0 0;
     margin: -30px -30px 25px -30px;
@@ -46,20 +46,24 @@ body {
     width: 130px;
     height: 130px;
     object-fit: contain;
+    border-radius: 50%;
+    background: #343A40;
+    padding: 8px;
+    border: 3px solid white;
     margin-bottom: 10px;
 }
 
 
 .header h1 {
     font-size: 22px;
-    color: #0B57D0;
+    color: white;
     margin: 5px 0;
 }
 
 
 .header h2 {
     font-size: 15px;
-    color: #374151;
+    color: #E9ECEF;
     margin: 0;
 }
 
