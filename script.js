@@ -79,8 +79,7 @@ if(loginForm){
 
 
 
-       // Login loading state
-// Real Apps Script authentication will be connected here
+      // Login loading state
 
 const loginButton = loginForm.querySelector("button");
 
@@ -89,16 +88,74 @@ loginButton.disabled = true;
 
 message.textContent = "";
 
+google.script.run
 
-setTimeout(function(){
+.withSuccessHandler(function(result){
 
     loginButton.textContent = "LOGIN";
     loginButton.disabled = false;
 
-    message.textContent = "Login successful.";
-    message.style.color = "green";
+    message.textContent = result.message;
 
-},1500);
+    if(result.success){
+
+        message.style.color = "green";
+
+        sessionStorage.setItem("loggedUser", result.fullName);
+        sessionStorage.setItem("userRole", result.role);
+
+        switch(result.role){
+
+            case "ICT_ADMIN":
+               // ICT Dashboard will open through Apps Script
+                break;
+
+            case "SCHOOL_ADMIN":
+                // School Administrator Dashboard will open through Apps Script
+                break;
+
+            case "TEACHER":
+               // Teacher Dashboard will open through Apps Script
+                break;
+
+            case "LEARNER":
+                // Learner Dashboard will open through Apps Script
+                break;
+
+            case "PARENT":
+                // Parent Dashboard will open through Apps Script
+                break;
+
+            default:
+                message.textContent = "Unknown user role.";
+                message.style.color = "red";
+
+        }
+
+    }
+
+    else{
+
+        message.style.color = "red";
+
+    }
+
+})
+
+.withFailureHandler(function(error){
+
+    loginButton.textContent = "LOGIN";
+    loginButton.disabled = false;
+
+    message.textContent = "System error. Please try again.";
+
+    message.style.color = "red";
+
+    console.error(error);
+
+})
+
+.authenticateUser(username,password);
 
 
 
