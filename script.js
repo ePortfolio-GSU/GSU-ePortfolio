@@ -104,34 +104,7 @@ google.script.run
         sessionStorage.setItem("loggedUser", result.fullName);
         sessionStorage.setItem("userRole", result.role);
 
-        switch(result.role){
-
-            case "ICT_ADMIN":
-               // ICT Dashboard will open through Apps Script
-                break;
-
-            case "SCHOOL_ADMIN":
-                // School Administrator Dashboard will open through Apps Script
-                break;
-
-            case "TEACHER":
-               // Teacher Dashboard will open through Apps Script
-                break;
-
-            case "LEARNER":
-                // Learner Dashboard will open through Apps Script
-                break;
-
-            case "PARENT":
-                // Parent Dashboard will open through Apps Script
-                break;
-
-            default:
-                message.textContent = "Unknown user role.";
-                message.style.color = "red";
-
-        }
-
+        openDashboard(result.role);
     }
 
     else{
@@ -162,3 +135,36 @@ google.script.run
     });
 
 }
+// =====================================================
+// Secure Dashboard Navigation
+// =====================================================
+
+function openDashboard(role){
+
+    switch(role){
+
+        case "ICT_ADMIN":
+            window.location.href = "ICTDashboard.html";
+            break;
+
+        case "SCHOOL_ADMIN":
+            window.location.href = "AdminDashboard.html";
+            break;
+
+        case "TEACHER":
+            window.location.href = "TeacherDashboard.html";
+            break;
+
+        case "LEARNER":
+            window.location.href = "LearnerDashboard.html";
+            break;
+
+        case "PARENT":
+            window.location.href = "ParentDashboard.html";
+            break;
+
+        default:
+            alert("Unknown user role.");
+    }
+
+        }
