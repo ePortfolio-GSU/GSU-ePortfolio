@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>GSU Embakasi Academy ePortfolio</title>
 
 <style>
+
 *{
 margin:0;
 padding:0;
@@ -14,96 +16,240 @@ font-family:Arial,Helvetica,sans-serif;
 }
 
 body{
-background:#f5f7fa;
+background:#f4f7fb;
+display:flex;
+justify-content:center;
+align-items:center;
+min-height:100vh;
+padding:20px;
 }
 
-header{
+.container{
+width:100%;
+max-width:420px;
+background:#fff;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.15);
+overflow:hidden;
+}
+
+.header{
 background:#003366;
 color:white;
-padding:18px;
 text-align:center;
+padding:25px;
 }
 
-header h1{
-font-size:28px;
+.logo{
+width:90px;
+height:90px;
+margin:auto;
+margin-bottom:15px;
+border-radius:50%;
+background:white;
+display:flex;
+align-items:center;
+justify-content:center;
+color:#003366;
+font-weight:bold;
 }
 
-header p{
-margin-top:8px;
+.header h1{
+font-size:24px;
+margin-bottom:8px;
+}
+
+.header p{
+font-size:14px;
+}
+
+.form{
+padding:25px;
+}
+
+.form label{
+display:block;
+margin-bottom:6px;
+font-weight:bold;
+color:#333;
+}
+
+.form input{
+width:100%;
+padding:14px;
+margin-bottom:18px;
+border:1px solid #ccc;
+border-radius:8px;
 font-size:16px;
 }
 
-.hero{
-padding:60px 20px;
-text-align:center;
+.password-box{
+position:relative;
 }
 
-.hero h2{
-font-size:34px;
+.toggle{
+position:absolute;
+right:15px;
+top:15px;
+font-size:14px;
+cursor:pointer;
 color:#003366;
+}
+
+.options{
+display:flex;
+justify-content:space-between;
+align-items:center;
 margin-bottom:20px;
+font-size:14px;
 }
 
-.hero p{
-max-width:700px;
-margin:auto;
-font-size:18px;
-line-height:1.7;
-color:#444;
-}
-
-.btn{
-display:inline-block;
-margin-top:35px;
-background:#0066cc;
+button{
+width:100%;
+padding:15px;
+background:#0056b3;
 color:white;
-padding:16px 45px;
-text-decoration:none;
-font-size:20px;
+border:none;
 border-radius:8px;
+font-size:18px;
+font-weight:bold;
+cursor:pointer;
 }
 
-.btn:hover{
-background:#004c99;
+button:hover{
+background:#003f88;
 }
 
-footer{
-margin-top:80px;
+.forgot{
+text-align:center;
+margin-top:20px;
+}
+
+.forgot a{
+text-decoration:none;
+color:#0056b3;
+font-weight:bold;
+}
+
+.footer{
+text-align:center;
+padding:20px;
+font-size:13px;
+background:#f5f5f5;
+color:#555;
+}
+
+.floating{
+position:fixed;
+right:18px;
+bottom:18px;
+display:flex;
+flex-direction:column;
+gap:12px;
+}
+
+.float-btn{
+width:55px;
+height:55px;
+border-radius:50%;
 background:#003366;
 color:white;
-padding:18px;
-text-align:center;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:24px;
+box-shadow:0 4px 12px rgba(0,0,0,.3);
 }
-</style>
 
+</style>
 </head>
 
 <body>
 
-<header>
-<h1>GSU Embakasi Academy</h1>
+<div class="container">
+
+<div class="header">
+
+<div class="logo">
+LOGO
+</div>
+
+<h1>GSU EMBAKASI ACADEMY</h1>
+
 <p>ePortfolio Management System</p>
-</header>
 
-<section class="hero">
+</div>
 
-<h2>Welcome</h2>
+<div class="form">
 
-<p>
-Welcome to the official GSU Embakasi Academy ePortfolio Management System.
-This platform enables learners, teachers, parents and administrators to securely manage digital portfolios, assessments, projects, practical activities and academic progress.
-</p>
+<label>Username</label>
 
-<a href="#" class="btn">Login</a>
+<input type="text" placeholder="Assessment Number / National ID">
 
-</section>
+<label>Password</label>
 
-<footer>
+<div class="password-box">
 
-© 2026 GSU Embakasi Academy. All Rights Reserved.
+<input type="password" id="password" placeholder="Password">
 
-</footer>
+<span class="toggle" onclick="togglePassword()">👁</span>
+
+</div>
+
+<div class="options">
+
+<label>
+<input type="checkbox">
+ Remember Me
+</label>
+
+</div>
+
+<button>LOGIN</button>
+
+<div class="forgot">
+
+<a href="#">Forgot Password?</a>
+
+</div>
+
+</div>
+
+<div class="footer">
+
+© 2026 GSU Embakasi Academy
+
+<br>
+
+Version 1.0
+
+</div>
+
+</div>
+
+<div class="floating">
+
+<div class="float-btn">🔔</div>
+
+<div class="float-btn">💬</div>
+
+</div>
+
+<script>
+
+function togglePassword(){
+
+const p=document.getElementById("password");
+
+if(p.type==="password"){
+p.type="text";
+}else{
+p.type="password";
+}
+
+}
+
+</script>
 
 </body>
-
 </html>
