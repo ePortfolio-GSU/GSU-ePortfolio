@@ -87,8 +87,7 @@ const loginButton = loginForm.querySelector("button");
 loginButton.textContent = "Authenticating...";
 loginButton.disabled = true;
 
-message.textContent = "Connecting securely...";
-message.style.color = "#0B57D0";
+message.textContent = "";
 
 
 setTimeout(function(){
@@ -96,8 +95,7 @@ setTimeout(function(){
     loginButton.textContent = "LOGIN";
     loginButton.disabled = false;
 
-    message.textContent = "Authentication system ready.";
-    message.style.color = "green";
+    message.textContent = "";
 
 },1500);
 
