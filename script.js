@@ -95,7 +95,8 @@ setTimeout(function(){
     loginButton.textContent = "LOGIN";
     loginButton.disabled = false;
 
-    message.textContent = "";
+    message.textContent = "Login successful.";
+    message.style.color = "green";
 
 },1500);
 
