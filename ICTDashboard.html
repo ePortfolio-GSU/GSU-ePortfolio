@@ -122,7 +122,28 @@
 
 </footer>
 
-<script src="script.js"></script>
+<script>
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    const user=sessionStorage.getItem("loggedUser");
+    const role=sessionStorage.getItem("userRole");
+
+    if(!user || !role){
+
+        alert("Your session has expired. Please login again.");
+
+        window.location.href="index.html";
+
+        return;
+
+    }
+
+    document.getElementById("currentUser").textContent="Welcome, "+user;
+
+});
+
+</script>
 
 </body>
 
