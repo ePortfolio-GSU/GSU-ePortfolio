@@ -1,255 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>GSU Embakasi Academy ePortfolio</title>
+    <title>
+        GSU Embakasi Academy | E-Portfolio Portal
+    </title>
 
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
-body{
-background:#f4f7fb;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
-padding:20px;
-}
-
-.container{
-width:100%;
-max-width:420px;
-background:#fff;
-border-radius:15px;
-box-shadow:0 5px 20px rgba(0,0,0,.15);
-overflow:hidden;
-}
-
-.header{
-background:#003366;
-color:white;
-text-align:center;
-padding:25px;
-}
-
-.logo{
-width:90px;
-height:90px;
-margin:auto;
-margin-bottom:15px;
-border-radius:50%;
-background:white;
-display:flex;
-align-items:center;
-justify-content:center;
-color:#003366;
-font-weight:bold;
-}
-
-.header h1{
-font-size:24px;
-margin-bottom:8px;
-}
-
-.header p{
-font-size:14px;
-}
-
-.form{
-padding:25px;
-}
-
-.form label{
-display:block;
-margin-bottom:6px;
-font-weight:bold;
-color:#333;
-}
-
-.form input{
-width:100%;
-padding:14px;
-margin-bottom:18px;
-border:1px solid #ccc;
-border-radius:8px;
-font-size:16px;
-}
-
-.password-box{
-position:relative;
-}
-
-.toggle{
-position:absolute;
-right:15px;
-top:15px;
-font-size:14px;
-cursor:pointer;
-color:#003366;
-}
-
-.options{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:20px;
-font-size:14px;
-}
-
-button{
-width:100%;
-padding:15px;
-background:#0056b3;
-color:white;
-border:none;
-border-radius:8px;
-font-size:18px;
-font-weight:bold;
-cursor:pointer;
-}
-
-button:hover{
-background:#003f88;
-}
-
-.forgot{
-text-align:center;
-margin-top:20px;
-}
-
-.forgot a{
-text-decoration:none;
-color:#0056b3;
-font-weight:bold;
-}
-
-.footer{
-text-align:center;
-padding:20px;
-font-size:13px;
-background:#f5f5f5;
-color:#555;
-}
-
-.floating{
-position:fixed;
-right:18px;
-bottom:18px;
-display:flex;
-flex-direction:column;
-gap:12px;
-}
-
-.float-btn{
-width:55px;
-height:55px;
-border-radius:50%;
-background:#003366;
-color:white;
-display:flex;
-justify-content:center;
-align-items:center;
-font-size:24px;
-box-shadow:0 4px 12px rgba(0,0,0,.3);
-}
-
-</style>
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<div class="container">
+    <main class="container">
 
-<div class="header">
+        <section class="login-card">
 
-<div class="logo">
-LOGO
-</div>
+            <!-- School Branding -->
+            <div class="header">
 
-<h1>GSU EMBAKASI ACADEMY</h1>
+                <img 
+                src="logo.png" 
+                alt="GSU Embakasi Academy Logo"
+                class="logo">
 
-<p>ePortfolio Management System</p>
+                <h1>
+                    GSU EMBAKASI ACADEMY
+                </h1>
 
-</div>
+                <h2>
+                    E-PORTFOLIO PORTAL
+                </h2>
 
-<div class="form">
+            </div>
 
-<label>Username</label>
 
-<input type="text" placeholder="Assessment Number / National ID">
+            <!-- Login Form -->
+            <form id="loginForm">
 
-<label>Password</label>
+                <label for="username">
+                    Username
+                </label>
 
-<div class="password-box">
+                <input 
+                type="text"
+                id="username"
+                placeholder="Assessment No / National ID"
+                autocomplete="username"
+                required>
 
-<input type="password" id="password" placeholder="Password">
 
-<span class="toggle" onclick="togglePassword()">👁</span>
+                <label for="password">
+                    Password
+                </label>
 
-</div>
+                <div class="password-box">
 
-<div class="options">
+                    <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter password"
+                    autocomplete="current-password"
+                    required>
 
-<label>
-<input type="checkbox">
- Remember Me
-</label>
 
-</div>
+                    <span id="togglePassword">
+                        👁
+                    </span>
 
-<button>LOGIN</button>
+                </div>
 
-<div class="forgot">
 
-<a href="#">Forgot Password?</a>
+                <label class="show-password">
 
-</div>
+                    <input 
+                    type="checkbox"
+                    id="showPassword">
 
-</div>
+                    Show Password
 
-<div class="footer">
+                </label>
 
-© 2026 GSU Embakasi Academy
 
-<br>
+                <a href="#" class="forgot">
+                    Forgot Password?
+                </a>
 
-Version 1.0
 
-</div>
+                <button type="submit">
+                    LOGIN
+                </button>
 
-</div>
 
-<div class="floating">
+                <p id="message">
+                    Authenticating...
+                </p>
 
-<div class="float-btn">🔔</div>
 
-<div class="float-btn">💬</div>
+            </form>
 
-</div>
 
-<script>
+        </section>
 
-function togglePassword(){
 
-const p=document.getElementById("password");
+        <!-- Support Buttons -->
+        <div class="support">
 
-if(p.type==="password"){
-p.type="text";
-}else{
-p.type="password";
-}
+            <button>
+                💬 Chat
+            </button>
 
-}
 
-</script>
+            <button>
+                ❓ Help
+            </button>
+
+        </div>
+
+
+       <footer>
+
+    © 2026 GSU Embakasi Academy. All Rights Reserved.
+
+    <br>
+
+    Version 1.0
+
+</footer>
+
+
+    </main>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
