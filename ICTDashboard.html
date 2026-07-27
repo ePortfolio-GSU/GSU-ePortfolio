@@ -7,8 +7,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>ICT System Administrator Dashboard</title>
-
+<title>GSU Embakasi Academy ePortfolio Portal</title>
 <link rel="stylesheet" href="style.css">
 
 </head>
@@ -126,24 +125,26 @@
 
 document.addEventListener("DOMContentLoaded", function(){
 
-    const user=sessionStorage.getItem("loggedUser");
-    const role=sessionStorage.getItem("userRole");
+    const user = sessionStorage.getItem("loggedUser");
+    const role = sessionStorage.getItem("userRole");
 
     if(!user || !role){
 
         alert("Your session has expired. Please login again.");
 
-        window.location.href="index.html";
+        window.location.href = "index.html";
 
         return;
 
     }
 
-    document.getElementById("currentUser").textContent="Welcome, "+user;
+    initializeDashboard();
 
 });
 
 </script>
+
+<script src="script.js"></script>
 
 </body>
 
