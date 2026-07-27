@@ -183,3 +183,134 @@ function logoutUser(){
     }
 
 }
+// ======================================================
+// MASTER DASHBOARD ROLE ENGINE
+// ======================================================
+
+function initializeDashboard(){
+
+    const user = sessionStorage.getItem("loggedUser");
+    const role = sessionStorage.getItem("userRole");
+
+    if(!user || !role){
+
+        alert("Session expired. Please login again.");
+
+        window.location.href = "index.html";
+
+        return;
+
+    }
+
+    document.getElementById("currentUser").textContent = "Welcome, " + user;
+
+    loadDashboard(role);
+
+}
+// ======================================================
+// LOAD ROLE-BASED DASHBOARD
+// ======================================================
+
+function loadDashboard(role){
+
+    switch(role){
+
+        case "ICT_ADMIN":
+
+            document.getElementById("dashboardTitle").textContent =
+            "ICT System Administrator Dashboard";
+
+            loadICTDashboard();
+
+            break;
+
+        case "SCHOOL_ADMIN":
+
+            document.getElementById("dashboardTitle").textContent =
+            "School Administrator Dashboard";
+
+            loadSchoolAdminDashboard();
+
+            break;
+
+        case "TEACHER":
+
+            document.getElementById("dashboardTitle").textContent =
+            "Teacher Dashboard";
+
+            loadTeacherDashboard();
+
+            break;
+
+        case "LEARNER":
+
+            document.getElementById("dashboardTitle").textContent =
+            "Learner Dashboard";
+
+            loadLearnerDashboard();
+
+            break;
+
+        case "PARENT":
+
+            document.getElementById("dashboardTitle").textContent =
+            "Parent Dashboard";
+
+            loadParentDashboard();
+
+            break;
+
+        default:
+
+            alert("Invalid user role.");
+
+            logoutUser();
+
+    }
+
+}
+// ======================================================
+// ICT SYSTEM ADMINISTRATOR
+// ======================================================
+
+function loadICTDashboard(){
+
+    console.log("ICT Dashboard Loaded");
+
+}
+// ======================================================
+// SCHOOL ADMINISTRATOR
+// ======================================================
+
+function loadSchoolAdminDashboard(){
+
+    console.log("School Administrator Dashboard Loaded");
+
+}
+// ======================================================
+// TEACHER
+// ======================================================
+
+function loadTeacherDashboard(){
+
+    console.log("Teacher Dashboard Loaded");
+
+}
+// ======================================================
+// LEARNER
+// ======================================================
+
+function loadLearnerDashboard(){
+
+    console.log("Learner Dashboard Loaded");
+
+}
+// ======================================================
+// PARENT
+// ======================================================
+
+function loadParentDashboard(){
+
+    console.log("Parent Dashboard Loaded");
+
+}
