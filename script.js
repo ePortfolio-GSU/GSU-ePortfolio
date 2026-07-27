@@ -314,3 +314,29 @@ function loadParentDashboard(){
     console.log("Parent Dashboard Loaded");
 
 }
+// ======================================================
+// DYNAMIC SIDEBAR GENERATOR
+// ======================================================
+
+function buildSidebar(menuItems){
+
+    const sidebar = document.getElementById("sidebarMenu");
+
+    if(!sidebar) return;
+
+    sidebar.innerHTML = "";
+
+    menuItems.forEach(function(item){
+
+        const li = document.createElement("li");
+
+        li.innerHTML =
+        `<a href="${item.link}">
+            ${item.icon} ${item.name}
+        </a>`;
+
+        sidebar.appendChild(li);
+
+    });
+
+}
