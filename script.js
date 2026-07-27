@@ -88,48 +88,67 @@ loginButton.disabled = true;
 
 message.textContent = "";
 
-google.script.run
+const WEB_APP_URL =
+"https://script.google.com/macros/s/AKfycbyDzCHI9SWd1uyzuKnnrXgSmnMeQtGa4qcjeFxIIdoYvEVspKbmbnvIz8qZ16oEQoMx/exec";
 
-.withSuccessHandler(function(result){
+fetch(WEB_APP_URL,{
 
-    loginButton.textContent = "LOGIN";
-    loginButton.disabled = false;
+    method:"POST",
 
-    message.textContent = result.message;
+    headers:{
+        "Content-Type":"application/json"
+    },
+
+    body:JSON.stringify({
+
+        action:"login",
+
+        username:username,
+
+        password:password
+
+    })
+
+})
+
+.then(response=>response.json())
+
+.then(result=>{
+
+    loginButton.textContent="LOGIN";
+    loginButton.disabled=false;
+
+    message.textContent=result.message;
 
     if(result.success){
 
-        message.style.color = "green";
+        message.style.color="green";
 
-        sessionStorage.setItem("loggedUser", result.fullName);
-        sessionStorage.setItem("userRole", result.role);
+        sessionStorage.setItem("loggedUser",result.fullName);
+        sessionStorage.setItem("userRole",result.role);
+        sessionStorage.setItem("username",result.username);
 
         openDashboard(result.role);
-    }
 
-    else{
+    }else{
 
-        message.style.color = "red";
+        message.style.color="red";
 
     }
 
 })
 
-.withFailureHandler(function(error){
+.catch(error=>{
 
-    loginButton.textContent = "LOGIN";
-    loginButton.disabled = false;
+    loginButton.textContent="LOGIN";
+    loginButton.disabled=false;
 
-    message.textContent = "System error. Please try again.";
-
-    message.style.color = "red";
+    message.style.color="red";
+    message.textContent="Unable to connect to the server.";
 
     console.error(error);
 
-})
-
-.authenticateUser(username,password);
-
+});
 
 
     });
