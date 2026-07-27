@@ -314,8 +314,6 @@ function loadICTDashboard(){
     "ICT System Administrator Dashboard";
 
 }
-
-}
 // ======================================================
 // SCHOOL ADMINISTRATOR
 // ======================================================
