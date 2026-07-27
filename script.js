@@ -144,30 +144,30 @@ function openDashboard(role){
     switch(role){
 
         case "ICT_ADMIN":
-            window.location.href = "ICTDashboard.html";
+            window.location.href = "MasterDashboard.html";
             break;
 
         case "SCHOOL_ADMIN":
-            window.location.href = "AdminDashboard.html";
+            window.location.href = "MasterDashboard.html";
             break;
 
         case "TEACHER":
-            window.location.href = "TeacherDashboard.html";
+            window.location.href = "MasterDashboard.html";
             break;
 
         case "LEARNER":
-            window.location.href = "LearnerDashboard.html";
+            window.location.href = "MasterDashboard.html";
             break;
 
         case "PARENT":
-            window.location.href = "ParentDashboard.html";
+            window.location.href = "MasterDashboard.html";
             break;
 
         default:
             alert("Unknown user role.");
     }
 
-        }
+}
 // =====================================================
 // Logout
 // =====================================================
