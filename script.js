@@ -275,7 +275,26 @@ function loadDashboard(role){
 
 function loadICTDashboard(){
 
-    console.log("ICT Dashboard Loaded");
+    buildSidebar([
+
+        {icon:"🏠", name:"Dashboard Overview", link:"#"},
+        {icon:"👥", name:"User Management", link:"#"},
+        {icon:"🏫", name:"School Administration", link:"#"},
+        {icon:"🎓", name:"Academic Management", link:"#"},
+        {icon:"📁", name:"Portfolio Management", link:"#"},
+        {icon:"🔒", name:"Security Centre", link:"#"},
+        {icon:"📋", name:"Audit Logs", link:"#"},
+        {icon:"📊", name:"Reports & Analytics", link:"#"},
+        {icon:"⚙", name:"System Settings", link:"#"},
+        {icon:"💾", name:"Backup & Recovery", link:"#"},
+        {icon:"🚪", name:"Logout", link:"#", action:"logout"}
+
+    ]);
+
+    document.getElementById("dashboardHeading").textContent =
+    "ICT System Administrator Dashboard";
+
+}
 
 }
 // ======================================================
