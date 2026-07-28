@@ -92,23 +92,15 @@ const WEB_APP_URL =
 "https://script.google.com/macros/s/AKfycbyDzCHI9SWd1uyzuKnnrXgSmnMeQtGa4qcjeFxIIdoYvEVspKbmbnvIz8qZ16oEQoMx/exec";
 
 fetch(WEB_APP_URL,{
-
     method:"POST",
-
     headers:{
         "Content-Type":"application/json"
     },
-
     body:JSON.stringify({
-
         action:"login",
-
         username:username,
-
         password:password
-
     })
-
 })
 
 .then(response=>response.json())
