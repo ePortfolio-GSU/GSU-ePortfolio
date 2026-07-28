@@ -135,10 +135,12 @@ fetch(WEB_APP_URL,{
     loginButton.textContent="LOGIN";
     loginButton.disabled=false;
 
-    message.style.color="red";
-    message.textContent="Unable to connect to the server.";
-
     console.error(error);
+
+    message.style.color="red";
+
+    message.textContent =
+    error.toString();
 
 });
 
