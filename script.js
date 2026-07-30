@@ -89,8 +89,7 @@ loginButton.disabled = true;
 message.textContent = "";
 
 const WEB_APP_URL =
-"https://script.google.com/macros/s/AKfycbyDzCHI9SWd1uyzuKnnrXgSmnMeQtGa4qcjeFxIIdoYvEVspKbmbnvIz8qZ16oEQoMx/exec";
-
+"https://script.google.com/macros/s/AKfycbwcYc2v0rRVF_AFDtluOVFCTja89vOH0HBtcI9rLGs0PCd7D3YpI5K4EVrb7XKaH_AL/exec";
 fetch(WEB_APP_URL,{
     method:"POST",
     headers:{
