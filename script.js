@@ -93,8 +93,8 @@ const WEB_APP_URL =
 fetch(WEB_APP_URL,{
     method:"POST",
     headers:{
-        "Content-Type":"application/json"
-    },
+    "Content-Type":"text/plain;charset=UTF-8"
+},
     body:JSON.stringify({
         action:"login",
         username:username,
