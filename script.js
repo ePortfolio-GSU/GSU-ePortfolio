@@ -184,16 +184,12 @@ function openDashboard(role){
 // Logout
 // =====================================================
 
-function logoutUser(){
-
-    if(confirm("Are you sure you want to logout?")){
-
+function logoutUser() {
+    if (confirm("Are you sure you want to logout?")) {
         sessionStorage.clear();
-
-        window.location.href="index.html";
-
+        alert("Logout successful.");
+        window.location.href = "index.html";
     }
-
 }
 // ======================================================
 // MASTER DASHBOARD ROLE ENGINE
