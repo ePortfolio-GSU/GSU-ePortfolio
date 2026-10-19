@@ -197,7 +197,19 @@ function logoutUser() {
 // ======================================================
 // MASTER DASHBOARD ROLE ENGINE
 // ======================================================
+document.addEventListener("DOMContentLoaded", function () {
+    const menuToggle = document.getElementById("menuToggle");
+    const sidebar = document.querySelector(".dashboard-sidebar");
 
+    if (!menuToggle || !sidebar) return;
+
+    menuToggle.addEventListener("click", function () {
+        const isOpen = sidebar.classList.toggle("active");
+
+        menuToggle.setAttribute("aria-expanded", String(isOpen));
+        menuToggle.textContent = isOpen ? "✕ Close Menu" : "☰ Menu";
+    });
+});
 function initializeDashboard(){
 
     const user = sessionStorage.getItem("loggedUser");
