@@ -347,25 +347,41 @@ function loadParentDashboard(){
 // DYNAMIC SIDEBAR GENERATOR
 // ======================================================
 
-function buildSidebar(menuItems){
-
+function buildSidebar(menuItems) {
     const sidebar = document.getElementById("sidebarMenu");
-
-    if(!sidebar) return;
+    if (!sidebar) return;
 
     sidebar.innerHTML = "";
 
-    menuItems.forEach(function(item){
-
+    menuItems.forEach(function(item) {
         const li = document.createElement("li");
+        const link = document.createElement("a");
 
-        li.innerHTML =
-        `<a href="${item.link}">
-            ${item.icon} ${item.name}
-        </a>`;
+        link.href = item.link || "#";
+        link.textContent = item.icon + " " + item.name;
 
+        link.addEventListener("click", function(event) {
+            event.preventDefault();
+
+            if (item.action === "logout") {
+                logoutUser();
+                return;
+            }
+
+            if (typeof item.onClick === "function") {
+                item.onClick();
+                return;
+            }
+
+            if (item.link && item.link !== "#") {
+                window.location.href = item.link;
+                return;
+            }
+
+            console.log("Dashboard section selected:", item.name);
+        });
+
+        li.appendChild(link);
         sidebar.appendChild(li);
-
     });
-
 }
