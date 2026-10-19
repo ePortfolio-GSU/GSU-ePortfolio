@@ -113,15 +113,18 @@ fetch(WEB_APP_URL,{
 
     if(result.success){
 
-        message.style.color="green";
+    message.style.color = "green";
+    message.textContent = "Login successful!";
 
-        sessionStorage.setItem("loggedUser",result.fullName);
-        sessionStorage.setItem("userRole",result.role);
-        sessionStorage.setItem("username",result.username);
+    sessionStorage.setItem("loginSuccessMessage", "Login successful!");
+    sessionStorage.setItem("loggedUser", result.fullName);
+    sessionStorage.setItem("userRole", result.role);
+    sessionStorage.setItem("username", result.username);
 
+    setTimeout(function() {
         openDashboard(result.role);
-
-    }else{
+    }, 1000);
+}else{
 
         message.style.color="red";
 
