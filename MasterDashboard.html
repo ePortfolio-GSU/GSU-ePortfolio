@@ -106,37 +106,23 @@
 
 </footer>
 
-<script>
-
-document.addEventListener("DOMContentLoaded", function(){
-
-    const user = sessionStorage.getItem("loggedUser");
-    const role = sessionStorage.getItem("userRole");
-
-    if(!user || !role){
-
-        alert("Your session has expired. Please login again.");
-
-        window.location.href = "index.html";
-
-        return;
-
-    }
-
-    initializeDashboard();
-
-});
-
 <script src="script.js"></script>
 
 <script>
+document.addEventListener("DOMContentLoaded", function () {
+    const user = sessionStorage.getItem("loggedUser");
+    const role = sessionStorage.getItem("userRole");
 
-document.addEventListener("DOMContentLoaded", function(){
+    if (!user || !role) {
+        alert("Your session has expired. Please login again.");
+        window.location.href = "index.html";
+        return;
+    }
 
     initializeDashboard();
-
     console.log("Master Dashboard Initialized");
-
 });
-
 </script>
+
+</body>
+</html>
