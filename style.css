@@ -8,6 +8,10 @@ body {
     margin: 0;
     min-height: 100vh;
     background: #F4F6F9;
+}
+
+/* Center the login page only */
+body:has(.login-card) {
     display: flex;
     justify-content: center;
     align-items: center;
