@@ -613,3 +613,50 @@ body {
         font-size: 13px;
     }
 }
+/* Mobile navigation and text wrapping */
+
+#menuToggle {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    #menuToggle {
+        display: block;
+        position: fixed;
+        top: 12px;
+        left: 12px;
+        z-index: 1300;
+        width: auto;
+        max-width: calc(100vw - 24px);
+        margin: 0;
+        padding: 10px 14px;
+        background: #0B57D0;
+        color: #fff;
+        border-radius: 8px;
+        font-size: 14px;
+    }
+
+    .dashboard-header {
+        padding-top: 58px;
+    }
+
+    .dashboard-title,
+    .dashboard-title h2,
+    .dashboard-title p,
+    .dashboard-breadcrumb,
+    .dashboard-section-title,
+    .dashboard-sidebar a,
+    #dashboardCards,
+    #dashboardWorkspace,
+    #dashboardActivity {
+        min-width: 0;
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .dashboard-sidebar {
+        max-width: 85vw;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+}
