@@ -614,7 +614,15 @@ body {
     }
 }
 /* Mobile navigation and text wrapping */
+@media (max-width: 768px) {
+    body:has(#menuToggle) {
+        display: block;
+    }
 
+    #menuToggle {
+        /* Keep your existing button styling here */
+    }
+}
 #menuToggle {
     display: none;
 }
