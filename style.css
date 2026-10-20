@@ -666,3 +666,39 @@ body {
         overflow-y: auto;
     }
 }
+/* Mobile menu strip — separate from the school header */
+.mobile-menu-strip {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-strip {
+        display: flex;
+        align-items: center;
+        min-height: 54px;
+        width: 100%;
+        margin-top: 70px;
+        padding: 4px 12px;
+        background: #800000;
+        position: relative;
+        z-index: 950;
+    }
+
+    #menuToggle {
+        display: inline-block;
+        position: static;
+        width: auto;
+        max-width: 100%;
+        margin: 0;
+        padding: 8px 14px;
+        background: #ffffff;
+        color: #800000;
+        border: 1px solid #ffffff;
+        border-radius: 6px;
+        font-size: 14px;
+    }
+
+    .dashboard-main {
+        padding-top: 12px;
+    }
+}
