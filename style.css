@@ -666,22 +666,35 @@ body {
         overflow-y: auto;
     }
 }
-/* Mobile menu strip — separate from the school header */
+/* MOBILE MENU — COMPACT STRIP, NO OVERLAPPING */
 .mobile-menu-strip {
     display: none;
 }
 
 @media (max-width: 768px) {
+    .dashboard-header {
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        width: 100%;
+        min-height: 70px;
+        height: auto;
+        padding: 10px 12px;
+    }
+
     .mobile-menu-strip {
         display: flex;
         align-items: center;
-        min-height: 54px;
+        justify-content: flex-start;
         width: 100%;
-        margin-top: 70px;
+        height: 48px;
+        min-height: 48px;
+        margin: 0;
         padding: 4px 12px;
         background: #800000;
         position: relative;
-        z-index: 950;
+        z-index: 800;
     }
 
     #menuToggle {
@@ -690,15 +703,40 @@ body {
         width: auto;
         max-width: 100%;
         margin: 0;
-        padding: 8px 14px;
-        background: #ffffff;
-        color: #800000;
+        padding: 7px 12px;
+        background: #800000;
+        color: #ffffff;
         border: 1px solid #ffffff;
         border-radius: 6px;
         font-size: 14px;
     }
 
+    .dashboard-sidebar {
+        position: fixed;
+        top: 118px;
+        left: -280px;
+        width: 260px;
+        height: calc(100dvh - 118px);
+        max-height: none;
+        padding-top: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        z-index: 900;
+        transition: left 0.3s ease;
+    }
+
+    .dashboard-sidebar.active {
+        left: 0;
+    }
+
     .dashboard-main {
-        padding-top: 12px;
+        margin: 0;
+        padding: 16px 12px;
+        width: 100%;
+        min-height: calc(100vh - 118px);
+    }
+
+    .dashboard-footer {
+        margin-left: 0;
     }
 }
