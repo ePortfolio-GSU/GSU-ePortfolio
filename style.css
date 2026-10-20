@@ -348,14 +348,10 @@ footer {
 
 }
 
-.dashboard-sidebar a:hover{
-
-    background:#E8F0FE;
-
-    color:#0B57D0;
-
-    border-left:4px solid #0B57D0;
-
+.dashboard-sidebar a:hover {
+    background: #600000;
+    color: #ffffff;
+    border-left: 4px solid #FFD54F;
 }
 
 .dashboard-sidebar a.active{
