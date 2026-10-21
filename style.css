@@ -1777,3 +1777,41 @@ body.dashboard-page {
         padding: 0 10px;
     }
 }
+/* MATCH SIDEBAR PANEL HEIGHT TO THE MAROON STRIP */
+
+.dashboard-page .dashboard-wrapper {
+    position: relative;
+}
+
+.dashboard-page .mobile-menu-strip {
+    align-self: stretch;
+    min-height: 100%;
+}
+
+.dashboard-page .dashboard-sidebar {
+    position: absolute;
+    top: 70px;
+    bottom: 0;
+    left: 64px;
+    height: auto;
+    max-height: none;
+    box-sizing: border-box;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #5B1826;
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.dashboard-page .dashboard-sidebar.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+    .dashboard-page .dashboard-sidebar {
+        top: 66px;
+        left: 52px;
+    }
+}
