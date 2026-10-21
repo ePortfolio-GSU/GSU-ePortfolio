@@ -1370,3 +1370,77 @@ body.dashboard-page {
         font-size: 19px;
     }
 }
+/* GSU DASHBOARD — MAROON SIDEBAR ALIGNMENT */
+
+.dashboard-page .mobile-menu-strip {
+    background: #5B1826;
+}
+
+.dashboard-page #menuToggle {
+    background: #5B1826;
+    border-color: rgba(255, 255, 255, 0.55);
+    position: relative;
+    z-index: 22;
+}
+
+/* Keep the sidebar below the Menu button */
+.dashboard-page .dashboard-sidebar {
+    position: fixed;
+    top: 130px;
+    left: 64px;
+    bottom: 0;
+    width: 250px;
+    height: calc(100vh - 130px);
+    height: calc(100dvh - 130px);
+    margin: 0;
+    padding: 0;
+    background: #5B1826;
+    transform: translateX(-110%);
+    visibility: hidden;
+    pointer-events: none;
+    overflow-y: auto;
+    z-index: 20;
+}
+
+.dashboard-page .dashboard-sidebar.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.dashboard-page .dashboard-sidebar ul {
+    margin: 0;
+    padding: 8px 0;
+    list-style: none;
+}
+
+.dashboard-page .dashboard-sidebar a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 10px 12px;
+    color: #fff;
+    border-left: 4px solid transparent;
+    text-decoration: none;
+}
+
+.dashboard-page .dashboard-sidebar a:hover,
+.dashboard-page .dashboard-sidebar a.active {
+    background: rgba(255, 255, 255, 0.12);
+    border-left-color: #FFD54F;
+}
+
+/* Phone layout */
+@media (max-width: 768px) {
+    .dashboard-page .mobile-menu-strip {
+        width: 52px;
+    }
+
+    .dashboard-page .dashboard-sidebar {
+        top: 124px;
+        left: 52px;
+        width: min(250px, calc(100vw - 60px));
+        height: calc(100vh - 124px);
+        height: calc(100dvh - 124px);
+    }
+}
