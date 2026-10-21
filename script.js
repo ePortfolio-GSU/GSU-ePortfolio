@@ -370,9 +370,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    initializeDashboard();
+    if (document.body.classList.contains("dashboard-page")) {
+        initializeDashboard();
+    }
 });
-
 
 // Check session and load the correct role
 function initializeDashboard() {
