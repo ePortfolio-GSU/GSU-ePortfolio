@@ -1444,3 +1444,50 @@ body.dashboard-page {
         height: calc(100dvh - 124px);
     }
 }
+/* GSU DASHBOARD — MATCH SIDEBAR ROWS TO STRIP ICONS */
+
+.dashboard-page .sidebar-quick-icons {
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.dashboard-page .sidebar-quick-icons button {
+    flex-shrink: 0;
+}
+
+.dashboard-page .dashboard-sidebar ul {
+    padding-top: 62px;
+}
+
+.dashboard-page .dashboard-sidebar li {
+    min-height: 54px;
+    display: flex;
+    align-items: stretch;
+}
+
+.dashboard-page .dashboard-sidebar a {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 54px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    line-height: 1.3;
+}
+
+/* Phone alignment */
+@media (max-width: 768px) {
+    .dashboard-page .sidebar-quick-icons {
+        gap: 8px;
+        margin-top: 8px;
+    }
+
+    .dashboard-page .dashboard-sidebar ul {
+        padding-top: 56px;
+    }
+
+    .dashboard-page .dashboard-sidebar li,
+    .dashboard-page .dashboard-sidebar a {
+        min-height: 48px;
+    }
+}
