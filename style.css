@@ -1800,3 +1800,27 @@ body.dashboard-page {
         width: min(250px, calc(100vw - 52px));
     }
 }
+/* Sidebar icon and label alignment */
+.dashboard-sidebar ul#sidebarMenu > li > a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+}
+
+.dashboard-sidebar .sidebar-item-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 24px;
+    width: 24px;
+    min-width: 24px;
+    line-height: 1;
+}
+
+.dashboard-sidebar .sidebar-item-label {
+    display: block;
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: left;
+}
