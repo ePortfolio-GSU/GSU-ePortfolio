@@ -786,3 +786,459 @@ body {
         pointer-events: auto;
     }
 }
+/* ==================================================
+   GSU MASTER DASHBOARD — BLUEPRINT OVERRIDES
+   Dashboard only; preserves login-page styling.
+================================================== */
+
+body.dashboard-page {
+    display: block;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0 0 64px;
+    overflow-x: clip;
+    background: #F4F6F9;
+}
+
+.dashboard-page .dashboard-wrapper {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    grid-template-rows: 70px minmax(calc(100vh - 134px), auto) auto;
+    width: 100%;
+    min-height: 100vh;
+    background: #F4F6F9;
+}
+
+.dashboard-page .dashboard-header {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    grid-column: 1 / -1;
+    grid-row: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    height: 70px;
+    min-width: 0;
+    padding: 8px 20px;
+    background: #0B57D0;
+    color: #fff;
+    z-index: 10;
+}
+
+.dashboard-page .dashboard-logo {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.dashboard-page .dashboard-logo img {
+    display: block;
+    width: 48px;
+    height: 48px;
+    flex: 0 0 48px;
+    object-fit: contain;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    background: #fff;
+    padding: 3px;
+}
+
+.dashboard-page .dashboard-title {
+    display: none;
+}
+
+.dashboard-page .dashboard-user-area {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    min-width: 0;
+}
+
+.dashboard-page #currentUser {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    text-align: right;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page .dashboard-user-area button.header-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 6px;
+    border: 1px solid rgba(255,255,255,.45);
+    border-radius: 50%;
+    background: transparent;
+    color: #fff;
+    font-size: 19px;
+}
+
+.dashboard-page .profile-dropdown {
+    position: relative;
+}
+
+.dashboard-page .profile-menu {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    z-index: 1500;
+    width: 160px;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 5px 18px rgba(0,0,0,.18);
+}
+
+.dashboard-page .profile-menu[hidden] {
+    display: none !important;
+}
+
+.dashboard-page .profile-menu button {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 11px;
+    border-radius: 5px;
+    background: #fff;
+    color: #343A40;
+    text-align: left;
+    font-size: 14px;
+}
+
+.dashboard-page .profile-menu button:hover {
+    background: #F0F3F8;
+}
+
+.dashboard-page .mobile-menu-strip {
+    position: relative;
+    display: flex;
+    grid-column: 1;
+    grid-row: 2;
+    flex-direction: column;
+    align-items: center;
+    width: 64px;
+    min-height: 100%;
+    padding: 8px 4px;
+    background: #800000;
+    z-index: 5;
+}
+
+.dashboard-page #menuToggle {
+    display: block;
+    width: 100%;
+    min-height: 42px;
+    margin: 0;
+    padding: 6px 2px;
+    border: 1px solid rgba(255,255,255,.6);
+    border-radius: 6px;
+    background: #800000;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page .dashboard-sidebar {
+    position: fixed;
+    top: 70px;
+    bottom: 0;
+    left: 64px;
+    width: 250px;
+    height: calc(100vh - 70px);
+    height: calc(100dvh - 70px);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #800000;
+    box-shadow: 3px 0 12px rgba(0,0,0,.18);
+    transform: translateX(-110%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform .22s ease, visibility .22s ease;
+    z-index: 20;
+}
+
+.dashboard-page .dashboard-sidebar.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.dashboard-page .dashboard-sidebar ul {
+    margin: 0;
+    padding: 12px 0;
+    list-style: none;
+}
+
+.dashboard-page .dashboard-sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 46px;
+    padding: 12px 16px;
+    color: #fff;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page .dashboard-sidebar a:hover,
+.dashboard-page .dashboard-sidebar a.active {
+    background: #600000;
+    border-left: 4px solid #FFD54F;
+}
+
+.dashboard-page .dashboard-main {
+    grid-column: 2;
+    grid-row: 2;
+    min-width: 0;
+    width: 100%;
+    margin: 0;
+    padding: 28px;
+    background: #F4F6F9;
+}
+
+.dashboard-page .dashboard-content {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    padding: 24px;
+    border: 1px solid #E1E5EB;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.dashboard-page .dashboard-breadcrumb {
+    margin: 0 0 22px;
+    color: #555;
+    font-size: 14px;
+}
+
+.dashboard-page .dashboard-section-title {
+    margin: 0 0 20px;
+    color: #343A40;
+    font-size: 24px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page .dashboard-welcome {
+    margin: 0 0 24px;
+    padding: 20px;
+    border: 1px solid #D9E2F0;
+    border-left: 5px solid #0B57D0;
+    border-radius: 8px;
+    background: #F8FAFD;
+}
+
+.dashboard-page .dashboard-welcome h2 {
+    margin: 0 0 8px;
+    color: #26364A;
+    font-size: 20px;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page .dashboard-welcome p {
+    margin: 0;
+    color: #505967;
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page #dashboardCards,
+.dashboard-page #dashboardWorkspace,
+.dashboard-page #dashboardActivity {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page .dashboard-footer {
+    grid-column: 2;
+    grid-row: 3;
+    width: 100%;
+    margin: 0;
+    padding: 14px 12px;
+    border-top: 1px solid #E1E5EB;
+    background: #fff;
+    color: #555;
+    font-size: 13px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.dashboard-page .dashboard-support {
+    position: fixed;
+    right: 18px;
+    bottom: 76px;
+    z-index: 15;
+    display: flex;
+    gap: 10px;
+}
+
+.dashboard-page .dashboard-support button {
+    width: auto;
+    min-width: 72px;
+    min-height: 40px;
+    margin: 0;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 7px;
+    background: #0B57D0;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 2px 7px rgba(0,0,0,.16);
+}
+
+@media (max-width: 768px) {
+    .dashboard-page .dashboard-wrapper {
+        grid-template-columns: 52px minmax(0, 1fr);
+        grid-template-rows: auto minmax(calc(100vh - 120px), auto) auto;
+        min-height: 100vh;
+    }
+
+    .dashboard-page .dashboard-header {
+        min-height: 66px;
+        height: auto;
+        padding: 8px 10px;
+        flex-wrap: nowrap;
+        gap: 8px;
+    }
+
+    .dashboard-page .dashboard-logo img {
+        width: 40px;
+        height: 40px;
+        flex-basis: 40px;
+    }
+
+    .dashboard-page .dashboard-user-area {
+        gap: 6px;
+    }
+
+    .dashboard-page #currentUser {
+        max-width: 120px;
+        font-size: 12px;
+    }
+
+    .dashboard-page .dashboard-user-area button.header-icon {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+    }
+
+    .dashboard-page .mobile-menu-strip {
+        grid-column: 1;
+        grid-row: 2;
+        width: 52px;
+        padding: 8px 3px;
+    }
+
+    .dashboard-page #menuToggle {
+        font-size: 10px;
+        padding: 7px 1px;
+    }
+
+    .dashboard-page .dashboard-sidebar {
+        top: 66px;
+        left: 52px;
+        width: min(250px, calc(100vw - 60px));
+        height: calc(100vh - 66px);
+        height: calc(100dvh - 66px);
+    }
+
+    .dashboard-page .dashboard-main {
+        grid-column: 2;
+        grid-row: 2;
+        padding: 14px 10px;
+    }
+
+    .dashboard-page .dashboard-content {
+        padding: 16px 12px;
+    }
+
+    .dashboard-page .dashboard-section-title {
+        font-size: 20px;
+    }
+
+    .dashboard-page .dashboard-welcome {
+        padding: 14px 12px;
+    }
+
+    .dashboard-page .dashboard-welcome h2 {
+        font-size: 18px;
+    }
+
+    .dashboard-page .dashboard-welcome p {
+        font-size: 14px;
+    }
+
+    .dashboard-page .dashboard-footer {
+        grid-column: 2;
+        grid-row: 3;
+        padding: 12px 6px;
+        font-size: 11px;
+        overflow-wrap: anywhere;
+    }
+
+    .dashboard-page .dashboard-support {
+        right: 10px;
+        bottom: 66px;
+        gap: 6px;
+    }
+
+    .dashboard-page .dashboard-support button {
+        min-width: 60px;
+        min-height: 36px;
+        padding: 8px 10px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 360px) {
+    .dashboard-page .dashboard-header {
+        padding-right: 6px;
+        padding-left: 6px;
+    }
+
+    .dashboard-page #currentUser {
+        max-width: 82px;
+        font-size: 11px;
+    }
+
+    .dashboard-page .dashboard-user-area {
+        gap: 4px;
+    }
+
+    .dashboard-page .dashboard-user-area button.header-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    .dashboard-page .dashboard-main {
+        padding: 10px 6px;
+    }
+
+    .dashboard-page .dashboard-content {
+        padding: 12px 8px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-page .dashboard-sidebar {
+        transition: none;
+    }
+}
