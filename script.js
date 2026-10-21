@@ -438,12 +438,18 @@ function loadDashboard(role) {
 }
 
 
-// Build role-specific navigation
+// Build role-specific navigation and quick icons
 function buildSidebar(menuItems) {
     const sidebar = document.getElementById("sidebarMenu");
+    const quickIcons = document.getElementById("sidebarQuickIcons");
+
     if (!sidebar) return;
 
     sidebar.replaceChildren();
+
+    if (quickIcons) {
+        quickIcons.replaceChildren();
+    }
 
     menuItems.forEach(function (item) {
         const li = document.createElement("li");
@@ -452,41 +458,65 @@ function buildSidebar(menuItems) {
         link.href = "#";
         link.textContent = item[0] + " " + item[1];
 
-        if (item[2] === "logout") {
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
+        link.addEventListener("click", function (event) {
+            event.preventDefault();
+
+            if (item[2] === "logout") {
                 logoutUser();
+                return;
+            }
+
+            sidebar.querySelectorAll("a").forEach(function (menuLink) {
+                menuLink.classList.remove("active");
             });
-        } else {
-            link.addEventListener("click", function (event) {
-                event.preventDefault();
 
-                sidebar.querySelectorAll("a").forEach(function (menuLink) {
-                    menuLink.classList.remove("active");
-                });
+            link.classList.add("active");
 
-                link.classList.add("active");
+            if (item[1] === "Dashboard Overview") {
+                const role = sessionStorage.getItem("userRole");
+                const heading = document.getElementById("dashboardHeading");
 
-                if (item[1] === "Dashboard Overview") {
-                    const heading =
-                        document.getElementById("dashboardHeading");
-
-                    if (heading) {
-                        heading.textContent =
-                            DASHBOARD_ROLES[
-                                sessionStorage.getItem("userRole")
-                            ].title;
-                    }
-                } else {
-                    alert(
-                        item[1] +
-                        " is listed in the menu but its page is not yet connected."
-                    );
+                if (heading && DASHBOARD_ROLES[role]) {
+                    heading.textContent = DASHBOARD_ROLES[role].title;
                 }
-            });
-        }
+            } else {
+                alert(
+                    item[1] +
+                    " is listed in the menu but its page is not yet connected."
+                );
+            }
+        });
 
         li.appendChild(link);
         sidebar.appendChild(li);
+
+        if (quickIcons) {
+            const iconButton = document.createElement("button");
+
+            iconButton.type = "button";
+            iconButton.textContent = item[0];
+            iconButton.title = item[1];
+            iconButton.setAttribute("aria-label", item[1]);
+            iconButton.disabled = true;
+
+            iconButton.addEventListener("click", function () {
+                if (!iconButton.disabled) {
+                    link.click();
+                }
+            });
+
+            quickIcons.appendChild(iconButton);
+        }
     });
+
+    const sidebarElement = document.getElementById("dashboardSidebar");
+    const isOpen = sidebarElement &&
+        sidebarElement.classList.contains("active");
+
+    if (quickIcons) {
+        quickIcons.querySelectorAll("button").forEach(function (button) {
+            button.disabled = !isOpen;
+            button.setAttribute("aria-disabled", String(!isOpen));
+        });
+    }
 }
