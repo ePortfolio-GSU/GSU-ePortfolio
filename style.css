@@ -1664,3 +1664,116 @@ body.dashboard-page {
         bottom: 66px;
     }
 }
+/* GSU DASHBOARD — UNIFIED MAROON NAVIGATION PANEL */
+
+.dashboard-page .mobile-menu-strip {
+    position: relative;
+    grid-column: 1;
+    grid-row: 2;
+    align-items: stretch;
+    width: 64px;
+    padding: 8px 4px;
+    background: #5B1826;
+    z-index: 21;
+}
+
+.dashboard-page #menuToggle {
+    position: relative;
+    z-index: 23;
+    background: #5B1826;
+}
+
+.dashboard-page .sidebar-quick-icons {
+    position: relative;
+    z-index: 22;
+}
+
+.dashboard-page .dashboard-sidebar {
+    position: absolute;
+    top: 70px;
+    bottom: auto;
+    left: 64px;
+    width: 250px;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    background: #5B1826;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+    transform: translateX(-110%);
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.dashboard-page .dashboard-sidebar.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.dashboard-page .dashboard-sidebar ul {
+    margin: 0;
+    padding: 0;
+    background: #5B1826;
+    list-style: none;
+}
+
+.dashboard-page .dashboard-sidebar li,
+.dashboard-page .dashboard-sidebar a {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 42px;
+    margin: 0;
+}
+
+.dashboard-page .dashboard-sidebar a {
+    display: flex;
+    align-items: center;
+    padding: 10px 14px;
+    border-left: 4px solid transparent;
+    background: #5B1826;
+    color: #fff;
+    text-decoration: none;
+}
+
+.dashboard-page .dashboard-sidebar a.sidebar-close-link {
+    font-weight: 700;
+    border-bottom: 1px solid rgba(255,255,255,.2);
+}
+
+.dashboard-page .dashboard-sidebar a:hover,
+.dashboard-page .dashboard-sidebar a.active {
+    background: #762B3A;
+    border-left-color: #FFD54F;
+}
+
+.dashboard-page .dashboard-support {
+    position: static;
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    margin: 16px 0;
+    padding: 0 18px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .dashboard-page .mobile-menu-strip {
+        width: 52px;
+        padding: 8px 3px;
+    }
+
+    .dashboard-page .dashboard-sidebar {
+        top: 66px;
+        left: 52px;
+        width: min(250px, calc(100vw - 60px));
+    }
+
+    .dashboard-page .dashboard-support {
+        padding: 0 10px;
+    }
+}
