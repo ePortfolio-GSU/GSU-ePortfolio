@@ -1636,3 +1636,31 @@ body.dashboard-page {
         min-height: 40px;
     }
 }
+/* GSU DASHBOARD — SCROLL WITH PAGE CONTENT */
+
+.dashboard-page .dashboard-sidebar {
+    position: absolute;
+    top: 70px;
+    bottom: auto;
+    max-height: none;
+    height: auto;
+}
+
+.dashboard-page .dashboard-support {
+    position: absolute;
+    right: 18px;
+    bottom: 76px;
+}
+
+@media (max-width: 768px) {
+    .dashboard-page .dashboard-sidebar {
+        top: 66px;
+        max-height: none;
+        height: auto;
+    }
+
+    .dashboard-page .dashboard-support {
+        right: 10px;
+        bottom: 66px;
+    }
+}
