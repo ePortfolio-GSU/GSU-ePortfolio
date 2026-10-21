@@ -438,7 +438,6 @@ function loadDashboard(role) {
 }
 
 
-// Build role-specific navigation and quick icons
 function buildSidebar(menuItems) {
     const sidebar = document.getElementById("sidebarMenu");
     const quickIcons = document.getElementById("sidebarQuickIcons");
@@ -451,55 +450,64 @@ function buildSidebar(menuItems) {
         quickIcons.replaceChildren();
     }
 
-    // First sidebar row: Close Menu
+    // Close Menu row
     const closeItem = document.createElement("li");
     const closeLink = document.createElement("a");
 
     closeLink.href = "#";
-    closeLink.textContent = "✕ Close Menu";
     closeLink.className = "sidebar-close-link";
+
+    const closeIcon = document.createElement("span");
+    closeIcon.className = "sidebar-item-icon";
+    closeIcon.textContent = "✕";
+
+    const closeLabel = document.createElement("span");
+    closeLabel.className = "sidebar-item-label";
+    closeLabel.textContent = "Close Menu";
+
+    closeLink.append(closeIcon, closeLabel);
 
     closeLink.addEventListener("click", function (event) {
         event.preventDefault();
 
-        const sidebarPanel =
-            document.getElementById("dashboardSidebar");
-        const menuToggle =
-            document.getElementById("menuToggle");
+        const sidebarPanel = document.getElementById("dashboardSidebar");
+        const menuToggle = document.getElementById("menuToggle");
 
-        if (sidebarPanel) {
-            sidebarPanel.classList.remove("active");
-        }
+        if (sidebarPanel) sidebarPanel.classList.remove("active");
 
         if (menuToggle) {
             menuToggle.setAttribute("aria-expanded", "false");
-            menuToggle.setAttribute(
-                "aria-label",
-                "Open navigation menu"
-            );
+            menuToggle.setAttribute("aria-label", "Open navigation menu");
             menuToggle.textContent = "☰ Menu";
         }
 
         if (quickIcons) {
-            quickIcons.querySelectorAll("button").forEach(
-                function (button) {
-                    button.disabled = true;
-                    button.setAttribute("aria-disabled", "true");
-                }
-            );
+            quickIcons.querySelectorAll("button").forEach(function (button) {
+                button.disabled = true;
+                button.setAttribute("aria-disabled", "true");
+            });
         }
     });
 
     closeItem.appendChild(closeLink);
     sidebar.appendChild(closeItem);
 
-    // Remaining rows correspond to the strip icons
+    // Menu rows and matching quick-strip icons
     menuItems.forEach(function (item) {
         const li = document.createElement("li");
         const link = document.createElement("a");
 
         link.href = "#";
-        link.textContent = item[1];
+
+        const icon = document.createElement("span");
+        icon.className = "sidebar-item-icon";
+        icon.textContent = item[0];
+
+        const label = document.createElement("span");
+        label.className = "sidebar-item-label";
+        label.textContent = item[1];
+
+        link.append(icon, label);
 
         link.addEventListener("click", function (event) {
             event.preventDefault();
@@ -509,22 +517,18 @@ function buildSidebar(menuItems) {
                 return;
             }
 
-            sidebar.querySelectorAll("a").forEach(
-                function (menuLink) {
-                    menuLink.classList.remove("active");
-                }
-            );
+            sidebar.querySelectorAll("a").forEach(function (menuLink) {
+                menuLink.classList.remove("active");
+            });
 
             link.classList.add("active");
 
             if (item[1] === "Dashboard Overview") {
                 const role = sessionStorage.getItem("userRole");
-                const heading =
-                    document.getElementById("dashboardHeading");
+                const heading = document.getElementById("dashboardHeading");
 
                 if (heading && DASHBOARD_ROLES[role]) {
-                    heading.textContent =
-                        DASHBOARD_ROLES[role].title;
+                    heading.textContent = DASHBOARD_ROLES[role].title;
                 }
             } else {
                 alert(
@@ -548,9 +552,7 @@ function buildSidebar(menuItems) {
             iconButton.setAttribute("aria-disabled", "true");
 
             iconButton.addEventListener("click", function () {
-                if (!iconButton.disabled) {
-                    link.click();
-                }
+                if (!iconButton.disabled) link.click();
             });
 
             quickIcons.appendChild(iconButton);
