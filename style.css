@@ -289,79 +289,56 @@ footer {
 
 }
 /* ==========================================================
-   ICT DASHBOARD SIDEBAR
+   ICT DASHBOARD SIDEBAR — ICON AND LABEL ALIGNMENT
 ========================================================== */
 
-.dashboard-sidebar{
-
-    position:fixed;
-
-    top:70px;
-    left:0;
-
-    width:260px;
-    height:calc(100vh - 70px);
-
-    background: #800000;
-
-    border-right:1px solid #E5E7EB;
-
-    overflow-y:auto;
-
-    box-shadow:2px 0 8px rgba(0,0,0,.08);
-
-    z-index:900;
-
+.dashboard-sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 12px 0;
 }
 
-.dashboard-sidebar ul{
-
-    list-style:none;
-
-    margin:0;
-
-    padding:20px 0;
-
+.dashboard-sidebar li {
+    margin: 0;
+    padding: 0;
 }
 
-.dashboard-sidebar li{
-
-    margin:0;
-
-    padding:0;
-
-}
-
-.dashboard-sidebar a{
-
-    display:block;
-
-    padding:14px 22px;
-
-    color:#ffffff;
-
-    text-decoration:none;
-
-    font-weight:600;
-
-    transition:.25s;
-
+.dashboard-sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 48px;
+    padding: 12px 18px;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 600;
+    line-height: 1.4;
+    transition: background 0.25s;
 }
 
 .dashboard-sidebar a:hover {
     background: #600000;
     color: #ffffff;
     border-left: 4px solid #FFD54F;
+    padding-left: 14px;
 }
 
-.dashboard-sidebar a.active{
+.dashboard-sidebar a.active {
+    background: #0B57D0;
+    color: #ffffff;
+    border-left: 4px solid #FFD54F;
+    padding-left: 14px;
+}
 
-    background:#0B57D0;
-
-    color:#ffffff;
-
-    border-left:4px solid #FFD54F;
-
+/* Keep icons consistently aligned */
+.dashboard-sidebar a > i,
+.dashboard-sidebar a > svg,
+.dashboard-sidebar a > .icon {
+    flex: 0 0 20px;
+    width: 20px;
+    text-align: center;
 }
 /* ==========================================================
    ICT DASHBOARD MAIN CONTENT
