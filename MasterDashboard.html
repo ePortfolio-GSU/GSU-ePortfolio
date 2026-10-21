@@ -1,121 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>GSU Embakasi Academy ePortfolio Portal</title>
-<link rel="stylesheet" href="style.css">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B57D0">
+    <title>GSU Embakasi Academy | ePortfolio</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-
-<body>
+<body class="dashboard-page">
 
 <div class="dashboard-wrapper">
 
-    <!-- Header -->
-
     <header class="dashboard-header">
-
-    <div class="dashboard-logo">
-
-        <img src="GSU Logo.png" alt="GSU Logo">
-
-        <div class="dashboard-title">
-
-            <h2 id="schoolName">GSU Embakasi Academy</h2>
-
-            <p id="dashboardTitle">ePortfolio Management System</p>
-
+        <div class="dashboard-logo">
+            <img src="GSU Logo.png" alt="GSU Embakasi Academy logo">
         </div>
 
+        <div class="dashboard-user-area">
+            <span id="currentUser">Welcome</span>
+
+            <button id="notificationBtn" class="header-icon"
+                    type="button" aria-label="Notifications"
+                    title="Notifications">🔔</button>
+
+            <div class="profile-dropdown">
+                <button id="profileBtn" class="header-icon"
+                        type="button" aria-label="Profile menu"
+                        aria-expanded="false" aria-controls="profileMenu">
+                    👤
+                </button>
+
+                <div id="profileMenu" class="profile-menu" hidden>
+                    <button id="myProfileBtn" type="button">My Profile</button>
+                    <button id="logoutBtn" type="button">Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="mobile-menu-strip">
+        <button id="menuToggle" type="button"
+                aria-label="Open navigation menu"
+                aria-controls="sidebarMenu"
+                aria-expanded="false">☰ Menu</button>
     </div>
 
-    <div class="dashboard-user-area">
-
-        <span id="currentUser">
-            Welcome
-        </span>
-
-        <button id="notificationBtn" title="Notifications">
-            🔔
-        </button>
-
-        <div class="profile-dropdown">
-    <button id="profileBtn" type="button" title="Profile">
-        👤
-    </button>
-
-    <div id="profileMenu" hidden>
-        <button id="myProfileBtn" type="button">My Profile</button>
-        <button id="logoutBtn" type="button" onclick="logoutUser()">Logout</button>
-    </div>
-</div>
-
-    </div>
-
-</header>
-
-
-    <!-- Sidebar -->
-<div class="mobile-menu-strip">
-    <button id="menuToggle"
-            type="button"
-            aria-label="Open navigation menu"
-            aria-controls="sidebarMenu"
-            aria-expanded="false">
-        ☰ Menu
-    </button>
-</div>
-    <aside class="dashboard-sidebar">
-
-    <ul id="sidebarMenu">
-
-    </ul>
-
-</aside>
-
-
-    <!-- Main Content -->
+    <aside class="dashboard-sidebar" id="dashboardSidebar"
+           aria-label="Dashboard navigation">
+        <ul id="sidebarMenu"></ul>
+    </aside>
 
     <main class="dashboard-main">
+        <div class="dashboard-content">
 
-       <div class="dashboard-content">
+            <div class="dashboard-breadcrumb">
+                <span>Home</span>
+            </div>
 
-    <div class="dashboard-breadcrumb">
-        Home / Dashboard Overview
-    </div>
+            <h1 class="dashboard-section-title"
+                id="dashboardHeading">Dashboard</h1>
 
-    <h1 class="dashboard-section-title"
-    id="dashboardHeading">
+            <section class="dashboard-welcome" aria-live="polite">
+                <h2 id="welcomeHeading">Welcome</h2>
+                <p id="welcomeMessage">
+                    Welcome to the GSU Embakasi Academy ePortfolio Management System.
+                </p>
+            </section>
 
-    Dashboard
+            <div id="dashboardCards"></div>
+            <div id="dashboardWorkspace"></div>
+            <div id="dashboardActivity"></div>
 
-</h1>
-
-    <div id="dashboardCards">
-
-    </div>
-<div id="dashboardWorkspace">
-
-</div>
-    <div id="dashboardActivity">
-
-    </div>
-
-</div>
-
+        </div>
     </main>
 
+    <footer class="dashboard-footer">
+        <div>©2026 GSU Embakasi Academy</div>
+        <div>All Rights Reserved.</div>
+    </footer>
+
 </div>
 
-
-<footer class="dashboard-footer">
-
-</footer>
+<div class="dashboard-support" aria-label="Support">
+    <button id="chatBtn" type="button">CHAT</button>
+    <button id="helpBtn" type="button">Help</button>
+</div>
 
 <script src="script.js"></script>
 
@@ -126,12 +95,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!user || !role) {
         alert("Your session has expired. Please login again.");
-        window.location.href = "index.html";
+        window.location.replace("index.html");
         return;
     }
 
-    initializeDashboard();
-    console.log("Master Dashboard Initialized");
+    if (typeof initializeDashboard === "function") {
+        initializeDashboard();
+    }
 });
 </script>
 
