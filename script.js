@@ -456,7 +456,7 @@ function buildSidebar(menuItems) {
         const link = document.createElement("a");
 
         link.href = "#";
-        link.textContent = item[0] + " " + item[1];
+       link.textContent = item[1];
 
         link.addEventListener("click", function (event) {
             event.preventDefault();
