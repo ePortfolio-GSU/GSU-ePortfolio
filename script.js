@@ -194,213 +194,93 @@ function logoutUser() {
         window.location.href = "index.html";
     }
 }
-// ======================================================
-// MASTER DASHBOARD ROLE ENGINE
-// ======================================================
-document.addEventListener("DOMContentLoaded", function () {
-    const menuToggle = document.getElementById("menuToggle");
-    const sidebar = document.querySelector(".dashboard-sidebar");
+// =====================================================
+// GSU E-PORTFOLIO — MASTER DASHBOARD ENGINE
+// Five roles, one shared dashboard
+// =====================================================
 
-    if (!menuToggle || !sidebar) return;
+const DASHBOARD_ROLES = {
+    ICT_ADMIN: {
+        title: "ICT ADMIN DASHBOARD",
+        welcome: "Welcome to the ICT System Administrator Portal.",
+        menu: [
+            ["🏠", "Dashboard Overview"],
+            ["👥", "User Management"],
+            ["🏫", "School Administration"],
+            ["🎓", "Academic Management"],
+            ["📁", "Portfolio Management"],
+            ["🔒", "Security Centre"],
+            ["📋", "Audit Logs"],
+            ["📊", "Reports & Analytics"],
+            ["⚙️", "System Settings"],
+            ["💾", "Backup & Recovery"],
+            ["🚪", "Logout", "logout"]
+        ]
+    },
 
-    menuToggle.addEventListener("click", function () {
-        const isOpen = sidebar.classList.toggle("active");
+    SCHOOL_ADMIN: {
+        title: "SCHOOL ADMIN DASHBOARD",
+        welcome: "Welcome to the School Administration Portal.",
+        menu: [
+            ["🏠", "Dashboard Overview"],
+            ["🎓", "Learners"],
+            ["👩‍🏫", "Teachers"],
+            ["🏫", "Classes & Subjects"],
+            ["📝", "Academic Records"],
+            ["📁", "Portfolios"],
+            ["📊", "Reports"],
+            ["⚙️", "Settings"],
+            ["🚪", "Logout", "logout"]
+        ]
+    },
 
-        menuToggle.setAttribute("aria-expanded", String(isOpen));
-        menuToggle.textContent = isOpen ? "✕ Close Menu" : "☰ Menu";
-    });
-});
-function initializeDashboard(){
+    TEACHER: {
+        title: "TEACHER DASHBOARD",
+        welcome: "Welcome to your teaching and learner progress workspace.",
+        menu: [
+            ["🏠", "Dashboard Overview"],
+            ["🏫", "My Classes"],
+            ["👥", "Learners"],
+            ["📝", "Assessments"],
+            ["📁", "Portfolios"],
+            ["📊", "Reports"],
+            ["👤", "My Profile"],
+            ["🚪", "Logout", "logout"]
+        ]
+    },
 
-    const user = sessionStorage.getItem("loggedUser");
-    const role = sessionStorage.getItem("userRole");
+    LEARNER: {
+        title: "LEARNER DASHBOARD",
+        welcome: "Welcome to your personal learning portfolio.",
+        menu: [
+            ["🏠", "Dashboard Overview"],
+            ["📁", "My Portfolio"],
+            ["📝", "My Assessments"],
+            ["📚", "Learning Resources"],
+            ["🏆", "Achievements"],
+            ["👤", "My Profile"],
+            ["🚪", "Logout", "logout"]
+        ]
+    },
 
-    if(!user || !role){
-
-        alert("Session expired. Please login again.");
-
-        window.location.href = "index.html";
-
-        return;
-
+    PARENT: {
+        title: "PARENT DASHBOARD",
+        welcome: "Welcome to the parent and guardian portal.",
+        menu: [
+            ["🏠", "Dashboard Overview"],
+            ["👨‍👩‍👧", "My Children"],
+            ["📈", "Academic Progress"],
+            ["📁", "Portfolios"],
+            ["📅", "Attendance"],
+            ["💬", "Messages"],
+            ["👤", "My Profile"],
+            ["🚪", "Logout", "logout"]
+        ]
     }
+};
 
-    document.getElementById("currentUser").textContent = "Welcome, " + user;
 
-    loadDashboard(role);
-
-}
-// ======================================================
-// LOAD ROLE-BASED DASHBOARD
-// ======================================================
-
-function loadDashboard(role){
-
-    switch(role){
-
-        case "ICT_ADMIN":
-
-            document.getElementById("dashboardTitle").textContent =
-            "ICT System Administrator Dashboard";
-
-            loadICTDashboard();
-
-            break;
-
-        case "SCHOOL_ADMIN":
-
-            document.getElementById("dashboardTitle").textContent =
-            "School Administrator Dashboard";
-
-            loadSchoolAdminDashboard();
-
-            break;
-
-        case "TEACHER":
-
-            document.getElementById("dashboardTitle").textContent =
-            "Teacher Dashboard";
-
-            loadTeacherDashboard();
-
-            break;
-
-        case "LEARNER":
-
-            document.getElementById("dashboardTitle").textContent =
-            "Learner Dashboard";
-
-            loadLearnerDashboard();
-
-            break;
-
-        case "PARENT":
-
-            document.getElementById("dashboardTitle").textContent =
-            "Parent Dashboard";
-
-            loadParentDashboard();
-
-            break;
-
-        default:
-
-            alert("Invalid user role.");
-
-            logoutUser();
-
-    }
-
-}
-// ======================================================
-// ICT SYSTEM ADMINISTRATOR
-// ======================================================
-
-function loadICTDashboard(){
-
-    buildSidebar([
-
-        {icon:"🏠", name:"Dashboard Overview", link:"#"},
-        {icon:"👥", name:"User Management", link:"#"},
-        {icon:"🏫", name:"School Administration", link:"#"},
-        {icon:"🎓", name:"Academic Management", link:"#"},
-        {icon:"📁", name:"Portfolio Management", link:"#"},
-        {icon:"🔒", name:"Security Centre", link:"#"},
-        {icon:"📋", name:"Audit Logs", link:"#"},
-        {icon:"📊", name:"Reports & Analytics", link:"#"},
-        {icon:"⚙", name:"System Settings", link:"#"},
-        {icon:"💾", name:"Backup & Recovery", link:"#"},
-        {icon:"🚪", name:"Logout", link:"#", action:"logout"}
-
-    ]);
-
-    document.getElementById("dashboardHeading").textContent =
-    "ICT System Administrator Dashboard";
-
-}
-// ======================================================
-// SCHOOL ADMINISTRATOR
-// ======================================================
-
-function loadSchoolAdminDashboard(){
-
-    console.log("School Administrator Dashboard Loaded");
-
-}
-// ======================================================
-// TEACHER
-// ======================================================
-
-function loadTeacherDashboard(){
-
-    console.log("Teacher Dashboard Loaded");
-
-}
-// ======================================================
-// LEARNER
-// ======================================================
-
-function loadLearnerDashboard(){
-
-    console.log("Learner Dashboard Loaded");
-
-}
-// ======================================================
-// PARENT
-// ======================================================
-
-function loadParentDashboard(){
-
-    console.log("Parent Dashboard Loaded");
-
-}
-// ======================================================
-// DYNAMIC SIDEBAR GENERATOR
-// ======================================================
-
-function buildSidebar(menuItems) {
-    const sidebar = document.getElementById("sidebarMenu");
-    if (!sidebar) return;
-
-    sidebar.innerHTML = "";
-
-    menuItems.forEach(function(item) {
-        const li = document.createElement("li");
-        const link = document.createElement("a");
-
-        link.href = item.link || "#";
-        link.textContent = item.icon + " " + item.name;
-
-        link.addEventListener("click", function(event) {
-            event.preventDefault();
-
-            if (item.action === "logout") {
-                logoutUser();
-                return;
-            }
-
-            if (typeof item.onClick === "function") {
-                item.onClick();
-                return;
-            }
-
-            if (item.link && item.link !== "#") {
-                window.location.href = item.link;
-                return;
-            }
-
-            console.log("Dashboard section selected:", item.name);
-        });
-
-        li.appendChild(link);
-        sidebar.appendChild(li);
-    });
-}
-/* =====================================================
-   GSU MASTER DASHBOARD — INTERFACE CONTROLS
-   Add at the bottom of script.js
-===================================================== */
-
+// Initialize dashboard after the page loads
 document.addEventListener("DOMContentLoaded", function () {
     const sidebar = document.getElementById("dashboardSidebar");
     const menuToggle = document.getElementById("menuToggle");
@@ -412,16 +292,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const helpBtn = document.getElementById("helpBtn");
 
     if (sidebar && menuToggle) {
-        function setMenuOpen(open) {
-            sidebar.classList.toggle("active", open);
-            menuToggle.setAttribute("aria-expanded", String(open));
-            menuToggle.setAttribute(
-                "aria-label",
-                open ? "Close navigation menu" : "Open navigation menu"
-            );
-            menuToggle.textContent = open ? "✕ Close" : "☰ Menu";
-        }
-
         setMenuOpen(false);
 
         menuToggle.addEventListener("click", function () {
@@ -429,21 +299,24 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         sidebar.addEventListener("click", function (event) {
-            if (event.target.closest("a") &&
-                window.matchMedia("(max-width: 768px)").matches) {
-                setMenuOpen(false);
-            }
-        });
+            const link = event.target.closest("a");
 
-        document.addEventListener("keydown", function (event) {
-            if (event.key === "Escape") {
+            if (link && window.matchMedia("(max-width: 768px)").matches) {
                 setMenuOpen(false);
-                if (profileMenu) profileMenu.hidden = true;
-                if (profileBtn) {
-                    profileBtn.setAttribute("aria-expanded", "false");
-                }
             }
         });
+    }
+
+    function setMenuOpen(open) {
+        if (!sidebar || !menuToggle) return;
+
+        sidebar.classList.toggle("active", open);
+        menuToggle.setAttribute("aria-expanded", String(open));
+        menuToggle.setAttribute(
+            "aria-label",
+            open ? "Close navigation menu" : "Open navigation menu"
+        );
+        menuToggle.textContent = open ? "✕ Close" : "☰ Menu";
     }
 
     if (profileBtn && profileMenu) {
@@ -464,26 +337,143 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            setMenuOpen(false);
+
+            if (profileMenu) profileMenu.hidden = true;
+            if (profileBtn) {
+                profileBtn.setAttribute("aria-expanded", "false");
+            }
+        }
+    });
+
     if (logoutBtn) {
         logoutBtn.addEventListener("click", logoutUser);
     }
 
     if (myProfileBtn) {
         myProfileBtn.addEventListener("click", function () {
-            if (profileMenu) profileMenu.hidden = true;
-            alert("My Profile: profile page integration is not yet configured.");
+            alert("My Profile page has not yet been connected.");
         });
     }
 
     if (chatBtn) {
         chatBtn.addEventListener("click", function () {
-            alert("Chat support is not yet configured.");
+            alert("Chat support has not yet been connected.");
         });
     }
 
     if (helpBtn) {
         helpBtn.addEventListener("click", function () {
-            alert("Help content is not yet configured.");
+            alert("Help content has not yet been connected.");
         });
     }
+
+    initializeDashboard();
 });
+
+
+// Check session and load the correct role
+function initializeDashboard() {
+    const user = sessionStorage.getItem("loggedUser");
+    const role = sessionStorage.getItem("userRole");
+
+    if (!user || !role || !DASHBOARD_ROLES[role]) {
+        alert("Your session is invalid or has expired. Please log in again.");
+        sessionStorage.clear();
+        window.location.replace("index.html");
+        return;
+    }
+
+    const currentUser = document.getElementById("currentUser");
+    if (currentUser) {
+        currentUser.textContent = "Welcome, " + user;
+    }
+
+    loadDashboard(role);
+}
+
+
+// Generate the shared dashboard for the assigned role
+function loadDashboard(role) {
+    const config = DASHBOARD_ROLES[role];
+
+    if (!config) {
+        alert("Invalid user role. Please log in again.");
+        sessionStorage.clear();
+        window.location.replace("index.html");
+        return;
+    }
+
+    const heading = document.getElementById("dashboardHeading");
+    const welcomeHeading = document.getElementById("welcomeHeading");
+    const welcomeMessage = document.getElementById("welcomeMessage");
+
+    if (heading) heading.textContent = config.title;
+
+    if (welcomeHeading) {
+        welcomeHeading.textContent =
+            "Welcome, " + sessionStorage.getItem("loggedUser");
+    }
+
+    if (welcomeMessage) {
+        welcomeMessage.textContent = config.welcome;
+    }
+
+    buildSidebar(config.menu);
+}
+
+
+// Build role-specific navigation
+function buildSidebar(menuItems) {
+    const sidebar = document.getElementById("sidebarMenu");
+    if (!sidebar) return;
+
+    sidebar.replaceChildren();
+
+    menuItems.forEach(function (item) {
+        const li = document.createElement("li");
+        const link = document.createElement("a");
+
+        link.href = "#";
+        link.textContent = item[0] + " " + item[1];
+
+        if (item[2] === "logout") {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+                logoutUser();
+            });
+        } else {
+            link.addEventListener("click", function (event) {
+                event.preventDefault();
+
+                sidebar.querySelectorAll("a").forEach(function (menuLink) {
+                    menuLink.classList.remove("active");
+                });
+
+                link.classList.add("active");
+
+                if (item[1] === "Dashboard Overview") {
+                    const heading =
+                        document.getElementById("dashboardHeading");
+
+                    if (heading) {
+                        heading.textContent =
+                            DASHBOARD_ROLES[
+                                sessionStorage.getItem("userRole")
+                            ].title;
+                    }
+                } else {
+                    alert(
+                        item[1] +
+                        " is listed in the menu but its page is not yet connected."
+                    );
+                }
+            });
+        }
+
+        li.appendChild(link);
+        sidebar.appendChild(li);
+    });
+}
