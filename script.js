@@ -396,3 +396,94 @@ function buildSidebar(menuItems) {
         sidebar.appendChild(li);
     });
 }
+/* =====================================================
+   GSU MASTER DASHBOARD — INTERFACE CONTROLS
+   Add at the bottom of script.js
+===================================================== */
+
+document.addEventListener("DOMContentLoaded", function () {
+    const sidebar = document.getElementById("dashboardSidebar");
+    const menuToggle = document.getElementById("menuToggle");
+    const profileBtn = document.getElementById("profileBtn");
+    const profileMenu = document.getElementById("profileMenu");
+    const myProfileBtn = document.getElementById("myProfileBtn");
+    const logoutBtn = document.getElementById("logoutBtn");
+    const chatBtn = document.getElementById("chatBtn");
+    const helpBtn = document.getElementById("helpBtn");
+
+    if (sidebar && menuToggle) {
+        function setMenuOpen(open) {
+            sidebar.classList.toggle("active", open);
+            menuToggle.setAttribute("aria-expanded", String(open));
+            menuToggle.setAttribute(
+                "aria-label",
+                open ? "Close navigation menu" : "Open navigation menu"
+            );
+            menuToggle.textContent = open ? "✕ Close" : "☰ Menu";
+        }
+
+        setMenuOpen(false);
+
+        menuToggle.addEventListener("click", function () {
+            setMenuOpen(!sidebar.classList.contains("active"));
+        });
+
+        sidebar.addEventListener("click", function (event) {
+            if (event.target.closest("a") &&
+                window.matchMedia("(max-width: 768px)").matches) {
+                setMenuOpen(false);
+            }
+        });
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                setMenuOpen(false);
+                if (profileMenu) profileMenu.hidden = true;
+                if (profileBtn) {
+                    profileBtn.setAttribute("aria-expanded", "false");
+                }
+            }
+        });
+    }
+
+    if (profileBtn && profileMenu) {
+        profileBtn.addEventListener("click", function (event) {
+            event.stopPropagation();
+            profileMenu.hidden = !profileMenu.hidden;
+            profileBtn.setAttribute(
+                "aria-expanded",
+                String(!profileMenu.hidden)
+            );
+        });
+
+        document.addEventListener("click", function (event) {
+            if (!event.target.closest(".profile-dropdown")) {
+                profileMenu.hidden = true;
+                profileBtn.setAttribute("aria-expanded", "false");
+            }
+        });
+    }
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener("click", logoutUser);
+    }
+
+    if (myProfileBtn) {
+        myProfileBtn.addEventListener("click", function () {
+            if (profileMenu) profileMenu.hidden = true;
+            alert("My Profile: profile page integration is not yet configured.");
+        });
+    }
+
+    if (chatBtn) {
+        chatBtn.addEventListener("click", function () {
+            alert("Chat support is not yet configured.");
+        });
+    }
+
+    if (helpBtn) {
+        helpBtn.addEventListener("click", function () {
+            alert("Help content is not yet configured.");
+        });
+    }
+});
