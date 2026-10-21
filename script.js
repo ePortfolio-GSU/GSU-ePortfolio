@@ -308,16 +308,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function setMenuOpen(open) {
-        if (!sidebar || !menuToggle) return;
+    const sidebar = document.getElementById("dashboardSidebar");
+    const menuToggle = document.getElementById("menuToggle");
 
-        sidebar.classList.toggle("active", open);
-        menuToggle.setAttribute("aria-expanded", String(open));
-        menuToggle.setAttribute(
-            "aria-label",
-            open ? "Close navigation menu" : "Open navigation menu"
-        );
-        menuToggle.textContent = open ? "✕ Close" : "☰ Menu";
-    }
+    if (!sidebar || !menuToggle) return;
+
+    sidebar.classList.toggle("active", open);
+    menuToggle.setAttribute("aria-expanded", String(open));
+    menuToggle.setAttribute(
+        "aria-label",
+        open ? "Close navigation menu" : "Open navigation menu"
+    );
+    menuToggle.textContent = open ? "✕ Close" : "☰ Menu";
+
+    const quickIcons = document.querySelectorAll(
+        "#sidebarQuickIcons button"
+    );
+
+    quickIcons.forEach(function (button) {
+        button.disabled = !open;
+        button.setAttribute("aria-disabled", String(!open));
+    });
+}
 
     if (profileBtn && profileMenu) {
         profileBtn.addEventListener("click", function (event) {
