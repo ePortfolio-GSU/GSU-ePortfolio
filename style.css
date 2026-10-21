@@ -1777,30 +1777,39 @@ body.dashboard-page {
         padding: 0 10px;
     }
 }
-/* MATCH SIDEBAR PANEL HEIGHT TO THE MAROON STRIP */
-
-.dashboard-page .dashboard-wrapper {
-    position: relative;
-}
+/* GSU FIX — SIDEBAR AND MAROON STRIP SHARE ONE HEIGHT */
 
 .dashboard-page .mobile-menu-strip {
+    position: relative;
     align-self: stretch;
     min-height: 100%;
+    overflow: visible;
+    background: #5B1826;
+    z-index: 21;
 }
 
 .dashboard-page .dashboard-sidebar {
     position: absolute;
-    top: 70px;
+    top: 0;
     bottom: 0;
-    left: 64px;
+    left: 100%;
+    width: 250px;
     height: auto;
     max-height: none;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
-    overflow-y: auto;
     overflow-x: hidden;
+    overflow-y: auto;
     background: #5B1826;
+    border: 0;
     border-radius: 0;
     box-shadow: none;
+    transform: translateX(-110%);
+    visibility: hidden;
+    pointer-events: none;
+    transition: transform .22s ease, visibility .22s ease;
+    z-index: 20;
 }
 
 .dashboard-page .dashboard-sidebar.active {
@@ -1811,7 +1820,6 @@ body.dashboard-page {
 
 @media (max-width: 768px) {
     .dashboard-page .dashboard-sidebar {
-        top: 66px;
-        left: 52px;
+        width: min(250px, calc(100vw - 52px));
     }
 }
