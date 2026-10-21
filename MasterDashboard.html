@@ -44,13 +44,16 @@
             🔔
         </button>
 
-        <button id="profileBtn" title="Profile">
-            👤
-        </button>
+        <div class="profile-dropdown">
+    <button id="profileBtn" type="button" title="Profile">
+        👤
+    </button>
 
-        <button id="logoutBtn" title="Logout" onclick="logoutUser()">
-    Logout
-</button>
+    <div id="profileMenu" hidden>
+        <button id="myProfileBtn" type="button">My Profile</button>
+        <button id="logoutBtn" type="button" onclick="logoutUser()">Logout</button>
+    </div>
+</div>
 
     </div>
 
