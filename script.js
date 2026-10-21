@@ -389,7 +389,7 @@ function initializeDashboard() {
 
     const currentUser = document.getElementById("currentUser");
     if (currentUser) {
-        currentUser.textContent = "Welcome, " + user;
+        currentUser.textContent = "Hi, " + user;
     }
 
     loadDashboard(role);
