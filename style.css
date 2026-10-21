@@ -1491,3 +1491,59 @@ body.dashboard-page {
         min-height: 48px;
     }
 }
+/* FIX: SIDEBAR EXTENDS FROM STRIP WITHOUT RUNNING BELOW FOOTER */
+
+.dashboard-page .dashboard-wrapper {
+    position: relative;
+    isolation: isolate;
+}
+
+.dashboard-page .dashboard-sidebar {
+    position: absolute;
+    top: 70px;
+    bottom: auto;
+    left: 64px;
+    width: 250px;
+    height: auto;
+    max-height: calc(100vh - 150px);
+    max-height: calc(100dvh - 150px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background: #5B1826;
+    border-radius: 0 0 8px 0;
+    box-shadow: 3px 4px 12px rgba(0, 0, 0, 0.18);
+    transform: translateX(-110%);
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.dashboard-page .dashboard-sidebar.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.dashboard-page .dashboard-sidebar ul {
+    padding: 0;
+    margin: 0;
+}
+
+.dashboard-page .dashboard-sidebar li,
+.dashboard-page .dashboard-sidebar a {
+    min-height: 44px;
+    box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+    .dashboard-page .dashboard-sidebar {
+        top: 66px;
+        left: 52px;
+        width: min(250px, calc(100vw - 60px));
+        max-height: calc(100vh - 136px);
+        max-height: calc(100dvh - 136px);
+    }
+}
