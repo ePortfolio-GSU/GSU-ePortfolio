@@ -1814,3 +1814,13 @@ flex: 1 1 auto;
 min-width: 0;
 text-align: left;
    }
+
+/* GSU EPORTFOLIO — GLOBAL FONT STANDARD */
+
+html,
+body,
+body *,
+body *::before,
+body *::after {
+    font-family: Arial, Helvetica, sans-serif;
+}
