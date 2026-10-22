@@ -1,0 +1,707 @@
+/* GSU Embakasi Academy dashboard blueprint corrections.
+   Load AFTER style.css and dashboard-layout.css. */
+body.dashboard-page {
+    --dashboard-header-height: 82px;
+    --dashboard-rail-width: 78px;
+    --dashboard-menu-width: 286px;
+    --dashboard-footer-height: 58px;
+    --dashboard-navy: #11102f;
+    --dashboard-header-sky-blue: #87ceeb;
+    --dashboard-maroon: #3f0718;
+    --dashboard-paper: #f5f4f0;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    background: var(--dashboard-paper) !important;
+    color: #18172d !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+body.dashboard-page *,
+body.dashboard-page *::before,
+body.dashboard-page *::after {
+    box-sizing: border-box !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+body.dashboard-page [hidden] { display: none !important; }
+
+/* Header: sky-blue bar, circular school logo, notification and profile at right. */
+body.dashboard-page .dashboard-header {
+    position: fixed !important;
+    inset: 0 0 auto 0 !important;
+    z-index: 1200 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    height: var(--dashboard-header-height) !important;
+    min-height: var(--dashboard-header-height) !important;
+    margin: 0 !important;
+    padding: 8px 14px !important;
+    overflow: visible !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--dashboard-header-sky-blue) !important;
+    color: var(--dashboard-navy) !important;
+    box-shadow: none !important;
+}
+
+body.dashboard-page .dashboard-logo {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+}
+
+body.dashboard-page .dashboard-logo img {
+    display: block !important;
+    flex: 0 0 56px !important;
+    width: 56px !important;
+    height: 56px !important;
+    max-width: 56px !important;
+    margin: 0 !important;
+    padding: 3px !important;
+    border: 2px solid #fff !important;
+    border-radius: 50% !important;
+    background: #f8f7f3 !important;
+    object-fit: contain !important;
+}
+
+body.dashboard-page .dashboard-user-area {
+    display: grid !important;
+    flex: 0 1 auto !important;
+    grid-template-columns: 36px minmax(76px, clamp(76px, 25vw, 145px)) !important;
+    grid-template-rows: 36px 22px !important;
+    align-items: center !important;
+    justify-items: center !important;
+    column-gap: 9px !important;
+    row-gap: 0 !important;
+    width: max-content !important;
+    max-width: calc(100vw - 92px) !important;
+    min-width: 0 !important;
+    margin: 0 0 0 auto !important;
+    padding: 0 !important;
+}
+
+body.dashboard-page .dashboard-user-area #notificationBtn {
+    grid-column: 1 !important;
+    grid-row: 1 !important;
+}
+
+body.dashboard-page .dashboard-user-area .profile-menu {
+    position: relative !important;
+    display: flex !important;
+    grid-column: 2 !important;
+    grid-row: 1 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+}
+
+body.dashboard-page .dashboard-user-area #currentUser {
+    display: block !important;
+    grid-column: 2 !important;
+    grid-row: 2 !important;
+    justify-self: stretch !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 3px 5px !important;
+    overflow: hidden !important;
+    border: 1px solid rgba(17, 16, 47, .35) !important;
+    background: #f0ede6 !important;
+    color: var(--dashboard-navy) !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+body.dashboard-page .dashboard-user-area #notificationBtn,
+body.dashboard-page .dashboard-user-area #profileBtn {
+    display: inline-flex !important;
+    flex: 0 0 36px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 1px solid rgba(255,255,255,.65) !important;
+    border-radius: 50% !important;
+    background: #f2efe9 !important;
+    color: var(--dashboard-navy) !important;
+    font-size: 19px !important;
+    line-height: 1 !important;
+    box-shadow: none !important;
+}
+
+body.dashboard-page .profile-dropdown {
+    position: absolute !important;
+    top: calc(100% + 8px) !important;
+    right: 0 !important;
+    z-index: 1250 !important;
+    width: 150px !important;
+    padding: 6px !important;
+    border: 1px solid #d4d0c8 !important;
+    border-radius: 5px !important;
+    background: #fff !important;
+    box-shadow: 0 5px 16px rgba(0,0,0,.16) !important;
+}
+
+/* Deep-maroon navigation rail and matching deep-maroon sidebar icon card. */
+body.dashboard-page .mobile-menu-strip {
+    position: fixed !important;
+    top: var(--dashboard-header-height) !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    z-index: 1110 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 6px !important;
+    width: var(--dashboard-rail-width) !important;
+    min-width: var(--dashboard-rail-width) !important;
+    max-width: var(--dashboard-rail-width) !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 7px 5px 10px !important;
+    overflow: hidden !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--dashboard-maroon) !important;
+    box-shadow: none !important;
+}
+
+body.dashboard-page #menuToggle {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 48px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 6px 3px !important;
+    border: 1px solid #c7c4be !important;
+    border-radius: 0 !important;
+    background: #f0eee8 !important;
+    color: var(--dashboard-navy) !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    line-height: 1.15 !important;
+    text-align: center !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    box-shadow: none !important;
+}
+
+body.dashboard-page .sidebar-icon-rail,
+body.dashboard-page .sidebar-quick-icons {
+    display: flex !important;
+    flex: 0 1 auto !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 0 !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    max-height: calc(100% - 54px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    border: 1px solid rgba(255,255,255,.55) !important;
+    background: var(--dashboard-maroon) !important;
+    pointer-events: none !important;
+    user-select: none !important;
+}
+
+body.dashboard-page .sidebar-rail-icon,
+body.dashboard-page .sidebar-quick-icons > * {
+    position: relative !important;
+    display: flex !important;
+    flex: 0 0 44px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: 44px !important;
+    margin: 0 !important;
+    padding: 2px 0 6px !important;
+    color: #fff !important;
+    font-size: 21px !important;
+    line-height: 1 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+}
+
+body.dashboard-page .sidebar-rail-icon::after,
+body.dashboard-page .sidebar-quick-icons > *::after {
+    content: "" !important;
+    position: absolute !important;
+    bottom: 3px !important;
+    left: 50% !important;
+    width: 25px !important;
+    height: 3px !important;
+    transform: translateX(-50%) !important;
+    background: #d6a0ad !important;
+}
+
+/* Expanded panel matches the rail colour so both read as one continuous strip. */
+body.dashboard-page .dashboard-sidebar {
+    position: fixed !important;
+    top: var(--dashboard-header-height) !important;
+    bottom: 0 !important;
+    left: var(--dashboard-rail-width) !important;
+    z-index: 1100 !important;
+    display: block !important;
+    width: 0 !important;
+    max-width: calc(100vw - var(--dashboard-rail-width)) !important;
+    height: auto !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: var(--dashboard-maroon) !important;
+    box-shadow: none !important;
+    pointer-events: none !important;
+    transform: none !important;
+    transition: width .2s ease !important;
+}
+
+body.dashboard-page .dashboard-sidebar.active {
+    width: var(--dashboard-menu-width) !important;
+    pointer-events: auto !important;
+}
+
+body.dashboard-page .dashboard-sidebar ul {
+    display: block !important;
+    width: var(--dashboard-menu-width) !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    padding: 8px 0 16px !important;
+    list-style: none !important;
+    background: var(--dashboard-maroon) !important;
+}
+
+body.dashboard-page .dashboard-sidebar li {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+body.dashboard-page .dashboard-sidebar a {
+    display: flex !important;
+    align-items: center !important;
+    gap: 11px !important;
+    width: 100% !important;
+    min-height: 47px !important;
+    margin: 0 !important;
+    padding: 10px 13px !important;
+    border: 0 !important;
+    border-bottom: 1px solid rgba(255,255,255,.13) !important;
+    border-left: 4px solid transparent !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #fff !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    line-height: 1.25 !important;
+    text-align: left !important;
+    text-decoration: none !important;
+    white-space: normal !important;
+    overflow-wrap: anywhere !important;
+    box-shadow: none !important;
+}
+
+body.dashboard-page .dashboard-sidebar a:hover,
+body.dashboard-page .dashboard-sidebar a.active {
+    border-left-color: #f5d36e !important;
+    background: rgba(255,255,255,.1) !important;
+    color: #fff !important;
+}
+
+body.dashboard-page .dashboard-sidebar .menu-item-icon,
+body.dashboard-page .dashboard-sidebar .sidebar-item-icon {
+    display: inline-flex !important;
+    flex: 0 0 25px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 25px !important;
+    min-width: 25px !important;
+    line-height: 1 !important;
+}
+
+body.dashboard-page .dashboard-sidebar .menu-item-label,
+body.dashboard-page .dashboard-sidebar .sidebar-item-label {
+    display: block !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    text-align: left !important;
+}
+
+body.dashboard-page.menu-open .sidebar-icon-rail,
+body.dashboard-page.menu-open .sidebar-quick-icons {
+    display: none !important;
+}
+
+/* Main well: fit the viewport, centre the title and welcome card. */
+body.dashboard-page .dashboard-wrapper {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: calc(100vh - var(--dashboard-footer-height)) !important;
+    margin: 0 !important;
+    padding: var(--dashboard-header-height) 0 0 var(--dashboard-rail-width) !important;
+    overflow: visible !important;
+    background: var(--dashboard-paper) !important;
+    box-sizing: border-box !important;
+    transition: padding-left .2s ease !important;
+}
+
+body.dashboard-page .dashboard-main {
+    display: flex !important;
+    flex: 1 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: calc(100vh - var(--dashboard-header-height) - var(--dashboard-footer-height)) !important;
+    margin: 0 !important;
+    padding: 16px 24px 10px !important;
+    border-left: 1px solid #292743 !important;
+    border-right: 1px solid #292743 !important;
+    background: var(--dashboard-paper) !important;
+    box-sizing: border-box !important;
+    overflow-wrap: anywhere !important;
+}
+
+body.dashboard-page .dashboard-content {
+    display: flex !important;
+    flex: 1 1 auto !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: calc(100vh - var(--dashboard-header-height) - var(--dashboard-footer-height) - 28px) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+body.dashboard-page .dashboard-breadcrumb {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 0 48px !important;
+    padding: 10px 12px !important;
+    border: 1px solid #2b2944 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: var(--dashboard-navy) !important;
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+    text-align: left !important;
+}
+
+body.dashboard-page .dashboard-section-title {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 0 48px !important;
+    padding: 0 6px !important;
+    color: var(--dashboard-navy) !important;
+    font-size: clamp(19px, 2.7vw, 27px) !important;
+    font-weight: 800 !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    overflow-wrap: anywhere !important;
+}
+
+body.dashboard-page .dashboard-welcome {
+    align-self: center !important;
+    width: min(100%, 600px) !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    min-height: 160px !important;
+    margin: 0 0 18px !important;
+    padding: 12px 14px 18px !important;
+    border: 1px solid #343343 !important;
+    border-radius: 0 !important;
+    border-left: 1px solid #343343 !important;
+    background: transparent !important;
+    color: #1b1a2e !important;
+    box-shadow: none !important;
+    overflow-wrap: anywhere !important;
+}
+
+body.dashboard-page .dashboard-welcome h2 {
+    margin: 0 0 7px !important;
+    color: var(--dashboard-navy) !important;
+    font-size: 19px !important;
+    font-weight: 800 !important;
+    line-height: 1.3 !important;
+    text-align: center !important;
+    overflow-wrap: anywhere !important;
+}
+
+body.dashboard-page .dashboard-welcome p {
+    margin: 0 !important;
+    color: #222131 !important;
+    font-size: 16px !important;
+    line-height: 1.45 !important;
+    text-align: left !important;
+    overflow-wrap: anywhere !important;
+}
+
+body.dashboard-page #dashboardCards,
+body.dashboard-page #dashboardWorkspace,
+body.dashboard-page #dashboardActivity {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
+}
+
+body.dashboard-page #dashboardCards > *,
+body.dashboard-page #dashboardWorkspace > *,
+body.dashboard-page #dashboardActivity > * {
+    max-width: 100% !important;
+    min-width: 0 !important;
+    overflow-wrap: anywhere !important;
+}
+
+/* Keep the support buttons at the base of the main well, above the footer. */
+body.dashboard-page .dashboard-support-buttons {
+    display: flex !important;
+    flex: 0 0 auto !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: auto 0 8px !important;
+    padding: 22px 0 8px !important;
+    background: transparent !important;
+}
+
+body.dashboard-page .dashboard-support-buttons button,
+body.dashboard-page .dashboard-support button {
+    display: inline-flex !important;
+    flex: 0 1 240px !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 9px !important;
+    width: min(240px, 100%) !important;
+    min-width: 0 !important;
+    min-height: 52px !important;
+    margin: 0 !important;
+    padding: 10px 18px !important;
+    border: 0 !important;
+    border-radius: 8px !important;
+    background: #2876cf !important;
+    color: #fff !important;
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    box-shadow: none !important;
+}
+
+body.dashboard-page .dashboard-support-buttons button:hover,
+body.dashboard-page .dashboard-support button:hover {
+    background: #1e63b2 !important;
+}
+
+/* Compatibility for older markup where .dashboard-support is outside the wrapper. */
+body.dashboard-page > .dashboard-support {
+    position: fixed !important;
+    z-index: 850 !important;
+    right: 14px !important;
+    bottom: calc(var(--dashboard-footer-height) + 10px) !important;
+    left: calc(var(--dashboard-rail-width) + 14px) !important;
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 16px !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    pointer-events: auto !important;
+}
+
+body.dashboard-page .dashboard-footer {
+    display: flex !important;
+    flex: 0 0 var(--dashboard-footer-height) !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 2px !important;
+    width: calc(100% - var(--dashboard-rail-width)) !important;
+    max-width: calc(100% - var(--dashboard-rail-width)) !important;
+    min-width: 0 !important;
+    min-height: var(--dashboard-footer-height) !important;
+    height: auto !important;
+    margin: 0 0 0 var(--dashboard-rail-width) !important;
+    padding: 7px 10px !important;
+    border: 1px solid #292743 !important;
+    border-bottom: 0 !important;
+    border-radius: 0 !important;
+    background: var(--dashboard-paper) !important;
+    color: #302f3c !important;
+    font-size: 12px !important;
+    line-height: 1.2 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+}
+
+body.dashboard-page .dashboard-footer p { margin: 0 !important; }
+
+/* Panels remain accessible above the footer and below the header. */
+body.dashboard-page .utility-panel {
+    position: fixed !important;
+    z-index: 1250 !important;
+    top: calc(var(--dashboard-header-height) + 10px) !important;
+    right: 14px !important;
+    width: min(300px, calc(100vw - 28px)) !important;
+    max-width: calc(100vw - 28px) !important;
+    padding: 15px !important;
+    border: 1px solid #d2cfd0 !important;
+    border-radius: 7px !important;
+    background: #fff !important;
+    color: #222 !important;
+    box-shadow: 0 5px 18px rgba(0,0,0,.18) !important;
+}
+
+body.dashboard-page .support-panel {
+    top: auto !important;
+    bottom: calc(var(--dashboard-footer-height) + 72px) !important;
+}
+
+body.dashboard-page .panel-close {
+    margin-top: 12px !important;
+    padding: 7px 12px !important;
+    border: 0 !important;
+    border-radius: 5px !important;
+    background: var(--dashboard-maroon) !important;
+    color: #fff !important;
+}
+
+/* The expanded desktop menu makes room for the dashboard instead of covering it. */
+@media (min-width: 769px) {
+    body.dashboard-page.menu-open .dashboard-wrapper {
+        padding-left: calc(var(--dashboard-rail-width) + var(--dashboard-menu-width)) !important;
+    }
+    body.dashboard-page.menu-open .dashboard-footer {
+        width: calc(100% - var(--dashboard-rail-width) - var(--dashboard-menu-width)) !important;
+        max-width: calc(100% - var(--dashboard-rail-width) - var(--dashboard-menu-width)) !important;
+        margin-left: calc(var(--dashboard-rail-width) + var(--dashboard-menu-width)) !important;
+    }
+    body.dashboard-page.menu-open > .dashboard-support {
+        left: calc(var(--dashboard-rail-width) + var(--dashboard-menu-width) + 14px) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    body.dashboard-page {
+        --dashboard-header-height: 76px;
+        --dashboard-rail-width: 68px;
+        --dashboard-menu-width: min(270px, calc(100vw - var(--dashboard-rail-width)));
+        --dashboard-footer-height: 54px;
+    }
+    body.dashboard-page .dashboard-header { gap: 7px !important; padding: 6px 8px !important; }
+    body.dashboard-page .dashboard-logo img {
+        flex-basis: 46px !important;
+        width: 46px !important;
+        height: 46px !important;
+        max-width: 46px !important;
+    }
+    body.dashboard-page .dashboard-user-area {
+        grid-template-columns: 32px minmax(72px, clamp(72px, 25vw, 120px)) !important;
+        grid-template-rows: 32px 20px !important;
+        column-gap: 6px !important;
+        max-width: calc(100vw - 72px) !important;
+    }
+    body.dashboard-page .dashboard-user-area #notificationBtn,
+    body.dashboard-page .dashboard-user-area #profileBtn {
+        flex-basis: 32px !important;
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        font-size: 17px !important;
+    }
+    body.dashboard-page .dashboard-user-area #currentUser { font-size: 9px !important; padding: 2px 3px !important; }
+    body.dashboard-page .mobile-menu-strip { padding: 7px 4px 9px !important; }
+    body.dashboard-page #menuToggle { min-height: 44px !important; font-size: 10px !important; }
+    body.dashboard-page .sidebar-rail-icon,
+    body.dashboard-page .sidebar-quick-icons > * { flex-basis: 41px !important; min-height: 41px !important; font-size: 19px !important; }
+    body.dashboard-page .dashboard-main {
+        min-height: calc(100vh - var(--dashboard-header-height) - var(--dashboard-footer-height)) !important;
+        padding: 12px 10px 8px !important;
+    }
+    body.dashboard-page .dashboard-content { min-height: calc(100vh - var(--dashboard-header-height) - var(--dashboard-footer-height) - 20px) !important; }
+    body.dashboard-page .dashboard-breadcrumb { margin-bottom: 25px !important; padding: 9px 10px !important; font-size: 13px !important; }
+    body.dashboard-page .dashboard-section-title { margin-bottom: 28px !important; font-size: clamp(18px, 5vw, 22px) !important; }
+    body.dashboard-page .dashboard-welcome { min-height: 140px !important; padding: 12px 11px 16px !important; }
+    body.dashboard-page .dashboard-welcome h2 { font-size: 16px !important; }
+    body.dashboard-page .dashboard-welcome p { font-size: 14px !important; }
+    body.dashboard-page .dashboard-support-buttons { gap: 10px !important; padding-top: 20px !important; }
+    body.dashboard-page .dashboard-support-buttons button,
+    body.dashboard-page .dashboard-support button { flex-basis: 145px !important; min-height: 46px !important; padding: 9px 10px !important; font-size: 14px !important; }
+    body.dashboard-page .dashboard-footer { padding: 6px 8px !important; font-size: 11px !important; }
+    body.dashboard-page.menu-open .sidebar-icon-rail,
+    body.dashboard-page.menu-open .sidebar-quick-icons { display: none !important; }
+}
+
+@media (max-width: 360px) {
+    body.dashboard-page .dashboard-logo img {
+        flex-basis: 40px !important;
+        width: 40px !important;
+        height: 40px !important;
+        max-width: 40px !important;
+    }
+    body.dashboard-page .dashboard-user-area {
+        grid-template-columns: 29px minmax(66px, 84px) !important;
+        column-gap: 5px !important;
+    }
+    body.dashboard-page .dashboard-user-area #notificationBtn,
+    body.dashboard-page .dashboard-user-area #profileBtn {
+        flex-basis: 29px !important;
+        width: 29px !important;
+        height: 29px !important;
+        min-width: 29px !important;
+    }
+    body.dashboard-page .dashboard-main { padding-right: 8px !important; padding-left: 8px !important; }
+    body.dashboard-page .dashboard-support-buttons { gap: 8px !important; }
+    body.dashboard-page .dashboard-support-buttons button { flex: 1 1 110px !important; }
+}
