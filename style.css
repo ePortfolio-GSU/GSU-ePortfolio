@@ -1815,6 +1815,49 @@ min-width: 0;
 text-align: left;
    }
 
+/* GSU DASHBOARD — SIDEBAR POSITIONING FIX */
+
+.dashboard-page .mobile-menu-strip {
+    position: relative;
+    align-self: stretch;
+    min-height: 100%;
+    overflow: visible;
+}
+
+.dashboard-page .dashboard-sidebar {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    right: auto;
+    bottom: auto;
+    width: 250px;
+    height: auto;
+    min-height: 100%;
+    max-height: calc(100vh - 150px);
+    max-height: calc(100dvh - 150px);
+    box-sizing: border-box;
+    margin: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #5B1826;
+    transform: translateX(-110%);
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 30;
+}
+
+.dashboard-page .dashboard-sidebar.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+    .dashboard-page .dashboard-sidebar {
+        width: min(250px, calc(100vw - 52px));
+    }
+}
+
 /* GSU EPORTFOLIO — GLOBAL FONT STANDARD */
 
 html,
