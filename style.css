@@ -1867,3 +1867,72 @@ body *::before,
 body *::after {
     font-family: Arial, Helvetica, sans-serif;
 }
+
+/* GSU DASHBOARD — MOBILE WIDTH AND ALIGNMENT FIX */
+
+.dashboard-page .dashboard-wrapper,
+.dashboard-page .dashboard-header,
+.dashboard-page .dashboard-main,
+.dashboard-page .dashboard-content,
+.dashboard-page .dashboard-footer {
+    box-sizing: border-box;
+    min-width: 0;
+}
+
+.dashboard-page .dashboard-header {
+    width: 100%;
+    padding-right: 12px;
+    padding-left: 12px;
+    overflow: hidden;
+}
+
+.dashboard-page .dashboard-logo {
+    flex: 0 1 auto;
+}
+
+.dashboard-page .dashboard-user-area {
+    flex: 0 1 auto;
+    min-width: 0;
+}
+
+.dashboard-page #currentUser {
+    min-width: 0;
+}
+
+.dashboard-page .dashboard-main {
+    overflow-wrap: anywhere;
+}
+
+.dashboard-page .dashboard-content {
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 768px) {
+    .dashboard-page .dashboard-header {
+        gap: 6px;
+    }
+
+    .dashboard-page .dashboard-logo img {
+        width: 42px;
+        height: 42px;
+        flex-basis: 42px;
+    }
+
+    .dashboard-page .dashboard-user-area {
+        column-gap: 5px;
+    }
+
+    .dashboard-page #currentUser {
+        max-width: 125px;
+        overflow-wrap: anywhere;
+    }
+
+    .dashboard-page .dashboard-main {
+        padding: 12px 8px;
+    }
+
+    .dashboard-page .dashboard-content {
+        padding: 14px 10px;
+    }
+  }
+  
