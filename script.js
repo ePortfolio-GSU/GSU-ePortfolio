@@ -184,16 +184,64 @@ function openDashboard(role){
     }
 
 }
-// =====================================================
-// Logout
-// =====================================================
-
 function logoutUser() {
-    if (confirm("Are you sure you want to logout?")) {
-        sessionStorage.clear();
-        alert("Logout successful.");
-        window.location.href = "index.html";
+    sessionStorage.clear();
+
+    const logoutMessage = document.createElement("div");
+    logoutMessage.textContent = "Logout successful!";
+    logoutMessage.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: fit-content;
+        max-width: calc(100% - 32px);
+        box-sizing: border-box;
+        padding: 12px 20px;
+        border-radius: 10px;
+        color: #ffffff;
+        background: linear-gradient(
+            110deg,
+            #087f3e,
+            #20b85a,
+            #087f3e,
+            #35c96b
+        );
+        background-size: 300% 100%;
+        font-weight: 700;
+        text-align: center;
+        overflow-wrap: anywhere;
+        box-shadow: 0 4px 14px rgba(0, 110, 50, 0.25);
+        z-index: 99999;
+        animation:
+            logoutGradient 1.5s ease-in-out infinite,
+            logoutFade 2s ease forwards;
+    `;
+
+    if (!document.getElementById("logoutAnimationStyles")) {
+        const style = document.createElement("style");
+        style.id = "logoutAnimationStyles";
+        style.textContent = `
+            @keyframes logoutGradient {
+                0% { background-position: 0% 50%; }
+                100% { background-position: 100% 50%; }
+            }
+
+            @keyframes logoutFade {
+                0% { opacity: 0; }
+                15% { opacity: 1; }
+                75% { opacity: 1; }
+                100% { opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
     }
+
+    document.body.appendChild(logoutMessage);
+
+    setTimeout(function () {
+        window.location.replace("index.html");
+    }, 2000);
 }
 // =====================================================
 // GSU E-PORTFOLIO — MASTER DASHBOARD ENGINE
