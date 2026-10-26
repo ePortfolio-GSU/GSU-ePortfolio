@@ -2038,3 +2038,17 @@ body.dashboard-page .dashboard-footer {
         animation: none;
     }
 }
+/* MENU / CLOSE — MATCHED SINGLE-LINE ALIGNMENT */
+
+#menuToggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    white-space: nowrap;
+    font: inherit;
+    line-height: 1;
+    gap: 6px;
+    padding: 10px 14px;
+    min-height: 40px;
+}
