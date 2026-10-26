@@ -383,7 +383,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "aria-label",
         open ? "Close navigation menu" : "Open navigation menu"
     );
-    MyNewPassword@2026
+    menuToggle.textContent = open ? "✕" : "☰";
 
     const quickIcons = document.querySelectorAll(
         "#sidebarQuickIcons button"
