@@ -1938,25 +1938,25 @@ body *::after {
   }
   
 
-/* GSU DASHBOARD — CHAT AND HELP BELOW FOOTER */
+/* GSU DASHBOARD — FIXED CHAT AND HELP BUTTONS */
 
-.dashboard-page .dashboard-support {
-    position: static !important;
-    grid-column: 2;
-    grid-row: 4;
+.dashboard-page .dashboard-support-buttons {
+    position: fixed;
+    right: 18px;
+    bottom: 20px;
+    z-index: 1000;
     display: flex;
     justify-content: flex-end;
     align-items: center;
     gap: 10px;
-    width: 100%;
+    width: auto;
     margin: 0;
-    padding: 16px 18px 24px;
+    padding: 0;
     box-sizing: border-box;
     background: transparent;
-    z-index: auto;
 }
 
-.dashboard-page .dashboard-support button {
+.dashboard-page .dashboard-support-buttons button {
     flex: 0 0 auto;
     min-width: 76px;
     min-height: 42px;
@@ -1964,15 +1964,13 @@ body *::after {
 }
 
 @media (max-width: 768px) {
-    .dashboard-page .dashboard-support {
-        grid-column: 2;
-        grid-row: 4;
-        justify-content: flex-end;
+    .dashboard-page .dashboard-support-buttons {
+        right: 10px;
+        bottom: 12px;
         gap: 8px;
-        padding: 14px 10px 22px;
     }
 
-    .dashboard-page .dashboard-support button {
+    .dashboard-page .dashboard-support-buttons button {
         min-width: 68px;
         min-height: 40px;
     }
