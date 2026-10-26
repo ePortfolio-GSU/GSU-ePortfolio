@@ -353,8 +353,17 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!link) return;
 
     if (link.classList.contains("sidebar-close-link")) return;
-
     if (link.textContent.trim().includes("Logout")) return;
+
+    if (link.getAttribute("href") === "#") {
+        event.preventDefault();
+
+        link.classList.remove("unlinked-shake");
+        void link.offsetWidth;
+        link.classList.add("unlinked-shake");
+
+        return;
+    }
 
     if (window.matchMedia("(max-width: 768px)").matches) {
         setMenuOpen(false);
