@@ -608,3 +608,41 @@ function buildSidebar(menuItems) {
         }
     });
 }
+/* UNLINKED CONTROLS — SHAKE INSTEAD OF POPUPS */
+
+document.addEventListener("click", function (event) {
+    const control = event.target.closest(
+        "button, a, [role='button'], [role='tab'], .tab, .menu-item, .nav-item"
+    );
+
+    if (!control) return;
+
+    const isLink = control.matches("a[href]");
+    const href = isLink ? control.getAttribute("href") : "";
+
+    const hasDestination =
+        isLink &&
+        href &&
+        href !== "#" &&
+        !href.toLowerCase().startsWith("javascript:");
+
+    const hasAction =
+        control.hasAttribute("onclick") ||
+        control.hasAttribute("data-action") ||
+        control.hasAttribute("data-target") ||
+        control.hasAttribute("type") ||
+        control.getAttribute("role") === "tab";
+
+    if (hasDestination || hasAction) return;
+
+    event.preventDefault();
+
+    control.classList.remove("unlinked-shake");
+    void control.offsetWidth;
+    control.classList.add("unlinked-shake");
+
+    control.addEventListener("animationend", function cleanup() {
+        control.classList.remove("unlinked-shake");
+        control.removeEventListener("animationend", cleanup);
+    }, { once: true });
+});
