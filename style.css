@@ -2038,35 +2038,3 @@ body.dashboard-page .dashboard-footer {
         animation: none;
     }
 }
-/* MENU / CLOSE — MATCHED SINGLE-LINE ALIGNMENT */
-
-#menuToggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    box-sizing: border-box;
-    white-space: nowrap;
-    font: inherit;
-    line-height: 1;
-    gap: 6px;
-    padding: 10px 14px;
-    min-height: 40px;
-}
-/* KEEP MENU AND CLOSE TEXT ON THE SAME ALIGNMENT */
-
-#menuToggle {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    text-align: center !important;
-    vertical-align: middle !important;
-    height: 42px !important;
-    min-height: 42px !important;
-    padding: 0 14px !important;
-    line-height: 42px !important;
-    box-sizing: border-box !important;
-    white-space: nowrap !important;
-    font-family: inherit !important;
-    font-size: inherit !important;
-    font-weight: inherit !important;
-}
