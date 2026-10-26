@@ -348,12 +348,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         sidebar.addEventListener("click", function (event) {
-            const link = event.target.closest("a");
+    const link = event.target.closest("a");
 
-            if (link && window.matchMedia("(max-width: 768px)").matches) {
-                setMenuOpen(false);
-            }
-        });
+    if (!link) return;
+
+    if (link.classList.contains("sidebar-close-link")) return;
+
+    if (link.textContent.trim().includes("Logout")) return;
+
+    if (window.matchMedia("(max-width: 768px)").matches) {
+        setMenuOpen(false);
+    }
+});
     }
 
     function setMenuOpen(open) {
@@ -620,7 +626,11 @@ document.addEventListener("click", function (event) {
     );
 
     if (!control) return;
-
+if (
+    control.id === "logoutBtn" ||
+    control.textContent.trim().includes("Logout") ||
+    control.closest("#logoutBtn")
+) return;
     const isLink = control.matches("a[href]");
     const href = isLink ? control.getAttribute("href") : "";
 
