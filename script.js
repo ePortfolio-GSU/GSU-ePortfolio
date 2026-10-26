@@ -580,10 +580,14 @@ function buildSidebar(menuItems) {
                     heading.textContent = DASHBOARD_ROLES[role].title;
                 }
             } else {
-                alert(
-                    item[1] +
-                    " is listed in the menu but its page is not yet connected."
-                );
+                link.classList.remove("unlinked-shake");
+                void link.offsetWidth;
+                link.classList.add("unlinked-shake");
+
+                link.addEventListener("animationend", function cleanup() {
+                    link.classList.remove("unlinked-shake");
+                    link.removeEventListener("animationend", cleanup);
+                }, { once: true });
             }
         });
 
