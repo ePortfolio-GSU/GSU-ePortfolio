@@ -79,7 +79,8 @@ if(loginForm){
 
 
 
-      // Login loading state
+     
+ // Login loading state
 
 const loginButton = loginForm.querySelector("button");
 
@@ -113,12 +114,8 @@ fetch(WEB_APP_URL,{
 
     if(result.success){
 
-    message.classList.remove("login-success");
+    message.style.color = "green";
     message.textContent = "Login successful!";
-    message.style.color = "";
-
-    void message.offsetWidth;
-    message.classList.add("login-success");
 
     sessionStorage.setItem("loginSuccessMessage", "Login successful!");
     sessionStorage.setItem("loggedUser", result.fullName);
@@ -127,14 +124,14 @@ fetch(WEB_APP_URL,{
 
     setTimeout(function() {
         openDashboard(result.role);
-    }, 2800);
-
+    }, 1000);
 }else{
 
-    message.classList.remove("login-success");
-    message.style.color = "red";
+        message.style.color="red";
 
-}
+    }
+
+})
 
 .catch(error=>{
 
