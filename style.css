@@ -2021,3 +2021,20 @@ body.dashboard-page .dashboard-footer {
         padding-top: 12px;
     }
 }
+/* UNLINKED CONTROLS — SHAKE FEEDBACK */
+
+@keyframes unlinkedShake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+.unlinked-shake {
+    animation: unlinkedShake 0.35s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .unlinked-shake {
+        animation: none;
+    }
+}
