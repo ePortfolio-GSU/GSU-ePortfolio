@@ -1977,3 +1977,49 @@ body *::after {
         min-height: 40px;
     }
 }
+/* GSU DASHBOARD — PAGE CONTENT ENDS WITH FOOTER */
+
+body.dashboard-page {
+    padding-bottom: 0;
+}
+
+body.dashboard-page .dashboard-wrapper {
+    grid-template-rows: auto;
+    min-height: 0;
+}
+
+body.dashboard-page .dashboard-main {
+    min-height: 0;
+}
+
+body.dashboard-page .dashboard-content {
+    display: flex;
+    flex-direction: column;
+}
+
+body.dashboard-page .dashboard-support-buttons {
+    position: static !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin: 24px 0 0;
+    padding: 12px 0 0;
+    box-sizing: border-box;
+}
+
+body.dashboard-page .dashboard-footer {
+    position: static !important;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+@media (max-width: 768px) {
+    body.dashboard-page .dashboard-support-buttons {
+        justify-content: flex-end;
+        gap: 8px;
+        padding-top: 12px;
+    }
+}
