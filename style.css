@@ -1981,11 +1981,11 @@ body *::after {
 
 body.dashboard-page {
     padding-bottom: 0;
+    min-height: 100vh;
 }
 
 body.dashboard-page .dashboard-wrapper {
-    grid-template-rows: auto minmax(0, 1fr) auto;
-    min-height: 100vh;
+    min-height: calc(100vh - var(--dashboard-header-height, 0px));
 }
 
 body.dashboard-page .dashboard-main {
