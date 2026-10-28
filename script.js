@@ -559,7 +559,7 @@ function buildSidebar(menuItems) {
 // Add a little space AFTER Close Menu only
 const sidebarSpacer = document.createElement("li");
 sidebarSpacer.setAttribute("aria-hidden", "true");
-sidebarSpacer.style.height = "6px";
+sidebarSpacer.style.height = "2px";
 sidebarSpacer.style.margin = "0";
 sidebarSpacer.style.padding = "0";
 sidebarSpacer.style.listStyle = "none";
