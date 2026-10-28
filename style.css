@@ -1279,14 +1279,14 @@ flex-basis: 48px;
 /* GSU DASHBOARD — QUICK ICON STRIP */
 
 .dashboard-page .mobile-menu-strip {
-    gap: 6px;
+    gap: 3px;
 }
 
 .dashboard-page .sidebar-quick-icons {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 3px;
     width: 100%;
     margin-top: 8px;
 }
@@ -1295,17 +1295,18 @@ flex-basis: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    min-width: 0;
-    height: 32px;
-    min-height: 32px;
+    width: 26px;
+    min-width: 26px;
+    height: 26px;
+    min-height: 26px;
     margin: 0;
-    padding: 2px;
+    padding: 1px;
     border: 1px solid rgba(255, 255, 255, 0.35);
-    border-radius: 6px;
+    border-radius: 5px;
     background: transparent;
     color: #fff;
-    font-size: 19px;
+    font-size: 14px;
+    line-height: 1;
     cursor: default;
     opacity: 0.9;
 }
@@ -1328,10 +1329,11 @@ flex-basis: 48px;
     }
 
     .dashboard-page .sidebar-quick-icons button {
-        width: 32px;
-        height: 32px;
-        min-height: 32px;
-        font-size: 17px;
+        width: 26px;
+        min-width: 26px;
+        height: 26px;
+        min-height: 26px;
+        font-size: 14px;
     }
 }
 /* GSU DASHBOARD — MAROON SIDEBAR ALIGNMENT */
