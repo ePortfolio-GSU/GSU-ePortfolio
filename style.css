@@ -2053,3 +2053,18 @@ body.dashboard-page .dashboard-footer {
         animation: none;
     }
 }
+/* REDUCE SPACING BETWEEN ROLE-SPECIFIC SIDEBAR ITEMS */
+.dashboard-page .dashboard-sidebar ul > li {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.dashboard-page .dashboard-sidebar ul > li > a:not(.sidebar-close-link) {
+    min-height: 30px !important;
+    padding-top: 3px !important;
+    padding-bottom: 3px !important;
+    line-height: 1.1 !important;
+    font-size: 12px !important;
+}
