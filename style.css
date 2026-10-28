@@ -2080,3 +2080,7 @@ body.dashboard-page .dashboard-footer {
     line-height: 1.5 !important;
     box-sizing: border-box !important;
 }
+/* GAP BELOW CLOSE MENU — ROLE ITEMS ONLY */
+.dashboard-page #sidebarMenu > li:nth-child(2) {
+    margin-top: 8px !important;
+}
