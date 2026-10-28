@@ -556,7 +556,16 @@ function buildSidebar(menuItems) {
     closeItem.appendChild(closeLink);
     sidebar.appendChild(closeItem);
 
-    // Menu rows and matching quick-strip icons
+// Add a little space AFTER Close Menu only
+const sidebarSpacer = document.createElement("li");
+sidebarSpacer.setAttribute("aria-hidden", "true");
+sidebarSpacer.style.height = "12px";
+sidebarSpacer.style.margin = "0";
+sidebarSpacer.style.padding = "0";
+sidebarSpacer.style.listStyle = "none";
+sidebar.appendChild(sidebarSpacer);
+
+// Menu rows and matching quick-strip icons
     menuItems.forEach(function (item) {
         const li = document.createElement("li");
         const link = document.createElement("a");
