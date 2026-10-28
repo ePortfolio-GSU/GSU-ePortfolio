@@ -2059,7 +2059,7 @@ body.dashboard-page .dashboard-footer {
 
 /* Add a small gap before the first role-specific item */
 .dashboard-page #sidebarMenu > li:nth-child(2) {
-    margin-top: 40px !important;
+    margin-top: 64px !important;
 }
 
 /* TIGHTEN ROLE-SPECIFIC SIDEBAR ROWS ONLY */
