@@ -1284,7 +1284,7 @@ gap: 12px;
 display: flex;
 flex-direction: column;
 align-items: center;
-gap: 12px;
+gap: 6px;
 width: 100%;
 margin-top: 8px;
 }
@@ -1411,7 +1411,7 @@ width: 52px;
 /* GSU DASHBOARD — MATCH SIDEBAR ROWS TO STRIP ICONS */
 
 .dashboard-page .sidebar-quick-icons {
-gap: 12px;
+gap: 6px;
 margin-top: 8px;
 }
 
