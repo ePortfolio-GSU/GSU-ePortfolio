@@ -1759,7 +1759,7 @@ padding: 8px 3px;
 }
 /* SPACE BEFORE ROLE-SPECIFIC SIDEBAR ITEMS ONLY */
 .dashboard-page .dashboard-sidebar a.sidebar-close-link + li {
-    margin-top: 14px;
+    margin-top: 18px;
 }
 /* GSU FIX — SIDEBAR AND MAROON STRIP SHARE ONE HEIGHT */
 
