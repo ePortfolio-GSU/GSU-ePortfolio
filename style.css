@@ -2059,7 +2059,7 @@ body.dashboard-page .dashboard-footer {
 
 /* Add a small gap before the first role-specific item */
 .dashboard-page #sidebarMenu > li:nth-child(2) {
-    margin-top: 14px !important;
+    margin-top: 20px !important;
 }
 
 /* Tighten spacing between role-specific menu items */
@@ -2069,7 +2069,7 @@ body.dashboard-page .dashboard-footer {
 }
 
 .dashboard-page #sidebarMenu > li:not(:first-child) > a:not(.sidebar-close-link) {
-    min-height: 26px !important;
+    min-height: 20px !important;
     height: auto !important;
     padding: 0 12px !important;
     font-size: 14px !important;
