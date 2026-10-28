@@ -942,14 +942,16 @@ list-style: none;
 }
 
 .dashboard-page .dashboard-sidebar a {
-display: flex;
-align-items: center;
-gap: 10px;
-min-height: 46px;
-padding: 12px 16px;
-color: #fff;
-text-decoration: none;
-overflow-wrap: anywhere;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 36px;
+    padding: 6px 12px;
+    color: #fff;
+    font-size: 13px;
+    line-height: 1.2;
+    text-decoration: none;
+    overflow-wrap: anywhere;
 }
 
 .dashboard-page .dashboard-sidebar a:hover,
@@ -1757,10 +1759,7 @@ padding: 8px 3px;
 }
 
 }
-/* SPACE BEFORE ROLE-SPECIFIC SIDEBAR ITEMS ONLY */
-.dashboard-page .dashboard-sidebar a.sidebar-close-link + li {
-    margin-top: 32px;
-}
+
 /* GSU FIX — SIDEBAR AND MAROON STRIP SHARE ONE HEIGHT */
 
 .dashboard-page .mobile-menu-strip {
