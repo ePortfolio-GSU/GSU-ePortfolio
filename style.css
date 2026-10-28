@@ -2069,10 +2069,10 @@ body.dashboard-page .dashboard-footer {
 }
 
 .dashboard-page #sidebarMenu > li:not(:first-child) > a:not(.sidebar-close-link) {
-    min-height: 34px !important;
+    min-height: 30px !important;
     height: auto !important;
-    padding: 4px 12px !important;
+    padding: 2px 12px !important;
     font-size: 14px !important;
-    line-height: 1.2 !important;
+    line-height: 1.15 !important;
     box-sizing: border-box !important;
 }
