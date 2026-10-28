@@ -1707,8 +1707,21 @@ text-decoration: none;
 }
 
 .dashboard-page .dashboard-sidebar a.sidebar-close-link {
-font-weight: 700;
-border-bottom: 1px solid rgba(255,255,255,.2);
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 42px;
+    margin: 0;
+    padding: 6px 2px;
+    border: 1px solid rgba(255,255,255,.55);
+    border-radius: 6px;
+    background: #5B1826;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
 }
 
 .dashboard-page .dashboard-sidebar a:hover,
