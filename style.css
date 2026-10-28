@@ -1322,7 +1322,7 @@ background: #600000;
 
 @media (max-width: 768px) {
 .dashboard-page .sidebar-quick-icons {
-gap: 8px;
+gap: 2px;
 }
 
 .dashboard-page .sidebar-quick-icons button {  
@@ -1411,8 +1411,8 @@ width: 52px;
 /* GSU DASHBOARD — MATCH SIDEBAR ROWS TO STRIP ICONS */
 
 .dashboard-page .sidebar-quick-icons {
-gap: 6px;
-margin-top: 8px;
+gap: 2px;
+margin-top: 4px;
 }
 
 .dashboard-page .sidebar-quick-icons button {
