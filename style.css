@@ -2053,3 +2053,26 @@ body.dashboard-page .dashboard-footer {
         animation: none;
     }
 }
+/* GSU SIDEBAR — FINAL ROW SPACING FIX */
+
+/* Keep the Close Menu row unchanged */
+
+/* Add a small gap before the first role-specific item */
+.dashboard-page #sidebarMenu > li:nth-child(2) {
+    margin-top: 8px !important;
+}
+
+/* Tighten spacing between role-specific menu items */
+.dashboard-page #sidebarMenu > li:not(:first-child) {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.dashboard-page #sidebarMenu > li:not(:first-child) > a:not(.sidebar-close-link) {
+    min-height: 34px !important;
+    height: auto !important;
+    padding: 4px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+    box-sizing: border-box !important;
+}
