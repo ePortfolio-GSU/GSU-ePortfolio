@@ -2053,21 +2053,18 @@ body.dashboard-page .dashboard-footer {
         animation: none;
     }
 }
-/* GSU SIDEBAR — FINAL ROW SPACING FIX */
+/* GSU SIDEBAR — CONTROLLED ROW SPACING */
 
-/* Keep the Close Menu row unchanged */
-
-/* Add a small gap before the first role-specific item */
+/* First role-specific item: preserve the gap below Close Menu */
 .dashboard-page #sidebarMenu > li:nth-child(2) {
-    margin-top: 64px !important;
+    margin-top: 8px !important;
 }
 
-/* TIGHTEN ROLE-SPECIFIC SIDEBAR ROWS ONLY */
-
+/* Compact role-specific rows without changing Close Menu */
 .dashboard-page #sidebarMenu > li:not(:first-child) {
     min-height: 0 !important;
     height: auto !important;
-    margin: 0 !important;
+    margin-bottom: 0 !important;
     padding: 0 !important;
 }
 
@@ -2075,12 +2072,8 @@ body.dashboard-page .dashboard-footer {
     min-height: 0 !important;
     height: auto !important;
     margin: 0 !important;
-    padding: 6px 12px !important;
+    padding: 5px 12px !important;
     font-size: 14px !important;
-    line-height: 1.5 !important;
+    line-height: 1.3 !important;
     box-sizing: border-box !important;
-}
-/* GAP BELOW CLOSE MENU — ROLE ITEMS ONLY */
-.dashboard-page #sidebarMenu > li:nth-child(2) {
-    margin-top: 8px !important;
 }
