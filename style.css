@@ -2082,3 +2082,7 @@ body.dashboard-page .dashboard-footer {
     line-height: 1.75 !important;
     box-sizing: border-box !important;
 }
+/* GSU DASHBOARD — HIDE QUICK STRIP ICONS */
+.dashboard-page .sidebar-quick-icons {
+    display: none !important;
+}
