@@ -2086,3 +2086,21 @@ body.dashboard-page .dashboard-footer {
 .dashboard-page .sidebar-quick-icons {
     display: none !important;
 }
+/* GSU DASHBOARD — SIDEBAR OPENS FROM DEVICE EDGE */
+.dashboard-page .dashboard-sidebar {
+    left: 0 !important;
+    margin-left: 0 !important;
+    z-index: 1000 !important;
+    box-sizing: border-box !important;
+}
+
+/* Keep sidebar links and icons inside the maroon card */
+.dashboard-page .dashboard-sidebar ul {
+    box-sizing: border-box !important;
+    width: 100% !important;
+}
+
+/* Hide the separate quick-icon strip */
+.dashboard-page .sidebar-quick-icons {
+    display: none !important;
+}
