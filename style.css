@@ -985,7 +985,8 @@ box-shadow: 0 2px 8px rgba(0,0,0,.06);
 margin: 0 0 22px;
 color: #212121;
   font-weight: 700;
-font-size: 16px;
+  text-align: center;
+font-size: 18px;
 }
 
 .dashboard-page .dashboard-section-title {
@@ -1017,6 +1018,7 @@ margin: 0;
 color: #202833;
 font-size: 15px;
   font-weight: 700;
+  text-align: center;
 line-height: 1.6;
 overflow-wrap: anywhere;
 }
