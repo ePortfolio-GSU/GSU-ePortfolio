@@ -984,6 +984,7 @@ box-shadow: 0 2px 8px rgba(0,0,0,.06);
 .dashboard-page .dashboard-breadcrumb {
 margin: 0 0 22px;
 color: #212121;
+  font-weight: 700;
 font-size: 14px;
 }
 
@@ -1015,6 +1016,7 @@ overflow-wrap: anywhere;
 margin: 0;
 color: #202833;
 font-size: 15px;
+  font-weight: 700;
 line-height: 1.6;
 overflow-wrap: anywhere;
 }
