@@ -114,8 +114,7 @@ fetch(WEB_APP_URL, {
         loginButton.classList.add("is-success");
         loginButton.textContent = "LOGIN SUCCESSFUL ✓";
 
-        message.style.color = "green";
-        message.textContent = "Login successful!";
+       message.textContent = "";
 
         sessionStorage.setItem("loginSuccessMessage", "Login successful!");
         sessionStorage.setItem("loggedUser", result.fullName);
