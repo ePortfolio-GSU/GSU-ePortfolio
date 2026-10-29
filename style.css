@@ -117,22 +117,55 @@ color: #0B57D0;
 text-decoration: none;
 }
 
-/* Login Button */
+/* Login Button — Authentication Animation Only */
 
-button {
-width: 100%;
-margin-top: 20px;
-padding: 13px;
-background: #0B57D0;
-color: white;
-border: none;
-border-radius: 8px;
-font-size: 16px;
-cursor: pointer;
+#loginForm button[type="submit"] {
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    background: #87CEEB;
+    color: #173042;
+    border: 1px solid #70B8D8;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.35s ease, color 0.35s ease;
 }
 
-button:hover {
-opacity: 0.9;
+#loginForm button[type="submit"]:hover {
+    opacity: 0.9;
+}
+
+#loginForm button[type="submit"].is-authenticating {
+    background: #A7A9AC;
+    color: #252525;
+    border-color: #85878A;
+    cursor: wait;
+    opacity: 1;
+}
+
+#loginForm button[type="submit"].is-success {
+    background: linear-gradient(
+        110deg,
+        #087F3E,
+        #20B85A,
+        #087F3E,
+        #35C96B
+    );
+    background-size: 300% 100%;
+    color: #FFFFFF;
+    border-color: #087F3E;
+    animation: loginSuccessGradient 1s linear infinite;
+    opacity: 1;
+}
+
+@keyframes loginSuccessGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    100% {
+        background-position: 100% 50%;
+    }
 }
 
 /* Authentication Message */
