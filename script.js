@@ -490,13 +490,16 @@ function loadDashboard(role) {
     if (heading) heading.textContent = config.title;
 
     if (welcomeHeading) {
-        welcomeHeading.textContent =
-            "Welcome, " + sessionStorage.getItem("loggedUser");
-    }
+    const loggedUser = sessionStorage.getItem("loggedUser") || "";
+    const firstName = loggedUser.trim().split(/\s+/)[0];
+
+    welcomeHeading.textContent = "WELCOME BACK, " + firstName.toUpperCase();
+}
 
     if (welcomeMessage) {
-        welcomeMessage.textContent = config.welcome;
-    }
+    welcomeMessage.textContent =
+        "We're glad to have you here. Your workspace is ready! Need a hand navigating the system? Tap the Help button below for quick guidance and support.";
+}
 
     buildSidebar(config.menu);
 }
