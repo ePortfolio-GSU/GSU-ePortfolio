@@ -2062,7 +2062,7 @@ body.dashboard-page .dashboard-footer {
 
 /* First role-specific item: preserve the gap below Close Menu */
 .dashboard-page #sidebarMenu > li:nth-child(2) {
-    margin-top: 13px !important;
+    margin-top: 8px !important;
 }
 
 /* Compact role-specific rows without changing Close Menu */
