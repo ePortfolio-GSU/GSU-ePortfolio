@@ -32,17 +32,17 @@ box-shadow: 0 4px 15px rgba(0,0,0,0.15);
 }
 
 /* Header */
+
 .header {
-    text-align: center;
-    background: #343A40;
-    padding: 90px 15px 25px;
-    border-radius: 12px 12px 0 0;
-    margin: -30px -30px 25px -30px;
-    position: relative;
-    overflow: visible;
+text-align: center;
+background: #343A40;
+padding: 25px 15px;
+border-radius: 12px 12px 0 0;
+margin: -30px -30px 25px -30px;
+  position: relative;
+overflow: visible;
 }
 
-/* Logo overlapping the top edge */
 .logo {
     width: 160px;
     height: auto;
@@ -53,11 +53,8 @@ box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     background: transparent;
     padding: 0;
     border: none;
-    margin: 0;
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    position: relative;
     z-index: 2;
 }
 .header h1 {
