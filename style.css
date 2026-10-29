@@ -2114,3 +2114,10 @@ body.dashboard-page .dashboard-footer {
     justify-content: center !important;
     box-sizing: border-box !important;
 }
+/* GSU DASHBOARD — SIDE-STRIP ICON VISIBILITY */
+.dashboard-page .sidebar-quick-icons {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: none !important;
+}
