@@ -81,69 +81,72 @@ if(loginForm){
 
      
  // Login loading state
+const loginButton = loginForm.querySelector('button[type="submit"]');
 
-const loginButton = loginForm.querySelector("button");
-
+loginButton.classList.remove("is-success");
+loginButton.classList.add("is-authenticating");
 loginButton.textContent = "Authenticating...";
 loginButton.disabled = true;
 
 message.textContent = "";
+message.style.color = "";
 
 const WEB_APP_URL =
 "https://script.google.com/macros/s/AKfycbwcYc2v0rRVF_AFDtluOVFCTja89vOH0HBtcI9rLGs0PCd7D3YpI5K4EVrb7XKaH_AL/exec";
-fetch(WEB_APP_URL,{
-    method:"POST",
-    headers:{
-    "Content-Type":"text/plain;charset=UTF-8"
-},
-    body:JSON.stringify({
-        action:"login",
-        username:username,
-        password:password
+
+fetch(WEB_APP_URL, {
+    method: "POST",
+    headers: {
+        "Content-Type": "text/plain;charset=UTF-8"
+    },
+    body: JSON.stringify({
+        action: "login",
+        username: username,
+        password: password
     })
 })
+.then(response => response.json())
+.then(result => {
 
-.then(response=>response.json())
+    if (result.success) {
 
-.then(result=>{
+        loginButton.classList.remove("is-authenticating");
+        loginButton.classList.add("is-success");
+        loginButton.textContent = "LOGIN SUCCESSFUL ✓";
 
-    loginButton.textContent="LOGIN";
-    loginButton.disabled=false;
+        message.style.color = "green";
+        message.textContent = "Login successful!";
 
-    message.textContent=result.message;
+        sessionStorage.setItem("loginSuccessMessage", "Login successful!");
+        sessionStorage.setItem("loggedUser", result.fullName);
+        sessionStorage.setItem("userRole", result.role);
+        sessionStorage.setItem("username", result.username);
 
-    if(result.success){
+        setTimeout(function() {
+            openDashboard(result.role);
+        }, 1000);
 
-    message.style.color = "green";
-    message.textContent = "Login successful!";
+    } else {
 
-    sessionStorage.setItem("loginSuccessMessage", "Login successful!");
-    sessionStorage.setItem("loggedUser", result.fullName);
-    sessionStorage.setItem("userRole", result.role);
-    sessionStorage.setItem("username", result.username);
+        loginButton.classList.remove("is-authenticating");
+        loginButton.textContent = "LOGIN";
+        loginButton.disabled = false;
 
-    setTimeout(function() {
-        openDashboard(result.role);
-    }, 1000);
-}else{
-
-        message.style.color="red";
-
+        message.style.color = "red";
+        message.textContent = result.message;
     }
 
 })
+.catch(error => {
 
-.catch(error=>{
-
-    loginButton.textContent="LOGIN";
-    loginButton.disabled=false;
+    loginButton.classList.remove("is-authenticating");
+    loginButton.textContent = "LOGIN";
+    loginButton.disabled = false;
 
     console.error(error);
 
-    message.style.color="red";
-
-    message.textContent =
-    error.toString();
+    message.style.color = "red";
+    message.textContent = error.toString();
 
 });
 
