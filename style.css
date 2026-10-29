@@ -1006,14 +1006,14 @@ background: #F8FAFD;
 
 .dashboard-page .dashboard-welcome h2 {
 margin: 0 0 8px;
-color: #26364A;
+color: #173B70;
 font-size: 20px;
 overflow-wrap: anywhere;
 }
 
 .dashboard-page .dashboard-welcome p {
 margin: 0;
-color: #505967;
+color: #26364A;
 font-size: 15px;
 line-height: 1.6;
 overflow-wrap: anywhere;
