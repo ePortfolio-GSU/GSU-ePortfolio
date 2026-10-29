@@ -2121,3 +2121,41 @@ body.dashboard-page .dashboard-footer {
     opacity: 1 !important;
     pointer-events: none !important;
 }
+/* GSU DASHBOARD — FLOATING CHAT ICON */
+body.dashboard-page .dashboard-support-buttons {
+    position: fixed !important;
+    right: 16px !important;
+    bottom: 70px !important;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    z-index: 900 !important;
+}
+
+body.dashboard-page .dashboard-support-buttons button {
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2) !important;
+}
+
+@media (max-width: 768px) {
+    body.dashboard-page .dashboard-support-buttons {
+        right: 10px !important;
+        bottom: 62px !important;
+    }
+
+    body.dashboard-page .dashboard-support-buttons button {
+        width: 42px !important;
+        height: 42px !important;
+        min-width: 42px !important;
+    }
+}
