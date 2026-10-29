@@ -2104,12 +2104,13 @@ body.dashboard-page .dashboard-footer {
 .dashboard-page .sidebar-quick-icons {
     display: none !important;
 }
-/* GSU DASHBOARD — BORDER AROUND SIDEBAR ICONS */
-.dashboard-page #sidebarMenu li a i,
-.dashboard-page #sidebarMenu li a .icon,
-.dashboard-page #sidebarMenu li a svg {
-    border: 1px solid rgba(255, 255, 255, 0.65) !important;
+/* GSU DASHBOARD — SIDEBAR ICON BORDERS */
+.dashboard-page #sidebarMenu a > :first-child {
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
     border-radius: 5px !important;
     padding: 4px !important;
-    box-sizing: content-box !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
 }
