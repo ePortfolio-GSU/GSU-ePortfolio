@@ -2114,20 +2114,3 @@ body.dashboard-page .dashboard-footer {
     justify-content: center !important;
     box-sizing: border-box !important;
 }
-/* GSU DASHBOARD — SIDEBAR ICONS ONLY */
-
-/* Slightly enlarge icons inside sidebar links */
-.dashboard-page #sidebarMenu li a > :first-child {
-    font-size: 21px !important;
-    min-width: 30px !important;
-    min-height: 30px !important;
-    padding: 5px !important;
-    margin-right: 8px !important;
-    flex-shrink: 0 !important;
-}
-
-/* Keep the sidebar icon and label aligned */
-.dashboard-page #sidebarMenu li a {
-    display: flex !important;
-    align-items: center !important;
-}
