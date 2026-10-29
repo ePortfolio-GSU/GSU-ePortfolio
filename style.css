@@ -2104,3 +2104,12 @@ body.dashboard-page .dashboard-footer {
 .dashboard-page .sidebar-quick-icons {
     display: none !important;
 }
+/* GSU DASHBOARD — BORDER AROUND SIDEBAR ICONS */
+.dashboard-page #sidebarMenu li a i,
+.dashboard-page #sidebarMenu li a .icon,
+.dashboard-page #sidebarMenu li a svg {
+    border: 1px solid rgba(255, 255, 255, 0.65) !important;
+    border-radius: 5px !important;
+    padding: 4px !important;
+    box-sizing: content-box !important;
+}
