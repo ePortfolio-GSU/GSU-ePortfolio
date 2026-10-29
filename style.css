@@ -39,6 +39,8 @@ background: #343A40;
 padding: 25px 15px;
 border-radius: 12px 12px 0 0;
 margin: -30px -30px 25px -30px;
+  position: relative;
+overflow: visible;
 }
 
 .logo {
@@ -46,11 +48,14 @@ margin: -30px -30px 25px -30px;
     height: auto;
     max-width: 100%;
     object-fit: contain;
+    display: block;
     border-radius: 0;
     background: transparent;
     padding: 0;
     border: none;
-    margin: 0;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 .header h1 {
