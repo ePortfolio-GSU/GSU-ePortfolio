@@ -13,7 +13,6 @@ background: #F4F6F9;
 body:has(.login-card) {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
     align-items: center;
     min-height: 100vh;
 }
@@ -2213,4 +2212,13 @@ body:has(.login-card) footer {
     width: 100%;
     margin-top: auto;
     text-align: center;
+}
+/* Login Page Footer Position */
+
+body:has(.login-card) footer {
+    width: 100%;
+    margin-top: auto;
+    padding: 15px 10px;
+    text-align: center;
+    flex-shrink: 0;
 }
