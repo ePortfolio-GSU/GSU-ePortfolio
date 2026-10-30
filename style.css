@@ -2221,24 +2221,3 @@ body:has(.login-card) footer {
 body:has(.login-card) {
     padding-bottom: 90px;
 }
-/* Inner Maroon U-Shaped Login Frame */
-
-body:has(.login-card) .login-card {
-    border: none;
-    position: relative;
-    overflow: hidden;
-}
-
-body:has(.login-card) .login-card::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-left: 5px solid #5B1826;
-    border-right: 5px solid #5B1826;
-    border-bottom: 5px solid #5B1826;
-    border-radius: 0 0 12px 12px;
-    pointer-events: none;
-}
