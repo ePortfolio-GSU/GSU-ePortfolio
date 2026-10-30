@@ -2262,35 +2262,34 @@ body:has(.login-card) footer {
         transform: perspective(1000px) rotateY(180deg);
     }
 }
-.login-options {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+/* Login options alignment */
+#loginForm .login-options {
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
     width: 100%;
-    flex-wrap: nowrap;
     margin-top: 10px;
+    column-gap: 12px;
 }
 
-.login-options .remember-me {
+#loginForm .remember-me {
     display: inline-flex;
-    flex-direction: row;
     align-items: center;
+    justify-self: start;
+    flex-direction: row;
     gap: 5px;
     white-space: nowrap;
-    flex-shrink: 0;
     width: auto;
     margin: 0;
 }
 
-.login-options .remember-me input {
-    margin: 0;
+#loginForm .remember-me input {
     flex-shrink: 0;
+    margin: 0;
 }
 
-.login-options .forgot {
-    display: inline-block;
+#loginForm .forgot {
+    justify-self: end;
     white-space: nowrap;
     margin: 0;
-    flex-shrink: 0;
 }
