@@ -2175,7 +2175,7 @@ body.dashboard-page .dashboard-footer {
 .signup-container p {
    color: #343A40;
 font-size: 15px;
-font-weight: 600;
+font-weight: 300;
     margin: 0;
 }
 
@@ -2186,8 +2186,8 @@ font-weight: 600;
     color: #FFFFFF;
     border: 2px solid #3E101B;
     border-radius: 7px;
-    padding: 6px 15px;
-    font-size: 13px;
+    padding: 5px 12px;
+    font-size: 12px;
     font-weight: 700;
     cursor: pointer;
     box-shadow:
