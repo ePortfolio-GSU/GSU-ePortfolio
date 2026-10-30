@@ -2159,3 +2159,35 @@ body.dashboard-page .dashboard-footer {
     opacity: 1 !important;
     pointer-events: none !important;
 }
+/* Modern Sign Up Button */
+
+.signup-container {
+    text-align: center;
+    margin: 20px auto;
+}
+
+.signup-container p {
+    color: #555D66;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.signup-btn {
+    background: #FFFFFF;
+    color: #555D66;
+    border: 1.5px solid #87CEEB;
+    border-radius: 30px;
+    padding: 11px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+}
+
+.signup-btn:hover {
+    background: #87CEEB;
+    color: #173042;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
