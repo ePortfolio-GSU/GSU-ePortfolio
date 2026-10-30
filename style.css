@@ -2206,19 +2206,18 @@ font-weight: 600;
     box-shadow: 0 1px 0 #350D17;
 }
 
-/* Login Page Footer */
+/* Fixed Login Page Footer */
 
 body:has(.login-card) footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    margin-top: auto;
+    padding: 12px 10px;
     text-align: center;
+    background: #F4F6F9;
+    z-index: 100;
 }
-/* Login Page Footer Position */
-
-body:has(.login-card) footer {
-    width: 100%;
-    margin-top: auto;
-    padding: 15px 10px;
-    text-align: center;
-    flex-shrink: 0;
+body:has(.login-card) {
+    padding-bottom: 90px;
 }
