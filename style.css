@@ -2230,7 +2230,7 @@ body:has(.login-card)::before {
     background-repeat: no-repeat;
     background-position: center;
     background-size: 600px;
-    opacity: 0.12;
+    opacity: 0.5;
     pointer-events: none;
     z-index: 0;
     animation: logoFlip 4.5s ease-in-out infinite;
