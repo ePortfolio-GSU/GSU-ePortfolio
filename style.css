@@ -119,24 +119,41 @@ color: #0B57D0;
 text-decoration: none;
 }
 
-/* Login Button — Authentication Animation Only */
+/* Login Button — Authentication and Remote-Control Animation */
 
 #loginForm button[type="submit"] {
-width: 100%;
-margin-top: 20px;
-padding: 13px;
-background: #87CEEB;
-color: #173042;
-border: 1px solid #70B8D8;
-border-radius: 8px;
-font-size: 16px;
-cursor: pointer;
-transition: background-color 0.35s ease, color 0.35s ease;
+    width: 100%;
+    margin-top: 20px;
+    padding: 13px;
+    background: #87CEEB;
+    color: #173042;
+    border: 1px solid #70B8D8;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+
+    box-shadow:
+        0 3px 0 rgba(0, 0, 0, 0.25),
+        0 4px 6px rgba(0, 0, 0, 0.18);
+
+    transition:
+        background-color 0.35s ease,
+        color 0.35s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
 }
 
 #loginForm button[type="submit"]:hover {
-opacity: 0.9;
+    opacity: 0.9;
 }
+
+/* Physical button press effect */
+#loginForm button[type="submit"]:active:not(.is-authenticating):not(.is-success) {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+/* Authentication state */
 #loginForm button[type="submit"].is-authenticating {
     background: #555D66;
     color: #FFFFFF;
@@ -145,6 +162,7 @@ opacity: 0.9;
     opacity: 1;
 }
 
+/* Successful login animation */
 #loginForm button[type="submit"].is-success {
     background: linear-gradient(
         110deg,
@@ -168,7 +186,6 @@ opacity: 0.9;
         background-position: 100% 50%;
     }
 }
-
 /* Authentication Message */
 
 #message {
