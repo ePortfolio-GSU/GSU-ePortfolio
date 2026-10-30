@@ -2262,3 +2262,24 @@ body:has(.login-card) footer {
         transform: perspective(1000px) rotateY(180deg);
     }
 }
+/* Remember Me and Forgot Password alignment */
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 13px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #343A40;
+    cursor: pointer;
+}
+
+.forgot {
+    margin: 0;
+    text-decoration: none;
+}
