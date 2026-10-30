@@ -2229,7 +2229,7 @@ body:has(.login-card)::before {
     background-image: url("logo.png");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 350px;
+    background-size: 500px;
     opacity: 0.06;
     pointer-events: none;
     z-index: 0;
