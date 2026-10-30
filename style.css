@@ -2275,6 +2275,7 @@ body:has(.login-card) footer {
     display: flex;
     align-items: center;
     gap: 6px;
+  white-space: nowrap;
     color: #343A40;
     cursor: pointer;
 }
