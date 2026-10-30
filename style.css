@@ -2180,22 +2180,35 @@ font-weight: 600;
     margin: 0;
 }
 
+/* Maroon Remote-Style Sign Up Button */
+
 .signup-btn {
-    background: #FFFFFF;
-    color: #555D66;
-    border: 1px solid #87CEEB;
-    border-radius: 20px;
+    background: #5B1826;
+    color: #FFFFFF;
+    border: 2px solid #3E101B;
+    border-radius: 7px;
     padding: 6px 15px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
+    box-shadow:
+        0 3px 0 #350D17,
+        0 4px 6px rgba(0, 0, 0, 0.18);
+    transition: all 0.2s ease;
 }
 
 .signup-btn:hover {
-    background: #87CEEB;
-    color: #173042;
+    background: #702335;
+    color: #FFFFFF;
 }
+
+.signup-btn:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 #350D17;
+}
+
+/* Login Page Footer */
+
 body:has(.login-card) footer {
     width: 100%;
     margin-top: auto;
