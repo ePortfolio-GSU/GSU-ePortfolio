@@ -136,9 +136,9 @@ text-decoration: none;
 }
 
 #loginForm button[type="submit"].is-authenticating {
-    background: #A7A9AC;
-    color: #252525;
-    border-color: #85878A;
+    background: #555D66;
+    color: #FFFFFF;
+    border-color: #555D66;
     cursor: wait;
     opacity: 1;
 }
