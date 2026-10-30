@@ -11,9 +11,11 @@ background: #F4F6F9;
 
 /* Center the login page only */
 body:has(.login-card) {
-display: flex;
-justify-content: center;
-align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: 100vh;
 }
 
 .container {
@@ -21,7 +23,9 @@ width: 100%;
 max-width: 420px;
 padding: 20px;
 }
-
+body:has(.login-card) .container {
+    margin: auto 0;
+}
 /* Login Card */
 
 .login-card {
@@ -2192,4 +2196,9 @@ font-weight: 600;
 .signup-btn:hover {
     background: #87CEEB;
     color: #173042;
+}
+body:has(.login-card) footer {
+    width: 100%;
+    margin-top: auto;
+    text-align: center;
 }
