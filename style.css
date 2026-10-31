@@ -189,9 +189,13 @@ box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
 /* Authentication Message */
 
 #message {
-text-align: center;
-margin-top: 15px;
-color: #555;
+    text-align: center;
+    margin: 10px 0 0;
+    min-height: 18px;
+    color: #555;
+    font-size: 13px;
+    line-height: 18px;
+    overflow-wrap: break-word;
 }
 
 /* Support Buttons */
@@ -2178,21 +2182,22 @@ body.dashboard-page .dashboard-footer {
     opacity: 1 !important;
     pointer-events: none !important;
 }
-/* Modern Sign Up Button */
 /* Compact Sign Up Section */
 
 .signup-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    margin: 16px auto;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 8px auto 0;
+    min-height: 32px;
 }
 
 .signup-container p {
-   color: #343A40;
-font-size: 15px;
-font-weight: 500;
+    color: #343A40;
+    font-size: 13px;
+    font-weight: 500;
     margin: 0;
 }
 
