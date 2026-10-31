@@ -2207,9 +2207,9 @@ body.dashboard-page .dashboard-footer {
     background: #5B1826;
     color: #FFFFFF;
     border: 2px solid #3E101B;
-    border-radius: 7px;
-    padding: 5px 12px;
-    font-size: 12px;
+    border-radius: 6px;
+    padding: 4px 9px;
+    font-size: 11px;
     font-weight: 700;
     cursor: pointer;
     box-shadow:
