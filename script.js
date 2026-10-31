@@ -198,7 +198,7 @@ if (loginForm) {
 
                 setTimeout(function() {
     openDashboard(result.role);
-}, 5000);
+}, 1000);
 
 
             } else {
