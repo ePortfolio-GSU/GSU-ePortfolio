@@ -197,8 +197,8 @@ if (loginForm) {
                 sessionStorage.setItem("username", result.username);
 
                 setTimeout(function() {
-                    openDashboard(result.role);
-                }, 1000);
+    openDashboard(result.role);
+}, 5000);
 
 
             } else {
