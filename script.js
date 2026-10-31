@@ -3,22 +3,64 @@
 // Version 1.0 JavaScript Foundation
 
 
-// Password visibility control
+// PASSWORD VISIBILITY CONTROL
 
 const passwordInput = document.getElementById("password");
 const showPassword = document.getElementById("showPassword");
 const togglePassword = document.getElementById("togglePassword");
 
+let passwordVisibilityTimer = null;
 
+
+// Automatically hide password
+function hidePassword() {
+
+    clearTimeout(passwordVisibilityTimer);
+
+    if (passwordInput) {
+        passwordInput.type = "password";
+    }
+
+    if (showPassword) {
+        showPassword.checked = false;
+    }
+
+    if (togglePassword) {
+        togglePassword.textContent = "👁";
+    }
+}
+
+
+// Start or refresh the 10-second countdown
+function refreshPasswordTimer() {
+
+    clearTimeout(passwordVisibilityTimer);
+
+    passwordVisibilityTimer = setTimeout(function() {
+        hidePassword();
+    }, 10000);
+}
+
+
+// Checkbox password visibility
 if (showPassword) {
 
-    showPassword.addEventListener("change", function(){
+    showPassword.addEventListener("change", function() {
 
-        if(this.checked){
+        if (this.checked) {
+
             passwordInput.type = "text";
-        }
-        else{
-            passwordInput.type = "password";
+
+            if (togglePassword) {
+                togglePassword.textContent = "🙈";
+            }
+
+            refreshPasswordTimer();
+
+        } else {
+
+            hidePassword();
+
         }
 
     });
@@ -26,21 +68,26 @@ if (showPassword) {
 }
 
 
+// Eye icon password visibility
 if (togglePassword) {
 
-    togglePassword.addEventListener("click", function(){
+    togglePassword.addEventListener("click", function() {
 
-        if(passwordInput.type === "password"){
+        if (passwordInput.type === "password") {
 
             passwordInput.type = "text";
+
+            if (showPassword) {
+                showPassword.checked = true;
+            }
+
             togglePassword.textContent = "🙈";
 
-        }
+            refreshPasswordTimer();
 
-        else{
+        } else {
 
-            passwordInput.type = "password";
-            togglePassword.textContent = "👁";
+            hidePassword();
 
         }
 
@@ -49,26 +96,43 @@ if (togglePassword) {
 }
 
 
+// Refresh countdown whenever a character is entered
+if (passwordInput) {
 
-// Login form handling
+    passwordInput.addEventListener("input", function() {
+
+        if (passwordInput.type === "text") {
+            refreshPasswordTimer();
+        }
+
+    });
+
+}
+
+
+
+// LOGIN FORM HANDLING
 
 const loginForm = document.getElementById("loginForm");
 const message = document.getElementById("message");
 
+const usernameInput = document.getElementById("username");
 
-if(loginForm){
 
-    loginForm.addEventListener("submit", function(event){
+if (loginForm) {
+
+    loginForm.addEventListener("submit", function(event) {
 
         event.preventDefault();
 
+        // Close password visibility immediately
+        hidePassword();
 
-        const username = document.getElementById("username").value.trim();
-        const password = document.getElementById("password").value.trim();
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
 
-
-
-        if(username === "" || password === ""){
+        // Validate empty fields
+        if (username === "" || password === "") {
 
             message.textContent = "Please enter username and password.";
             message.style.color = "red";
@@ -78,77 +142,106 @@ if(loginForm){
         }
 
 
+        // Capture credentials, then clear both fields
+        usernameInput.value = "";
+        passwordInput.value = "";
 
-     
- // Login loading state
-const loginButton = loginForm.querySelector('button[type="submit"]');
 
-loginButton.classList.remove("is-success");
-loginButton.classList.add("is-authenticating");
-loginButton.textContent = "Authenticating...";
-loginButton.disabled = true;
+        // Login loading state
+        const loginButton = loginForm.querySelector('button[type="submit"]');
 
-message.textContent = "";
-message.style.color = "";
+        loginButton.classList.remove("is-success");
+        loginButton.classList.add("is-authenticating");
+        loginButton.textContent = "Authenticating...";
+        loginButton.disabled = true;
 
-const WEB_APP_URL =
-"https://script.google.com/macros/s/AKfycbwcYc2v0rRVF_AFDtluOVFCTja89vOH0HBtcI9rLGs0PCd7D3YpI5K4EVrb7XKaH_AL/exec";
+        message.textContent = "";
+        message.style.color = "";
 
-fetch(WEB_APP_URL, {
-    method: "POST",
-    headers: {
-        "Content-Type": "text/plain;charset=UTF-8"
-    },
-    body: JSON.stringify({
-        action: "login",
-        username: username,
-        password: password
-    })
-})
-.then(response => response.json())
-.then(result => {
 
-    if (result.success) {
+        const WEB_APP_URL =
+        "https://script.google.com/macros/s/AKfycbwcYc2v0rRVF_AFDtluOVFCTja89vOH0HBtcI9rLGs0PCd7D3YpI5K4EVrb7XKaH_AL/exec";
 
-        loginButton.classList.remove("is-authenticating");
-        loginButton.classList.add("is-success");
-        loginButton.textContent = "LOGIN SUCCESSFUL ✓";
 
-       message.textContent = "";
+        fetch(WEB_APP_URL, {
 
-        sessionStorage.setItem("loginSuccessMessage", "Login successful!");
-        sessionStorage.setItem("loggedUser", result.fullName);
-        sessionStorage.setItem("userRole", result.role);
-        sessionStorage.setItem("username", result.username);
+            method: "POST",
 
-        setTimeout(function() {
-            openDashboard(result.role);
-        }, 1000);
+            headers: {
+                "Content-Type": "text/plain;charset=UTF-8"
+            },
 
-    } else {
+            body: JSON.stringify({
+                action: "login",
+                username: username,
+                password: password
+            })
 
-        loginButton.classList.remove("is-authenticating");
-        loginButton.textContent = "LOGIN";
-        loginButton.disabled = false;
+        })
 
-        message.style.color = "red";
-        message.textContent = result.message;
-    }
+        .then(response => response.json())
 
-})
-.catch(error => {
+        .then(result => {
 
-    loginButton.classList.remove("is-authenticating");
-    loginButton.textContent = "LOGIN";
-    loginButton.disabled = false;
+            if (result.success) {
 
-    console.error(error);
+                loginButton.classList.remove("is-authenticating");
+                loginButton.classList.add("is-success");
+                loginButton.textContent = "LOGIN SUCCESSFUL ✓";
 
-    message.style.color = "red";
-    message.textContent = error.toString();
+                message.textContent = "";
 
-});
+                sessionStorage.setItem("loginSuccessMessage", "Login successful!");
+                sessionStorage.setItem("loggedUser", result.fullName);
+                sessionStorage.setItem("userRole", result.role);
+                sessionStorage.setItem("username", result.username);
 
+                setTimeout(function() {
+                    openDashboard(result.role);
+                }, 1000);
+
+
+            } else {
+
+                loginButton.classList.remove("is-authenticating");
+                loginButton.textContent = "LOGIN";
+                loginButton.disabled = false;
+
+                // Red blinking and shaking effect
+                usernameInput.classList.remove("login-error");
+                passwordInput.classList.remove("login-error");
+
+                void usernameInput.offsetWidth;
+
+                usernameInput.classList.add("login-error");
+                passwordInput.classList.add("login-error");
+
+                setTimeout(function() {
+
+                    usernameInput.classList.remove("login-error");
+                    passwordInput.classList.remove("login-error");
+
+                }, 800);
+
+                message.style.color = "red";
+                message.textContent = result.message;
+
+            }
+
+        })
+
+        .catch(error => {
+
+            loginButton.classList.remove("is-authenticating");
+            loginButton.textContent = "LOGIN";
+            loginButton.disabled = false;
+
+            console.error(error);
+
+            message.style.color = "red";
+            message.textContent = error.toString();
+
+        });
 
     });
 
