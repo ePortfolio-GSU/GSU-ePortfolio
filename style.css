@@ -2182,16 +2182,15 @@ body.dashboard-page .dashboard-footer {
     opacity: 1 !important;
     pointer-events: none !important;
 }
-/* Compact Sign Up Section */
+/* Sign Up Section */
 
 .signup-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
-    gap: 8px;
+    gap: 5px;
     margin: 8px auto 0;
-    min-height: 32px;
 }
 
 .signup-container p {
