@@ -767,3 +767,59 @@ if (
         control.removeEventListener("animationend", cleanup);
     }, { once: true });
 });
+// RESET LOGIN PAGE WHEN RETURNING THROUGH BACK BUTTON
+
+window.addEventListener("pageshow", function () {
+
+    const loginForm = document.getElementById("loginForm");
+    const usernameInput = document.getElementById("username");
+    const passwordInput = document.getElementById("password");
+    const rememberMe = document.getElementById("rememberMe");
+    const showPassword = document.getElementById("showPassword");
+    const togglePassword = document.getElementById("togglePassword");
+    const message = document.getElementById("message");
+
+    const loginButton = document.querySelector(
+        '#loginForm button[type="submit"]'
+    );
+
+    if (loginForm) {
+        loginForm.reset();
+    }
+
+    if (usernameInput) {
+        usernameInput.value = "";
+    }
+
+    if (passwordInput) {
+        passwordInput.value = "";
+        passwordInput.type = "password";
+    }
+
+    if (rememberMe) {
+        rememberMe.checked = false;
+    }
+
+    if (showPassword) {
+        showPassword.checked = false;
+    }
+
+    if (togglePassword) {
+        togglePassword.textContent = "👁";
+    }
+
+    if (message) {
+        message.textContent = "";
+    }
+
+    if (loginButton) {
+        loginButton.classList.remove(
+            "is-success",
+            "is-authenticating"
+        );
+
+        loginButton.textContent = "LOGIN";
+        loginButton.disabled = false;
+    }
+
+});
