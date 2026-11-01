@@ -362,21 +362,21 @@ const DASHBOARD_ROLES = {
         ]
     },
 
-    SCHOOL_ADMIN: {
-        title: "SCHOOL ADMIN DASHBOARD",
-        welcome: "Welcome to the School Administration Portal.",
-        menu: [
-            ["🏠", "Dashboard Overview"],
-            ["🎓", "Learners"],
-            ["👩‍🏫", "Teachers"],
-            ["🏫", "Classes & Subjects"],
-            ["📝", "Academic Records"],
-            ["📁", "Portfolios"],
-            ["📊", "Reports"],
-            ["⚙️", "Settings"],
-            ["🚪", "Logout", "logout"]
-        ]
-    },
+   SCHOOL_ADMIN: {
+    title: "SCHOOL ADMIN DASHBOARD",
+    welcome: "Welcome to the School Administration Portal.",
+    menu: [
+        ["🏠", "Dashboard Overview"],
+        ["🎓", "Learners"],
+        ["👩‍🏫", "Teachers"],
+        ["🏫", "Classes & Subjects"],
+        ["📝", "Academic Records"],
+        ["📁", "Portfolios"],
+        ["📊", "Reports & Analytics"],
+        ["📅", "School Operations"],
+        ["🚪", "Logout", "logout"]
+    ]
+},
 
     TEACHER: {
         title: "TEACHER DASHBOARD",
@@ -407,20 +407,20 @@ const DASHBOARD_ROLES = {
         ]
     },
 
-    PARENT: {
-        title: "PARENT DASHBOARD",
-        welcome: "Welcome to the parent and guardian portal.",
-        menu: [
-            ["🏠", "Dashboard Overview"],
-            ["👨‍👩‍👧", "My Children"],
-            ["📈", "Academic Progress"],
-            ["📁", "Portfolios"],
-            ["📅", "Attendance"],
-            ["💬", "Messages"],
-            ["👤", "My Profile"],
-            ["🚪", "Logout", "logout"]
-        ]
-    }
+   PARENT: {
+    title: "PARENT DASHBOARD",
+    welcome: "Welcome to the parent and guardian portal.",
+    menu: [
+        ["🏠", "Dashboard Overview"],
+        ["👨‍👩‍👧", "My Children"],
+        ["📈", "Academic Progress"],
+        ["📁", "Portfolios"],
+        ["📅", "Attendance"],
+        ["💬", "Send Feedback"],
+        ["👤", "My Profile"],
+        ["🚪", "Logout", "logout"]
+    ]
+}
 };
 
 
