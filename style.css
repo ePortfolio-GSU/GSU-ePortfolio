@@ -2666,3 +2666,53 @@ body:has(.login-card) footer {
         flex-direction: column;
     }
 }
+/* =====================================================
+   ACADEMIC COMMAND CENTRE — HORIZONTAL LAYOUT
+===================================================== */
+
+.session-card-main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
+    align-items: center;
+    column-gap: 28px;
+}
+
+.session-year-block {
+    grid-column: 1 / -1;
+}
+
+.session-progress-layout {
+    grid-column: 1;
+    grid-row: 2;
+    margin: 20px 0;
+}
+
+.session-term-timeline {
+    grid-column: 2;
+    grid-row: 2;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-self: center;
+}
+
+.session-card-details {
+    grid-column: 1 / -1;
+}
+
+@media (max-width: 600px) {
+    .session-card-main {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 0;
+    }
+
+    .session-year-block,
+    .session-progress-layout,
+    .session-term-timeline,
+    .session-card-details {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .session-term-timeline {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
