@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0B57D0">
+
+    <title>GSU Embakasi Academy | Calendar & Events</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="events.css">
+</head>
+
+<body class="dashboard-page calendar-page">
+
+<div class="dashboard-wrapper">
+
+    <header class="dashboard-header">
+        <div class="dashboard-brand">
+            <img src="logo.png" alt="GSU Embakasi Academy">
+            <div>
+                <strong>GSU EMBAKASI ACADEMY</strong>
+                <span>ACADEMIC CALENDAR & EVENTS</span>
+            </div>
+        </div>
+
+        <div class="calendar-user">
+            <span id="calendarUserName"></span>
+            <button id="calendarBackButton" type="button">
+                Back to Dashboard
+            </button>
+        </div>
+    </header>
+
+    <main class="calendar-main">
+
+        <section class="calendar-heading">
+            <div>
+                <h1>Calendar & Events</h1>
+                <p>School academic programme, events and activities.</p>
+            </div>
+
+            <div id="calendarAcademicContext"></div>
+        </section>
+
+
+        <!-- SCHOOL CALENDAR -->
+
+        <section class="calendar-section">
+
+            <div class="calendar-section-heading">
+                <div>
+                    <h2>School Calendar</h2>
+                    <p>Official academic programme and school timelines.</p>
+                </div>
+
+                <button
+                    id="addSchoolCalendarButton"
+                    class="calendar-admin-button"
+                    type="button"
+                    hidden>
+                    + Add School Calendar Record
+                </button>
+            </div>
+
+            <div id="schoolCalendarList" class="calendar-record-list">
+                <p class="calendar-loading">Loading school calendar...</p>
+            </div>
+
+        </section>
+
+
+        <!-- EVENTS AND ACTIVITIES -->
+
+        <section class="calendar-section">
+
+            <div class="calendar-section-heading">
+                <div>
+                    <h2>Events & Activities</h2>
+                    <p>School announcements, programmes and activities.</p>
+                </div>
+
+                <button
+                    id="addSchoolEventButton"
+                    class="calendar-admin-button"
+                    type="button"
+                    hidden>
+                    + Create Event / Activity
+                </button>
+            </div>
+
+
+            <nav class="event-tabs" aria-label="Event categories">
+
+                <button class="event-tab active"
+                    data-event-view="ongoing" type="button">
+                    Ongoing
+                </button>
+
+                <button class="event-tab"
+                    data-event-view="upcoming" type="button">
+                    Upcoming
+                </button>
+
+                <button class="event-tab"
+                    data-event-view="ended" type="button">
+                    Ended / Completed
+                </button>
+
+                <button class="event-tab"
+                    data-event-view="past" type="button">
+                    Past Events
+                </button>
+
+            </nav>
+
+            <div id="schoolEventsList" class="calendar-record-list">
+                <p class="calendar-loading">Loading events and activities...</p>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="calendar-footer">
+        © 2026 GSU Embakasi Academy. All Rights Reserved.
+    </footer>
+
+</div>
+
+
+<!-- SCHOOL CALENDAR FORM -->
+
+<dialog id="schoolCalendarDialog" class="calendar-dialog">
+
+    <form id="schoolCalendarForm">
+
+        <h2 id="schoolCalendarFormTitle">School Calendar Record</h2>
+
+        <input type="hidden" id="schoolRecordId">
+
+        <label for="schoolRecordType">Record Type</label>
+        <select id="schoolRecordType" required>
+            <option value="TERM">Academic Term</option>
+            <option value="EVENT">School Calendar Event</option>
+        </select>
+
+        <label for="schoolTermId">Term ID</label>
+        <input id="schoolTermId" type="text"
+            placeholder="Example: 2026-T3" required>
+
+        <label for="schoolRecordTitle">Title</label>
+        <input id="schoolRecordTitle" type="text" required>
+
+        <label for="schoolRecordCategory">Category</label>
+        <input id="schoolRecordCategory" type="text"
+            placeholder="Term, Holiday, Examination, Milestone">
+
+        <label for="schoolRecordStart">Start date and time</label>
+        <input id="schoolRecordStart" type="datetime-local" required>
+
+        <label for="schoolRecordEnd">End date and time</label>
+        <input id="schoolRecordEnd" type="datetime-local" required>
+
+        <label for="schoolRecordVenue">Venue</label>
+        <input id="schoolRecordVenue" type="text">
+
+        <label for="schoolRecordDescription">Description</label>
+        <textarea id="schoolRecordDescription" rows="3"></textarea>
+
+        <label for="schoolRecordStatus">Status</label>
+        <select id="schoolRecordStatus">
+            <option value="PUBLISHED">Published</option>
+            <option value="DRAFT">Draft</option>
+        </select>
+
+        <div class="calendar-form-actions">
+            <button type="submit">Save Record</button>
+            <button type="button" data-close-dialog="schoolCalendarDialog">
+                Close
+            </button>
+        </div>
+
+    </form>
+
+</dialog>
+
+
+<!-- EVENTS AND ACTIVITIES FORM -->
+
+<dialog id="schoolEventDialog" class="calendar-dialog">
+
+    <form id="schoolEventForm">
+
+        <h2 id="schoolEventFormTitle">Create Event / Activity</h2>
+
+        <input type="hidden" id="schoolEventId">
+
+        <label for="schoolEventTitle">Event title / name</label>
+        <input id="schoolEventTitle" type="text" required>
+
+        <label for="schoolEventStart">Start date and time</label>
+        <input id="schoolEventStart" type="datetime-local" required>
+
+        <label for="schoolEventEnd">End date and time</label>
+        <input id="schoolEventEnd" type="datetime-local" required>
+
+        <label for="schoolEventVenue">Venue</label>
+        <input id="schoolEventVenue" type="text" required>
+
+        <label for="schoolEventDescription">Description</label>
+        <textarea id="schoolEventDescription" rows="4" required></textarea>
+
+        <label for="schoolEventAudience">Select audience</label>
+        <select id="schoolEventAudience" required>
+            <option value="ALL">All users</option>
+            <option value="TEACHERS">Teachers only</option>
+            <option value="LEARNERS">Learners only</option>
+            <option value="PARENTS">Parents / Guardians only</option>
+            <option value="SCHOOL_ADMINS">School administrators</option>
+            <option value="ICT_ADMINS">ICT administrators</option>
+            <option value="SELECTED">Specified audience</option>
+        </select>
+
+        <label for="schoolEventTargets">Specified roles or usernames</label>
+        <textarea id="schoolEventTargets" rows="3"
+            placeholder="Enter comma-separated roles or usernames"></textarea>
+
+        <label for="schoolEventStatus">Event status</label>
+        <select id="schoolEventStatus">
+            <option value="DRAFT">Draft</option>
+            <option value="PUBLISHED">Published</option>
+            <option value="POSTPONED">Postponed</option>
+            <option value="CANCELLED">Cancelled</option>
+        </select>
+
+        <div class="calendar-form-actions">
+            <button type="submit">POST / SAVE EVENT</button>
+            <button type="button" data-close-dialog="schoolEventDialog">
+                Close
+            </button>
+        </div>
+
+    </form>
+
+</dialog>
+
+
+<script src="events.js"></script>
+
+</body>
+</html>
