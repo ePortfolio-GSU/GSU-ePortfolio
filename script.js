@@ -422,8 +422,245 @@ const DASHBOARD_ROLES = {
     ]
 }
 };
+// =====================================================
+// GSU ACADEMIC COMMAND CENTRE
+// Shared role-based session progress card
+// =====================================================
+
+const ACADEMIC_SESSION_CONFIG = {
+    academicYear: "2026",
+    sessionStartDate: "",
+    sessionEndDate: "",
+    nextMilestone: "",
+
+    terms: [
+        { label: "TERM 01", startDate: "", endDate: "" },
+        { label: "TERM 02", startDate: "", endDate: "" },
+        { label: "TERM 03", startDate: "", endDate: "" }
+    ]
+};
+
+const SESSION_ROLE_CONTEXT = {
+    ICT_ADMIN: "WHOLE-SCHOOL SESSION OVERSIGHT",
+    SCHOOL_ADMIN: "SCHOOL CALENDAR & MILESTONE OVERSIGHT",
+    TEACHER: "TEACHING & CLASS SESSION CONTEXT",
+    LEARNER: "YOUR ACADEMIC YEAR & LEARNING TIMELINE",
+    PARENT: "LINKED LEARNER SESSION OVERVIEW"
+};
 
 
+function parseSessionDate(value) {
+    if (!value) return null;
+
+    const date = new Date(value + "T00:00:00+03:00");
+
+    return Number.isNaN(date.getTime()) ? null : date;
+}
+
+
+function formatSessionDate(value) {
+    const date = parseSessionDate(value);
+
+    if (!date) return "Not configured";
+
+    return new Intl.DateTimeFormat("en-KE", {
+        timeZone: "Africa/Nairobi",
+        day: "numeric",
+        month: "short",
+        year: "numeric"
+    }).format(date);
+}
+
+
+function calculateSessionProgress() {
+    const start = parseSessionDate(
+        ACADEMIC_SESSION_CONFIG.sessionStartDate
+    );
+
+    const end = parseSessionDate(
+        ACADEMIC_SESSION_CONFIG.sessionEndDate
+    );
+
+    if (!start || !end || end <= start) return null;
+
+    const now = new Date();
+
+    const elapsed = now.getTime() - start.getTime();
+    const duration = end.getTime() - start.getTime();
+
+    return Math.min(100, Math.max(
+        0,
+        Math.round((elapsed / duration) * 100)
+    ));
+}
+
+
+function getAcademicTermStatus(term) {
+    const start = parseSessionDate(term.startDate);
+    const end = parseSessionDate(term.endDate);
+
+    if (!start || !end || end < start) {
+        return "DATES PENDING";
+    }
+
+    const now = new Date();
+
+    if (now < start) return "UPCOMING";
+    if (now > end) return "COMPLETED";
+
+    return "IN PROGRESS";
+}
+
+
+function renderSessionProgressCard(role) {
+    const host = document.getElementById("dashboardCards");
+
+    if (!host) return;
+
+    const config = ACADEMIC_SESSION_CONFIG;
+    const progress = calculateSessionProgress();
+
+    const termMarkup = config.terms.map(term => {
+        const status = getAcademicTermStatus(term);
+
+        return `
+            <div class="session-term">
+                <span>${term.label}</span>
+                <strong>${status}</strong>
+            </div>
+        `;
+    }).join("");
+
+    host.innerHTML = `
+        <section class="session-progress-card">
+
+            <header class="session-card-header">
+
+                <div class="session-card-brand">
+                    <span class="session-card-symbol">◎</span>
+
+                    <div>
+                        <h2>ACADEMIC COMMAND CENTRE</h2>
+                        <p>GSU EMBakasi Academy · LIVE SESSION</p>
+                    </div>
+                </div>
+
+                <span class="session-live-indicator">
+                    <span></span> LIVE
+                </span>
+
+            </header>
+
+            <div class="session-card-role">
+                ${SESSION_ROLE_CONTEXT[role] || "ACADEMIC SESSION VIEW"}
+            </div>
+
+            <div class="session-card-main">
+
+                <div class="session-year-block">
+                    <span>ACADEMIC YEAR</span>
+                    <strong>${config.academicYear}</strong>
+                </div>
+
+                <div class="session-progress-layout">
+
+                    <div class="session-progress-ring"
+                         style="--session-progress: ${progress ?? 0}%">
+
+                        <div class="session-ring-content">
+                            <strong>
+                                ${progress === null ? "—" : progress + "%"}
+                            </strong>
+                            <span>COMPLETED</span>
+                        </div>
+
+                    </div>
+
+                    <div class="session-progress-description">
+                        <span>SESSION PROGRESS</span>
+
+                        <strong>
+                            ${progress === null
+                                ? "Calendar awaiting configuration"
+                                : progress + "% of the academic year completed"}
+                        </strong>
+
+                        <p>
+                            Tracking progress across all three academic terms.
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="session-term-timeline">
+                    ${termMarkup}
+                </div>
+
+                <div class="session-card-details">
+
+                    <div>
+                        <span>SESSION START</span>
+                        <strong>
+                            ${formatSessionDate(config.sessionStartDate)}
+                        </strong>
+                    </div>
+
+                    <div>
+                        <span>NEXT MILESTONE</span>
+                        <strong>
+                            ${config.nextMilestone || "Not configured"}
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="session-card-clock">
+                <span id="sessionLiveDate">Loading date...</span>
+                <strong id="sessionLiveTime">Loading time...</strong>
+            </div>
+
+        </section>
+    `;
+
+    updateSessionClock();
+
+    if (window.sessionProgressClock) {
+        clearInterval(window.sessionProgressClock);
+    }
+
+    window.sessionProgressClock = setInterval(
+        updateSessionClock,
+        1000
+    );
+}
+
+
+function updateSessionClock() {
+    const dateElement = document.getElementById("sessionLiveDate");
+    const timeElement = document.getElementById("sessionLiveTime");
+
+    if (!dateElement || !timeElement) return;
+
+    const now = new Date();
+
+    dateElement.textContent = new Intl.DateTimeFormat("en-KE", {
+        timeZone: "Africa/Nairobi",
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    }).format(now);
+
+    timeElement.textContent = new Intl.DateTimeFormat("en-KE", {
+        timeZone: "Africa/Nairobi",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+    }).format(now);
+}
 // Initialize dashboard after the page loads
 document.addEventListener("DOMContentLoaded", function () {
     const sidebar = document.getElementById("dashboardSidebar");
@@ -597,6 +834,7 @@ function loadDashboard(role) {
 }
 
     buildSidebar(config.menu);
+    renderSessionProgressCard(role);
 }
 
 
