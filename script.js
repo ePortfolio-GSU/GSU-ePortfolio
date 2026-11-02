@@ -195,6 +195,7 @@ if (loginForm) {
                 sessionStorage.setItem("loggedUser", result.fullName);
                 sessionStorage.setItem("userRole", result.role);
                 sessionStorage.setItem("username", result.username);
+                sessionStorage.setItem("sessionToken", result.sessionToken);
 
                 setTimeout(function() {
     openDashboard(result.role);
