@@ -548,20 +548,24 @@ function renderSessionProgressCard(role) {
 
             <header class="session-card-header">
 
-                <div class="session-card-brand">
-                    <span class="session-card-symbol">◎</span>
+    <div class="session-card-brand">
+        <span class="session-card-symbol">◎</span>
 
-                    <div>
-                        <h2>ACADEMIC COMMAND CENTRE</h2>
-                        <p>GSU EMBakasi Academy · LIVE SESSION</p>
-                    </div>
-                </div>
+        <div>
+            <h2>ACADEMIC COMMAND CENTRE</h2>
+            <p>GSU EMBAKASI ACADEMY · LIVE SESSION</p>
+        </div>
+    </div>
 
-                <span class="session-live-indicator">
-    <span></span> LIVE
-</span>
+    <span class="session-week-date" id="sessionLiveDate">
+        Loading date...
+    </span>
 
-            </header>
+    <span class="session-live-indicator">
+        <span></span> LIVE
+    </span>
+
+</header>
 
             <div class="session-card-role">
                 ${SESSION_ROLE_CONTEXT[role] || "ACADEMIC SESSION VIEW"}
