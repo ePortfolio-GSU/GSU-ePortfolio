@@ -2742,3 +2742,90 @@ body:has(.login-card) footer {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
+/* ACADEMIC COMMAND CENTRE — BOTTOM ACTIVITIES ROW */
+
+.session-activities-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 18px;
+    width: 100%;
+    margin-top: 16px;
+    padding-top: 13px;
+    border-top: 1px solid rgba(135, 206, 235, 0.22);
+}
+
+.session-ongoing-section,
+.session-upcoming-section {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.session-upcoming-section {
+    align-items: flex-end;
+    text-align: right;
+}
+
+.session-activities-label {
+    color: #87CEEB;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.session-activities-names {
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.session-ongoing-button {
+    align-self: flex-start;
+    margin-top: 2px;
+}
+
+.session-upcoming-section strong {
+    color: #FFFFFF;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.session-upcoming-section span {
+    color: #B9C9D8;
+    font-size: 10px;
+}
+
+/* Compact phone layout — retain the two-column arrangement */
+
+@media (max-width: 600px) {
+
+    .session-activities-row {
+        gap: 10px;
+        margin-top: 12px;
+        padding-top: 10px;
+    }
+
+    .session-activities-label {
+        font-size: 9px;
+        letter-spacing: 0.7px;
+    }
+
+    .session-activities-names,
+    .session-upcoming-section strong {
+        font-size: 10px;
+    }
+
+    .session-upcoming-section span {
+        font-size: 9px;
+    }
+
+    .session-ongoing-button {
+        padding: 6px 10px;
+        font-size: 9px;
+    }
+}
