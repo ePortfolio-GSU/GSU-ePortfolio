@@ -647,7 +647,6 @@ function renderSessionProgressCard(role) {
             </div>
 
             <div class="session-card-clock">
-                <span id="sessionLiveDate">Loading date...</span>
                 <strong id="sessionLiveTime">Loading time...</strong>
             </div>
 
@@ -675,13 +674,40 @@ function updateSessionClock() {
 
     const now = new Date();
 
-    dateElement.textContent = new Intl.DateTimeFormat("en-KE", {
+    const nairobiDate = new Date(
+        now.toLocaleString("en-US", {
+            timeZone: "Africa/Nairobi"
+        })
+    );
+
+    const academicYearStart = new Date(
+        nairobiDate.getFullYear(),
+        0,
+        1
+    );
+
+    const dayOfYear = Math.floor(
+        (nairobiDate - academicYearStart) / 86400000
+    ) + 1;
+
+    const weekNumber = Math.ceil(dayOfYear / 7);
+
+    const weekLabel = String(weekNumber).padStart(2, "0");
+
+    const dayLabel = new Intl.DateTimeFormat("en-KE", {
         timeZone: "Africa/Nairobi",
-        weekday: "long",
-        day: "numeric",
-        month: "long",
+        weekday: "short"
+    }).format(now).toUpperCase();
+
+    const dateLabel = new Intl.DateTimeFormat("en-KE", {
+        timeZone: "Africa/Nairobi",
+        day: "2-digit",
+        month: "short",
         year: "numeric"
-    }).format(now);
+    }).format(now).toUpperCase();
+
+    dateElement.textContent =
+        `WEEK ${weekLabel} · ${dayLabel} · ${dateLabel}`;
 
     timeElement.textContent = new Intl.DateTimeFormat("en-KE", {
         timeZone: "Africa/Nairobi",
