@@ -670,39 +670,8 @@ function renderSessionProgressCard(role) {
 // GSU ACADEMIC COMMAND CENTRE
 // Shared role-based session progress card
 // =====================================================
-
-const ACADEMIC_SESSION_CONFIG = {
-    academicYear: "2026",
-    sessionStartDate: "2026-01-01",
-    sessionEndDate: "2026-12-31",
-    nextMilestone: "Year Closure",
-
-    terms: [
-        {
-            label: "TERM 01",
-            startDate: "2026-01-05",
-            endDate: "2026-04-02"
-        },
-        {
-            label: "TERM 02",
-            startDate: "2026-04-27",
-            endDate: "2026-07-31"
-        },
-        {
-            label: "TERM 03",
-            startDate: "2026-08-24",
-            endDate: "2026-10-23"
-        }
-    ]
-};
-const SESSION_ROLE_CONTEXT = {
-    ICT_ADMIN: "WHOLE-SCHOOL SESSION OVERSIGHT",
-    SCHOOL_ADMIN: "SCHOOL CALENDAR & MILESTONE OVERSIGHT",
-    TEACHER: "TEACHING & CLASS SESSION CONTEXT",
-    LEARNER: "YOUR ACADEMIC YEAR & LEARNING TIMELINE",
-    PARENT: "LINKED LEARNER SESSION OVERVIEW"
-};
-
+// Reuse the ACADEMIC_SESSION_CONFIG declared above.
+// Reuse the SESSION_ROLE_CONTEXT declared above.
 
 function parseSessionDate(value) {
     if (!value) return null;
