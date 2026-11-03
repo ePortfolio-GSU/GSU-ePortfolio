@@ -608,23 +608,37 @@ function renderSessionProgressCard(role) {
                     ${termMarkup}
                 </div>
 
-                <div class="session-card-details">
+                <div class="session-activities-row">
 
-                    <div>
-                        <span>SESSION START</span>
-                        <strong>
-                            ${formatSessionDate(config.sessionStartDate)}
-                        </strong>
-                    </div>
+    <div class="session-ongoing-section">
 
-                    <div>
-                        <span>NEXT MILESTONE</span>
-                        <strong>
-                            ${config.nextMilestone || "Not configured"}
-                        </strong>
-                    </div>
+        <div class="session-activities-label">
+            ONGOING ASSESSMENTS
+        </div>
 
-                </div>
+        <strong class="session-activities-names">
+            KPSEA / KJSEA / KPLEA
+        </strong>
+
+        <a href="events.html" class="session-ongoing-button">
+            ONGOING
+        </a>
+
+    </div>
+
+    <div class="session-upcoming-section">
+
+        <div class="session-activities-label">
+            UPCOMING
+        </div>
+
+        <strong>KCSE EXAMINATIONS</strong>
+
+        <span>2–20 November 2026</span>
+
+    </div>
+
+</div>
 
             </div>
 
