@@ -557,9 +557,17 @@ function renderSessionProgressCard(role) {
                     </div>
                 </div>
 
-                <span class="session-live-indicator">
-                    <span></span> LIVE
-                </span>
+                <div class="session-card-actions">
+
+    <a href="events.html" class="session-ongoing-button">
+        ONGOING
+    </a>
+
+    <span class="session-live-indicator">
+        <span></span> LIVE
+    </span>
+
+</div>
 
             </header>
 
