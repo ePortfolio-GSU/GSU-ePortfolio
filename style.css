@@ -2829,3 +2829,283 @@ body:has(.login-card) footer {
         font-size: 9px;
     }
 }
+/* =====================================================
+   GSU ACADEMIC COMMAND CENTRE
+   FINAL RESPONSIVE LAYOUT CORRECTION
+===================================================== */
+
+/* Ensure the card occupies the entire dashboard width */
+
+.dashboard-page #dashboardCards {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+}
+
+.dashboard-page .session-progress-card {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* Prevent heading and header content from collapsing */
+
+.session-card-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+
+.session-card-brand {
+    display: flex;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.session-card-brand > div {
+    min-width: 0;
+}
+
+.session-card-brand h2 {
+    white-space: normal;
+    overflow-wrap: normal;
+    word-break: normal;
+    line-height: 1.35;
+}
+
+.session-week-date {
+    min-width: 0;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: normal;
+    line-height: 1.5;
+}
+
+.session-live-indicator {
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* Maintain the intended horizontal progress layout */
+
+.session-card-main {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.session-progress-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 0;
+}
+
+.session-progress-description {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: normal;
+}
+
+.session-term-timeline {
+    width: 100%;
+    min-width: 0;
+}
+
+.session-term {
+    min-width: 0;
+    overflow-wrap: normal;
+}
+
+.session-term strong {
+    overflow-wrap: anywhere;
+}
+
+/* Keep activities balanced */
+
+.session-activities-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.session-ongoing-section,
+.session-upcoming-section {
+    min-width: 0;
+}
+
+.session-activities-names,
+.session-upcoming-section strong {
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+.session-ongoing-section > span,
+.session-upcoming-section > span {
+    overflow-wrap: anywhere;
+    line-height: 1.5;
+}
+
+/* Tablet and phone */
+
+@media (max-width: 768px) {
+
+    .dashboard-page #dashboardCards {
+        display: block !important;
+        grid-template-columns: minmax(0, 1fr) !important;
+    }
+
+    .session-progress-card {
+        padding: 18px;
+    }
+
+    .session-card-header {
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 10px;
+    }
+
+    .session-card-brand h2 {
+        font-size: 14px;
+        letter-spacing: 0.5px;
+    }
+
+    .session-card-brand p {
+        font-size: 8px;
+        letter-spacing: 0.7px;
+    }
+
+    .session-week-date {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .session-live-indicator {
+        grid-column: 2;
+        grid-row: 1;
+    }
+
+    .session-progress-layout {
+        gap: 16px;
+    }
+
+    .session-progress-ring {
+        flex: 0 0 110px;
+        width: 110px;
+        height: 110px;
+    }
+
+    .session-ring-content {
+        width: 88px;
+        height: 88px;
+    }
+
+    .session-term-timeline {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+/* Smaller phones */
+
+@media (max-width: 420px) {
+
+    .session-progress-card {
+        padding: 14px;
+        border-radius: 14px;
+    }
+
+    .session-card-brand {
+        gap: 8px;
+    }
+
+    .session-card-symbol {
+        width: 32px;
+        height: 32px;
+        font-size: 19px;
+        flex-shrink: 0;
+    }
+
+    .session-card-brand h2 {
+        font-size: 12px;
+        letter-spacing: 0.3px;
+    }
+
+    .session-card-brand p {
+        font-size: 7px;
+        letter-spacing: 0.3px;
+    }
+
+    .session-week-date {
+        font-size: 11px;
+    }
+
+    .session-progress-layout {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .session-progress-description {
+        width: 100%;
+        text-align: center;
+    }
+
+    .session-progress-description strong {
+        font-size: 13px;
+    }
+
+    .session-progress-description p {
+        font-size: 11px;
+    }
+
+    .session-term-timeline {
+        gap: 6px;
+    }
+
+    .session-term {
+        padding: 9px 6px;
+    }
+
+    .session-term span,
+    .session-term strong {
+        font-size: 9px;
+    }
+
+    .session-activities-row {
+        gap: 10px;
+    }
+
+    .session-activities-label {
+        font-size: 9px;
+        letter-spacing: 0.5px;
+    }
+
+    .session-activities-names,
+    .session-upcoming-section strong {
+        font-size: 10px;
+    }
+
+    .session-ongoing-section > span,
+    .session-upcoming-section > span {
+        font-size: 9px;
+    }
+
+    .session-ongoing-button {
+        padding: 7px 10px;
+        font-size: 9px;
+    }
+
+    .session-card-clock {
+        flex-direction: row;
+        align-items: center;
+    }
+}
