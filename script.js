@@ -449,6 +449,13 @@ const SESSION_ROLE_CONTEXT = {
     PARENT: "LINKED LEARNER SESSION OVERVIEW"
 };
 
+// Existing school Calendar & Events API
+const SESSION_EVENTS_API_URL =
+    "https://script.google.com/macros/s/AKfycbwcYc2v0rRVF_AFDtluOVFCTja89vOH0HBtcI9rLGs0PCd7D3YpI5K4EVrb7XKaH_AL/exec";
+
+let sessionEventsRefreshTimer = null;
+
+
 function getNairobiDateString(date = new Date()) {
     const parts = new Intl.DateTimeFormat("en-CA", {
         timeZone: "Africa/Nairobi",
@@ -468,6 +475,7 @@ function getNairobiDateString(date = new Date()) {
     return `${values.year}-${values.month}-${values.day}`;
 }
 
+
 function parseSessionDate(value) {
     if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
         return null;
@@ -477,6 +485,7 @@ function parseSessionDate(value) {
 
     return Number.isNaN(date.getTime()) ? null : date;
 }
+
 
 function formatSessionDate(value) {
     const date = parseSessionDate(value);
@@ -490,6 +499,7 @@ function formatSessionDate(value) {
         year: "numeric"
     }).format(date);
 }
+
 
 function calculateSessionProgress() {
     const start = parseSessionDate(
@@ -513,6 +523,7 @@ function calculateSessionProgress() {
     ));
 }
 
+
 function getAcademicTermStatus(term) {
     const today = getNairobiDateString();
 
@@ -529,6 +540,7 @@ function getAcademicTermStatus(term) {
 
     return "IN PROGRESS";
 }
+
 
 function getAcademicTermWeek() {
     const todayString = getNairobiDateString();
@@ -564,12 +576,10 @@ function getAcademicTermWeek() {
     const daysUntilFirstSaturday =
         (6 - startDay + 7) % 7;
 
-    // The first partial week ends on the first Saturday.
     if (daysFromStart <= daysUntilFirstSaturday) {
         return "WEEK 01";
     }
 
-    // Every subsequent week starts on Sunday.
     const daysAfterFirstSaturday =
         daysFromStart - daysUntilFirstSaturday - 1;
 
@@ -578,6 +588,177 @@ function getAcademicTermWeek() {
 
     return `WEEK ${String(weekNumber).padStart(2, "0")}`;
 }
+
+
+// =====================================================
+// EVENT DATE HELPERS
+// =====================================================
+
+function getSessionEventDate(value) {
+    if (!value) return null;
+
+    const date = new Date(value);
+
+    return Number.isNaN(date.getTime()) ? null : date;
+}
+
+
+function formatSessionEventDateRange(startValue, endValue) {
+    const start = getSessionEventDate(startValue);
+    const end = getSessionEventDate(endValue);
+
+    if (!start || !end) return "Date unavailable";
+
+    const options = {
+        timeZone: "Africa/Nairobi",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
+    };
+
+    const formatter = new Intl.DateTimeFormat("en-KE", options);
+
+    return `${formatter.format(start)} – ${formatter.format(end)}`;
+}
+
+
+// =====================================================
+// LOAD ONGOING AND UPCOMING EVENTS
+// =====================================================
+
+async function loadSessionEvents() {
+    const ongoingTitle = document.getElementById("sessionOngoingTitle");
+    const ongoingTime = document.getElementById("sessionOngoingTime");
+    const upcomingTitle = document.getElementById("sessionUpcomingTitle");
+    const upcomingTime = document.getElementById("sessionUpcomingTime");
+
+    if (!ongoingTitle || !upcomingTitle) return;
+
+    const sessionToken = sessionStorage.getItem("sessionToken");
+
+    if (!sessionToken) {
+        ongoingTitle.textContent = "Events unavailable";
+        ongoingTime.textContent = "Please log in again";
+        upcomingTitle.textContent = "Events unavailable";
+        upcomingTime.textContent = "Please log in again";
+        return;
+    }
+
+    try {
+        const response = await fetch(SESSION_EVENTS_API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/plain;charset=UTF-8"
+            },
+            body: JSON.stringify({
+                action: "getCalendarData",
+                sessionToken: sessionToken
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error("Calendar service unavailable");
+        }
+
+        const result = await response.json();
+
+        if (!result.success) {
+            throw new Error(
+                result.message || "Unable to load school events"
+            );
+        }
+
+        const now = new Date();
+
+        // Only published events are eligible for display.
+        const events = (result.eventsActivities || [])
+            .filter(event => {
+                const status = String(event.status || "").toUpperCase();
+
+                const start = getSessionEventDate(event.startDateTime);
+                const end = getSessionEventDate(event.endDateTime);
+
+                return (
+                    status === "PUBLISHED" &&
+                    start &&
+                    end &&
+                    end >= start
+                );
+            });
+
+        // Events currently in progress.
+        const ongoingEvents = events
+            .filter(event => {
+                const start = getSessionEventDate(event.startDateTime);
+                const end = getSessionEventDate(event.endDateTime);
+
+                return start <= now && now <= end;
+            })
+            .sort((a, b) =>
+                getSessionEventDate(a.endDateTime) -
+                getSessionEventDate(b.endDateTime)
+            );
+
+        // The nearest future event.
+        const upcomingEvents = events
+            .filter(event => {
+                const start = getSessionEventDate(event.startDateTime);
+
+                return start > now;
+            })
+            .sort((a, b) =>
+                getSessionEventDate(a.startDateTime) -
+                getSessionEventDate(b.startDateTime)
+            );
+
+        // Display the active event ending soonest if events overlap.
+        const ongoingEvent = ongoingEvents[0] || null;
+
+        // Display the event starting soonest.
+        const upcomingEvent = upcomingEvents[0] || null;
+
+        if (ongoingEvent) {
+            ongoingTitle.textContent = ongoingEvent.title;
+
+            ongoingTime.textContent = formatSessionEventDateRange(
+                ongoingEvent.startDateTime,
+                ongoingEvent.endDateTime
+            );
+        } else {
+            ongoingTitle.textContent = "No ongoing events";
+            ongoingTime.textContent = "No event is currently in progress";
+        }
+
+        if (upcomingEvent) {
+            upcomingTitle.textContent = upcomingEvent.title;
+
+            upcomingTime.textContent = formatSessionEventDateRange(
+                upcomingEvent.startDateTime,
+                upcomingEvent.endDateTime
+            );
+        } else {
+            upcomingTitle.textContent = "No upcoming events";
+            upcomingTime.textContent = "No future events scheduled";
+        }
+
+    } catch (error) {
+        console.error("Session events error:", error);
+
+        ongoingTitle.textContent = "Events temporarily unavailable";
+        ongoingTime.textContent = "Unable to retrieve event information";
+
+        upcomingTitle.textContent = "Events temporarily unavailable";
+        upcomingTime.textContent = "Unable to retrieve event information";
+    }
+}
+
+
+// =====================================================
+// RENDER ACADEMIC COMMAND CENTRE
+// =====================================================
 
 function renderSessionProgressCard(role) {
     const host = document.getElementById("dashboardCards");
@@ -673,15 +854,21 @@ function renderSessionProgressCard(role) {
                     <div class="session-ongoing-section">
 
                         <div class="session-activities-label">
-                            ONGOING ASSESSMENTS
+                            ONGOING
                         </div>
 
-                        <strong class="session-activities-names">
-                            KPSEA / KJSEA / KPLEA
+                        <strong
+                            class="session-activities-names"
+                            id="sessionOngoingTitle">
+                            Loading events...
                         </strong>
 
+                        <span id="sessionOngoingTime">
+                            Retrieving event information...
+                        </span>
+
                         <a href="events.html" class="session-ongoing-button">
-                            ONGOING
+                            VIEW EVENTS
                         </a>
 
                     </div>
@@ -692,9 +879,13 @@ function renderSessionProgressCard(role) {
                             UPCOMING
                         </div>
 
-                        <strong>KCSE EXAMINATIONS</strong>
+                        <strong id="sessionUpcomingTitle">
+                            Loading events...
+                        </strong>
 
-                        <span>2–20 November 2026</span>
+                        <span id="sessionUpcomingTime">
+                            Retrieving event information...
+                        </span>
 
                     </div>
 
@@ -719,7 +910,25 @@ function renderSessionProgressCard(role) {
         updateSessionClock,
         1000
     );
+
+    // Load events immediately.
+    loadSessionEvents();
+
+    // Refresh event information every minute.
+    if (sessionEventsRefreshTimer) {
+        clearInterval(sessionEventsRefreshTimer);
+    }
+
+    sessionEventsRefreshTimer = setInterval(
+        loadSessionEvents,
+        60000
+    );
 }
+
+
+// =====================================================
+// LIVE SESSION CLOCK
+// =====================================================
 
 function updateSessionClock() {
     const dateElement = document.getElementById("sessionLiveDate");
@@ -728,6 +937,7 @@ function updateSessionClock() {
     if (!dateElement || !timeElement) return;
 
     const now = new Date();
+
     const weekLabel = getAcademicTermWeek();
 
     const dayLabel = new Intl.DateTimeFormat("en-KE", {
