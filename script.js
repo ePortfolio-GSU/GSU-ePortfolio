@@ -756,10 +756,6 @@ async function loadSessionEvents() {
 }
 
 
-// =====================================================
-// RENDER ACADEMIC COMMAND CENTRE
-// =====================================================
-
 function renderSessionProgressCard(role) {
     const host = document.getElementById("dashboardCards");
 
@@ -789,7 +785,7 @@ function renderSessionProgressCard(role) {
 
                     <div>
                         <h2>ACADEMIC COMMAND CENTRE</h2>
-                        <p>GSU EMBAKASI ACADEMY · LIVE SESSION</p>
+                        <p>GSU EMBAKASI ACADEMY</p>
                     </div>
                 </div>
 
@@ -804,7 +800,7 @@ function renderSessionProgressCard(role) {
             </header>
 
             <div class="session-card-role">
-                ${SESSION_ROLE_CONTEXT[role] || "ACADEMIC SESSION VIEW"}
+                ${SESSION_ROLE_CONTEXT[role] || "ACADEMIC SESSION"}
             </div>
 
             <div class="session-card-main">
@@ -823,7 +819,6 @@ function renderSessionProgressCard(role) {
                             <strong>
                                 ${progress === null ? "—" : progress + "%"}
                             </strong>
-
                             <span>COMPLETED</span>
                         </div>
 
@@ -834,13 +829,9 @@ function renderSessionProgressCard(role) {
 
                         <strong>
                             ${progress === null
-                                ? "Calendar awaiting configuration"
-                                : progress + "% of the academic year completed"}
+                                ? "Not configured"
+                                : progress + "% COMPLETED"}
                         </strong>
-
-                        <p>
-                            Tracking progress across all three academic terms.
-                        </p>
                     </div>
 
                 </div>
@@ -860,15 +851,16 @@ function renderSessionProgressCard(role) {
                         <strong
                             class="session-activities-names"
                             id="sessionOngoingTitle">
-                            Loading events...
+                            Loading...
                         </strong>
 
                         <span id="sessionOngoingTime">
-                            Retrieving event information...
+                            Loading...
                         </span>
 
-                        <a href="events.html" class="session-ongoing-button">
-                            VIEW EVENTS
+                        <a href="events.html"
+                           class="session-ongoing-button">
+                            ONGOING
                         </a>
 
                     </div>
@@ -880,11 +872,11 @@ function renderSessionProgressCard(role) {
                         </div>
 
                         <strong id="sessionUpcomingTitle">
-                            Loading events...
+                            Loading...
                         </strong>
 
                         <span id="sessionUpcomingTime">
-                            Retrieving event information...
+                            Loading...
                         </span>
 
                     </div>
@@ -911,10 +903,8 @@ function renderSessionProgressCard(role) {
         1000
     );
 
-    // Load events immediately.
     loadSessionEvents();
 
-    // Refresh event information every minute.
     if (sessionEventsRefreshTimer) {
         clearInterval(sessionEventsRefreshTimer);
     }
@@ -924,7 +914,6 @@ function renderSessionProgressCard(role) {
         60000
     );
 }
-
 
 // =====================================================
 // LIVE SESSION CLOCK
