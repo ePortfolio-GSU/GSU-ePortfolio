@@ -425,38 +425,35 @@ const DASHBOARD_ROLES = {
 };
 // =====================================================
 // GSU ACADEMIC COMMAND CENTRE
-// DYNAMIC SCHOOL CALENDAR AND SESSION PROGRESS
+// Shared role-based session progress card
 // =====================================================
 
+const ACADEMIC_SESSION_CONFIG = {
+    academicYear: "2026",
+    sessionStartDate: "2026-01-01",
+    sessionEndDate: "2026-12-31",
+    nextMilestone: "Year Closure",
+
+    terms: [
+        { label: "TERM 01", startDate: "2026-01-05", endDate: "2026-04-02" },
+        { label: "TERM 02", startDate: "2026-04-27", endDate: "2026-07-31" },
+        { label: "TERM 03", startDate: "2026-08-24", endDate: "2026-10-23" }
+    ]
+};
+
+const SESSION_ROLE_CONTEXT = {
+    ICT_ADMIN: "ICT ADMIN",
+    SCHOOL_ADMIN: "SCHOOL ADMIN",
+    TEACHER: "TEACHER",
+    LEARNER: "LEARNER",
+    PARENT: "PARENT / GUARDIAN"
+};
+
+// Existing school Calendar & Events API
 const SESSION_EVENTS_API_URL =
     "https://script.google.com/macros/s/AKfycbwcYc2v0rRVF_AFDtluOVFCTja89vOH0HBtcI9rLGs0PCd7D3YpI5K4EVrb7XKaH_AL/exec";
 
-let sessionCalendarData = null;
 let sessionEventsRefreshTimer = null;
-let sessionProgressClock = null;
-
-
-// =====================================================
-// NAIROBI DATE AND TIME
-// =====================================================
-
-function getNairobiNow() {
-    return new Date(
-        new Date().toLocaleString("en-US", {
-            timeZone: "Africa/Nairobi"
-        })
-    );
-}
-
-
-function getNairobiYear() {
-    return Number(
-        new Intl.DateTimeFormat("en-KE", {
-            timeZone: "Africa/Nairobi",
-            year: "numeric"
-        }).format(new Date())
-    );
-}
 
 
 function getNairobiDateString(date = new Date()) {
@@ -470,535 +467,183 @@ function getNairobiDateString(date = new Date()) {
     const values = {};
 
     parts.forEach(part => {
-        values[part.type] = part.value;
+        if (part.type !== "literal") {
+            values[part.type] = part.value;
+        }
     });
 
     return `${values.year}-${values.month}-${values.day}`;
 }
 
 
-// =====================================================
-// DATE PARSING
-// =====================================================
-
-function parseSessionDate(value, isEndDate = false) {
-    if (!value) return null;
-
-    const input = String(value).trim();
-
-    if (!input) return null;
-
-    // Date-only values are interpreted using Nairobi time.
-    const dateOnly = input.match(
-        /^(\d{4})-(\d{2})-(\d{2})$/
-    );
-
-    if (dateOnly) {
-        const time = isEndDate
-            ? "23:59:59.999"
-            : "00:00:00.000";
-
-        const parsed = new Date(
-            `${dateOnly[1]}-${dateOnly[2]}-${dateOnly[3]}T${time}+03:00`
-        );
-
-        return Number.isNaN(parsed.getTime()) ? null : parsed;
+function parseSessionDate(value) {
+    if (!value || !/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+        return null;
     }
 
-    // Datetime-local values are interpreted using Nairobi time.
-    const localDateTime = input.match(
-        /^(\d{4}-\d{2}-\d{2})T(\d{2}:\d{2})(?::(\d{2})(?:\.(\d{1,3}))?)?$/
-    );
+    const date = new Date(`${value}T00:00:00+03:00`);
 
-    if (localDateTime) {
-        const seconds = localDateTime[3] || "00";
-        const milliseconds = (localDateTime[4] || "0")
-            .padEnd(3, "0");
-
-        const parsed = new Date(
-            `${localDateTime[1]}T${localDateTime[2]}:${seconds}.${milliseconds}+03:00`
-        );
-
-        return Number.isNaN(parsed.getTime()) ? null : parsed;
-    }
-
-    // Values already containing a timezone or UTC offset.
-    const parsed = new Date(input);
-
-    return Number.isNaN(parsed.getTime()) ? null : parsed;
+    return Number.isNaN(date.getTime()) ? null : date;
 }
 
 
 function formatSessionDate(value) {
-    const date = value instanceof Date
-        ? value
-        : parseSessionDate(value);
+    const date = parseSessionDate(value);
 
-    if (!date) return "Date unavailable";
+    if (!date) return "Not configured";
 
     return new Intl.DateTimeFormat("en-KE", {
         timeZone: "Africa/Nairobi",
-        day: "2-digit",
+        day: "numeric",
         month: "short",
         year: "numeric"
     }).format(date);
 }
 
 
-function formatSessionEventDateRange(startValue, endValue) {
-    const start = parseSessionDate(startValue);
-    const end = parseSessionDate(endValue);
-
-    if (!start || !end) return "Date information unavailable";
-
-    const dateFormatter = new Intl.DateTimeFormat("en-KE", {
-        timeZone: "Africa/Nairobi",
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-    });
-
-    const timeFormatter = new Intl.DateTimeFormat("en-KE", {
-        timeZone: "Africa/Nairobi",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true
-    });
-
-    if (dateFormatter.format(start) === dateFormatter.format(end)) {
-        return `${dateFormatter.format(start)} · ${timeFormatter.format(start)} – ${timeFormatter.format(end)}`;
-    }
-
-    return `${dateFormatter.format(start)} ${timeFormatter.format(start)} – ${dateFormatter.format(end)} ${timeFormatter.format(end)}`;
-}
-
-
-function escapeSessionHTML(value) {
-    return String(value ?? "").replace(/[&<>"']/g, character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-    })[character]);
-}
-
-
-// =====================================================
-// ACADEMIC YEAR PROGRESS
-// Every academic year runs January 1 to December 31.
-// =====================================================
-
 function calculateSessionProgress() {
-    const now = Date.now();
-    const year = getNairobiYear();
-
-    const yearStart = new Date(
-        `${year}-01-01T00:00:00.000+03:00`
-    ).getTime();
-
-    const yearEnd = new Date(
-        `${year}-12-31T23:59:59.999+03:00`
-    ).getTime();
-
-    const totalDuration = yearEnd - yearStart;
-    const elapsedDuration = Math.max(
-        0,
-        Math.min(now - yearStart, totalDuration)
+    const start = parseSessionDate(
+        ACADEMIC_SESSION_CONFIG.sessionStartDate
     );
 
-    const percentage = totalDuration > 0
-        ? Math.round((elapsedDuration / totalDuration) * 100)
-        : 0;
+    const end = parseSessionDate(
+        ACADEMIC_SESSION_CONFIG.sessionEndDate
+    );
 
-    return {
-        year,
-        percentage,
-        yearStart,
-        yearEnd
-    };
+    if (!start || !end || end <= start) return null;
+
+    const now = new Date();
+
+    const elapsed = now.getTime() - start.getTime();
+    const duration = end.getTime() - start.getTime();
+
+    return Math.min(100, Math.max(
+        0,
+        Math.round((elapsed / duration) * 100)
+    ));
 }
 
-
-// =====================================================
-// SCHOOL CALENDAR DATA
-// =====================================================
-
-function getPublishedSchoolTerms() {
-    const records = sessionCalendarData?.schoolCalendar || [];
-
-    return records
-        .filter(record =>
-            record.recordType === "TERM" &&
-            record.status === "PUBLISHED"
-        )
-        .map(record => {
-            const start = parseSessionDate(record.startDate);
-            const end = parseSessionDate(record.endDate, true);
-
-            return {
-                ...record,
-                start,
-                end
-            };
-        })
-        .filter(term =>
-            term.start &&
-            term.end &&
-            term.end >= term.start
-        )
-        .sort((a, b) => a.start - b.start);
-}
-
-
-// =====================================================
-// TERM STATUS AND WEEK NUMBER
-// =====================================================
 
 function getAcademicTermStatus(term) {
-    const now = Date.now();
+    const today = getNairobiDateString();
 
-    if (now >= term.start.getTime() && now <= term.end.getTime()) {
-        return "IN PROGRESS";
+    if (
+        !parseSessionDate(term.startDate) ||
+        !parseSessionDate(term.endDate) ||
+        term.endDate < term.startDate
+    ) {
+        return "DATES PENDING";
     }
 
-    if (now < term.start.getTime()) {
-        return "UPCOMING";
-    }
+    if (today < term.startDate) return "UPCOMING";
+    if (today > term.endDate) return "COMPLETED";
 
-    return "COMPLETED";
+    return "IN PROGRESS";
 }
 
 
 function getAcademicTermWeek() {
-    const terms = getPublishedSchoolTerms();
-    const now = getNairobiNow().getTime();
+    const todayString = getNairobiDateString();
+    const todayParts = todayString.split("-").map(Number);
 
-    const activeTerm = terms.find(term =>
-        now >= term.start.getTime() &&
-        now <= term.end.getTime()
+    const todayUTC = Date.UTC(
+        todayParts[0],
+        todayParts[1] - 1,
+        todayParts[2]
+    );
+
+    const activeTerm = ACADEMIC_SESSION_CONFIG.terms.find(term =>
+        todayString >= term.startDate &&
+        todayString <= term.endDate
     );
 
     if (!activeTerm) return "HOLIDAY";
 
-    const termStart = activeTerm.start;
-    const termEnd = activeTerm.end;
+    const startParts = activeTerm.startDate.split("-").map(Number);
 
-    // The first partial week counts as WEEK 01.
-    const startDay = termStart.getDay();
-
-    const firstSunday = new Date(termStart);
-    firstSunday.setDate(
-        firstSunday.getDate() - startDay
-    );
-    firstSunday.setHours(0, 0, 0, 0);
-
-    const currentSunday = new Date(
-        getNairobiNow().getTime()
+    const startUTC = Date.UTC(
+        startParts[0],
+        startParts[1] - 1,
+        startParts[2]
     );
 
-    currentSunday.setDate(
-        currentSunday.getDate() - currentSunday.getDay()
+    const daysFromStart = Math.floor(
+        (todayUTC - startUTC) / 86400000
     );
-    currentSunday.setHours(0, 0, 0, 0);
 
-    const weekNumber = Math.floor(
-        (currentSunday.getTime() - firstSunday.getTime()) /
-        (7 * 24 * 60 * 60 * 1000)
-    ) + 1;
+    const startDay = new Date(startUTC).getUTCDay();
 
-    const termEndDay = termEnd.getDay();
+    const daysUntilFirstSaturday =
+        (6 - startDay + 7) % 7;
 
-    // A term week ends on Saturday.
-    const finalSaturday = new Date(termEnd);
-    finalSaturday.setDate(
-        finalSaturday.getDate() + (6 - termEndDay)
-    );
-    finalSaturday.setHours(23, 59, 59, 999);
-
-    if (now > finalSaturday.getTime()) {
-        return "HOLIDAY";
+    if (daysFromStart <= daysUntilFirstSaturday) {
+        return "WEEK 01";
     }
+
+    const daysAfterFirstSaturday =
+        daysFromStart - daysUntilFirstSaturday - 1;
+
+    const weekNumber =
+        2 + Math.floor(daysAfterFirstSaturday / 7);
 
     return `WEEK ${String(weekNumber).padStart(2, "0")}`;
 }
 
 
 // =====================================================
-// BUILD ACADEMIC PERIODS
-// No hardcoded term dates.
-// Dates come from the published School Calendar.
+// EVENT DATE HELPERS
 // =====================================================
 
-function buildAcademicPeriods() {
-    const terms = getPublishedSchoolTerms();
-    const periods = [];
+function getSessionEventDate(value) {
+    if (!value) return null;
 
-    terms.forEach((term, index) => {
-        periods.push({
-            type: "TERM",
-            title: term.title || `TERM ${String(index + 1).padStart(2, "0")}`,
-            start: term.start,
-            end: term.end
-        });
+    const date = new Date(value);
 
-        const nextTerm = terms[index + 1];
-
-        let holidayTitle = "";
-
-        if (index % 3 === 0) {
-            holidayTitle = "EASTER HOLIDAY";
-        } else if (index % 3 === 1) {
-            holidayTitle = "AUGUST HOLIDAY";
-        } else {
-            holidayTitle = "DECEMBER HOLIDAY";
-        }
-
-        const holidayStart = new Date(
-            term.end.getTime() + 1
-        );
-
-        let holidayEnd = null;
-
-        if (nextTerm) {
-            holidayEnd = new Date(
-                nextTerm.start.getTime() - 1
-            );
-        } else if (index % 3 === 2) {
-            const year = Number(
-                new Intl.DateTimeFormat("en-KE", {
-                    timeZone: "Africa/Nairobi",
-                    year: "numeric"
-                }).format(term.end)
-            );
-
-            const decemberEnd = new Date(
-                `${year}-12-31T23:59:59.999+03:00`
-            );
-
-            if (decemberEnd >= holidayStart) {
-                holidayEnd = decemberEnd;
-            }
-        }
-
-        if (!holidayEnd || holidayEnd >= holidayStart) {
-            periods.push({
-                type: "HOLIDAY",
-                title: holidayTitle,
-                start: holidayStart,
-                end: holidayEnd
-            });
-        }
-    });
-
-    // Academic year boundaries are fixed every year.
-    const currentYear = getNairobiYear();
-
-    for (let year = currentYear; year <= currentYear + 3; year++) {
-        periods.push({
-            type: "ACADEMIC_YEAR",
-            title: `ACADEMIC YEAR ${year}`,
-            start: new Date(
-                `${year}-01-01T00:00:00.000+03:00`
-            ),
-            end: new Date(
-                `${year}-12-31T23:59:59.999+03:00`
-            )
-        });
-    }
-
-    return periods;
+    return Number.isNaN(date.getTime()) ? null : date;
 }
 
 
-// =====================================================
-// PUBLISHED EVENTS AND ACTIVITIES
-// =====================================================
+function formatSessionEventDateRange(startValue, endValue) {
+    const start = getSessionEventDate(startValue);
+    const end = getSessionEventDate(endValue);
 
-function getPublishedSessionEvents() {
-    const records = sessionCalendarData?.eventsActivities || [];
+    if (!start || !end) return "Date unavailable";
 
-    return records
-        .filter(event =>
-            event.status === "PUBLISHED"
-        )
-        .map(event => ({
-            ...event,
-            start: parseSessionDate(event.startDateTime),
-            end: parseSessionDate(event.endDateTime)
-        }))
-        .filter(event =>
-            event.start &&
-            event.end &&
-            event.end >= event.start
-        );
-}
-
-
-// =====================================================
-// SELECT ONGOING AND UPCOMING
-// Active published events take priority over
-// the academic period.
-// Upcoming is the nearest future event or period.
-// =====================================================
-
-function getSessionHighlights() {
-    const now = Date.now();
-
-    const periods = buildAcademicPeriods();
-    const events = getPublishedSessionEvents();
-
-    const activeEvents = events
-        .filter(event =>
-            event.start.getTime() <= now &&
-            event.end.getTime() >= now
-        )
-        .sort((a, b) => a.end - b.end);
-
-    const futureEvents = events
-        .filter(event =>
-            event.start.getTime() > now
-        )
-        .map(event => ({
-            type: "EVENT",
-            title: event.title,
-            start: event.start,
-            end: event.end
-        }));
-
-    const activePeriods = periods
-        .filter(period =>
-            period.type !== "ACADEMIC_YEAR" &&
-            period.start.getTime() <= now &&
-            (!period.end || period.end.getTime() >= now)
-        );
-
-    let ongoing = null;
-
-    if (activeEvents.length) {
-        const event = activeEvents[0];
-
-        ongoing = {
-            type: "EVENT",
-            title: event.title,
-            start: event.start,
-            end: event.end
-        };
-    } else if (activePeriods.length) {
-        ongoing = activePeriods
-            .sort((a, b) => {
-                const priority = {
-                    TERM: 1,
-                    HOLIDAY: 2
-                };
-
-                return priority[a.type] - priority[b.type];
-            })[0];
-    } else {
-        const activeYear = periods.find(period =>
-            period.type === "ACADEMIC_YEAR" &&
-            period.start.getTime() <= now &&
-            period.end.getTime() >= now
-        );
-
-        if (activeYear) ongoing = activeYear;
-    }
-
-    const futurePeriods = periods.filter(period =>
-        period.start.getTime() > now
-    );
-
-    const upcomingCandidates = [
-        ...futureEvents,
-        ...futurePeriods
-    ];
-
-    upcomingCandidates.sort(
-        (a, b) => a.start - b.start
-    );
-
-    return {
-        ongoing,
-        upcoming: upcomingCandidates[0] || null
+    const options = {
+        timeZone: "Africa/Nairobi",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true
     };
+
+    const formatter = new Intl.DateTimeFormat("en-KE", options);
+
+    return `${formatter.format(start)} – ${formatter.format(end)}`;
 }
 
 
 // =====================================================
-// DISPLAY SESSION HIGHLIGHTS
-// =====================================================
-
-function renderSessionHighlights() {
-    const ongoingTitle = document.getElementById(
-        "sessionOngoingTitle"
-    );
-
-    const ongoingTime = document.getElementById(
-        "sessionOngoingTime"
-    );
-
-    const upcomingTitle = document.getElementById(
-        "sessionUpcomingTitle"
-    );
-
-    const upcomingTime = document.getElementById(
-        "sessionUpcomingTime"
-    );
-
-    if (!ongoingTitle || !ongoingTime ||
-        !upcomingTitle || !upcomingTime) {
-        return;
-    }
-
-    const highlights = getSessionHighlights();
-
-    if (highlights.ongoing) {
-        ongoingTitle.textContent = highlights.ongoing.title;
-
-        ongoingTime.textContent = highlights.ongoing.end
-            ? `Ends: ${formatSessionDate(highlights.ongoing.end)}`
-            : "End date pending";
-    } else {
-        ongoingTitle.textContent = "No ongoing period";
-        ongoingTime.textContent = "No active published period";
-    }
-
-    if (highlights.upcoming) {
-        upcomingTitle.textContent = highlights.upcoming.title;
-
-        upcomingTime.textContent =
-            `Begins: ${formatSessionDate(highlights.upcoming.start)}`;
-    } else {
-        upcomingTitle.textContent = "No upcoming period";
-        upcomingTime.textContent = "No future period published";
-    }
-}
-
-
-// =====================================================
-// LOAD SCHOOL CALENDAR FROM BACKEND
+// LOAD ONGOING AND UPCOMING EVENTS
 // =====================================================
 
 async function loadSessionEvents() {
+    const ongoingTitle = document.getElementById("sessionOngoingTitle");
+    const ongoingTime = document.getElementById("sessionOngoingTime");
+    const upcomingTitle = document.getElementById("sessionUpcomingTitle");
+    const upcomingTime = document.getElementById("sessionUpcomingTime");
+
+    if (!ongoingTitle || !upcomingTitle) return;
+
     const sessionToken = sessionStorage.getItem("sessionToken");
 
     if (!sessionToken) {
-        const ongoingTitle = document.getElementById(
-            "sessionOngoingTitle"
-        );
-
-        const upcomingTitle = document.getElementById(
-            "sessionUpcomingTitle"
-        );
-
-        if (ongoingTitle) {
-            ongoingTitle.textContent = "Calendar unavailable";
-        }
-
-        if (upcomingTitle) {
-            upcomingTitle.textContent = "Calendar unavailable";
-        }
-
+        ongoingTitle.textContent = "Events unavailable";
+        ongoingTime.textContent = "Please log in again";
+        upcomingTitle.textContent = "Events unavailable";
+        upcomingTime.textContent = "Please log in again";
         return;
     }
 
@@ -1010,191 +655,133 @@ async function loadSessionEvents() {
             },
             body: JSON.stringify({
                 action: "getCalendarData",
-                sessionToken
+                sessionToken: sessionToken
             })
         });
 
+        if (!response.ok) {
+            throw new Error("Calendar service unavailable");
+        }
+
         const result = await response.json();
 
-        if (!result || result.success !== true) {
+        if (!result.success) {
             throw new Error(
-                result?.message || "Unable to load school calendar."
+                result.message || "Unable to load school events"
             );
         }
 
-        sessionCalendarData = result;
+        const now = new Date();
 
-        renderSessionHighlights();
-        renderSessionTermTimeline();
+        // Only published events are eligible for display.
+        const events = (result.eventsActivities || [])
+            .filter(event => {
+                const status = String(event.status || "").toUpperCase();
+
+                const start = getSessionEventDate(event.startDateTime);
+                const end = getSessionEventDate(event.endDateTime);
+
+                return (
+                    status === "PUBLISHED" &&
+                    start &&
+                    end &&
+                    end >= start
+                );
+            });
+
+        // Events currently in progress.
+        const ongoingEvents = events
+            .filter(event => {
+                const start = getSessionEventDate(event.startDateTime);
+                const end = getSessionEventDate(event.endDateTime);
+
+                return start <= now && now <= end;
+            })
+            .sort((a, b) =>
+                getSessionEventDate(a.endDateTime) -
+                getSessionEventDate(b.endDateTime)
+            );
+
+        // The nearest future event.
+        const upcomingEvents = events
+            .filter(event => {
+                const start = getSessionEventDate(event.startDateTime);
+
+                return start > now;
+            })
+            .sort((a, b) =>
+                getSessionEventDate(a.startDateTime) -
+                getSessionEventDate(b.startDateTime)
+            );
+
+        // Display the active event ending soonest if events overlap.
+        const ongoingEvent = ongoingEvents[0] || null;
+
+        // Display the event starting soonest.
+        const upcomingEvent = upcomingEvents[0] || null;
+
+        if (ongoingEvent) {
+            ongoingTitle.textContent = ongoingEvent.title;
+
+            ongoingTime.textContent = formatSessionEventDateRange(
+                ongoingEvent.startDateTime,
+                ongoingEvent.endDateTime
+            );
+        } else {
+            ongoingTitle.textContent = "No ongoing events";
+            ongoingTime.textContent = "No event is currently in progress";
+        }
+
+        if (upcomingEvent) {
+            upcomingTitle.textContent = upcomingEvent.title;
+
+            upcomingTime.textContent = formatSessionEventDateRange(
+                upcomingEvent.startDateTime,
+                upcomingEvent.endDateTime
+            );
+        } else {
+            upcomingTitle.textContent = "No upcoming events";
+            upcomingTime.textContent = "No future events scheduled";
+        }
 
     } catch (error) {
-        console.error(
-            "Academic Command Centre calendar error:",
-            error
-        );
+        console.error("Session events error:", error);
 
-        const ongoingTitle = document.getElementById(
-            "sessionOngoingTitle"
-        );
+        ongoingTitle.textContent = "Events temporarily unavailable";
+        ongoingTime.textContent = "Unable to retrieve event information";
 
-        const upcomingTitle = document.getElementById(
-            "sessionUpcomingTitle"
-        );
-
-        if (ongoingTitle) {
-            ongoingTitle.textContent = "Calendar temporarily unavailable";
-        }
-
-        if (upcomingTitle) {
-            upcomingTitle.textContent = "Calendar temporarily unavailable";
-        }
+        upcomingTitle.textContent = "Events temporarily unavailable";
+        upcomingTime.textContent = "Unable to retrieve event information";
     }
 }
 
-
-// =====================================================
-// DYNAMIC TERM TIMELINE
-// =====================================================
-
-function renderSessionTermTimeline() {
-    const host = document.getElementById(
-        "sessionTermTimeline"
-    );
-
-    if (!host) return;
-
-    const terms = getPublishedSchoolTerms();
-
-    if (!terms.length) {
-        host.innerHTML = `
-            <div class="session-term">
-                <span>SCHOOL TERMS</span>
-                <strong>DATES PENDING</strong>
-            </div>
-        `;
-
-        return;
-    }
-
-    host.innerHTML = terms.map(term => {
-        const status = getAcademicTermStatus(term);
-
-        return `
-            <div class="session-term">
-                <span>${escapeSessionHTML(
-                    term.title || "SCHOOL TERM"
-                )}</span>
-                <strong>${escapeSessionHTML(status)}</strong>
-            </div>
-        `;
-    }).join("");
-}
-
-
-// =====================================================
-// LIVE DATE AND CLOCK
-// =====================================================
-
-function updateSessionClock() {
-    const dateElement = document.getElementById(
-        "sessionLiveDate"
-    );
-
-    const timeElement = document.getElementById(
-        "sessionLiveTime"
-    );
-
-    if (!dateElement || !timeElement) return;
-
-    const now = new Date();
-
-    const weekLabel = getAcademicTermWeek();
-
-    const dayLabel = new Intl.DateTimeFormat("en-KE", {
-        timeZone: "Africa/Nairobi",
-        weekday: "long"
-    }).format(now);
-
-    const dateLabel = new Intl.DateTimeFormat("en-KE", {
-        timeZone: "Africa/Nairobi",
-        day: "2-digit",
-        month: "short",
-        year: "numeric"
-    }).format(now);
-
-    const timeLabel = new Intl.DateTimeFormat("en-KE", {
-        timeZone: "Africa/Nairobi",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true
-    }).format(now);
-
-    dateElement.textContent =
-        `${weekLabel} · ${dayLabel} · ${dateLabel}`;
-
-    timeElement.textContent = timeLabel;
-
-    const progress = calculateSessionProgress();
-
-    const fill = document.querySelector(
-        ".session-progress-fill"
-    );
-
-    const percentage = document.querySelector(
-        ".session-progress-percent"
-    );
-
-    if (fill) {
-        fill.style.width = `${progress.percentage}%`;
-    }
-
-    if (percentage) {
-        percentage.textContent =
-            `${progress.percentage}%`;
-    }
-}
-
-// =====================================================
-// RENDER ACADEMIC COMMAND CENTRE
-// =====================================================
 
 function renderSessionProgressCard(role) {
     const host = document.getElementById("dashboardCards");
 
     if (!host) return;
 
+    const config = ACADEMIC_SESSION_CONFIG;
     const progress = calculateSessionProgress();
 
-    const terms = getPublishedSchoolTerms();
+    const termMarkup = config.terms.map(term => {
+        const status = getAcademicTermStatus(term);
 
-    const termMarkup = terms.length
-        ? terms.map(term => {
-            const status = getAcademicTermStatus(term);
-
-            return `
-                <div class="session-term">
-                    <span>${escapeSessionHTML(
-                        term.title || "SCHOOL TERM"
-                    )}</span>
-                    <strong>${escapeSessionHTML(status)}</strong>
-                </div>
-            `;
-        }).join("")
-        : `
+        return `
             <div class="session-term">
-                <span>SCHOOL TERMS</span>
-                <strong>DATES PENDING</strong>
+                <span>${term.label}</span>
+                <strong>${status}</strong>
             </div>
         `;
+    }).join("");
 
     host.innerHTML = `
         <section class="session-progress-card">
 
-            <div class="session-card-header">
+            <header class="session-card-header">
 
                 <div class="session-card-brand">
-                    <div class="session-card-symbol">GSU</div>
+                    <span class="session-card-symbol">◎</span>
 
                     <div>
                         <h2>ACADEMIC COMMAND CENTRE</h2>
@@ -1202,126 +789,120 @@ function renderSessionProgressCard(role) {
                     </div>
                 </div>
 
-                <div class="session-card-status">
-                    <div
-                        class="session-week-date"
-                        id="sessionLiveDate"
-                    ></div>
+                <span class="session-week-date" id="sessionLiveDate">
+                    Loading date...
+                </span>
 
-                    <div class="session-live-indicator">
-                        <span></span>
-                        LIVE
+                <span class="session-live-indicator">
+                    <span></span> LIVE
+                </span>
+
+            </header>
+
+            <div class="session-card-role">
+                ${SESSION_ROLE_CONTEXT[role] || "ACADEMIC SESSION"}
+            </div>
+
+            <div class="session-card-main">
+
+                <div class="session-year-block">
+                    <span>ACADEMIC YEAR</span>
+                    <strong>${config.academicYear}</strong>
+                </div>
+
+                <div class="session-progress-layout">
+
+                    <div class="session-progress-ring"
+                         style="--session-progress: ${progress ?? 0}%">
+
+                        <div class="session-ring-content">
+                            <strong>
+                                ${progress === null ? "—" : progress + "%"}
+                            </strong>
+                            <span>COMPLETED</span>
+                        </div>
+
                     </div>
+
+                    <div class="session-progress-description">
+                        <span>SESSION PROGRESS</span>
+
+                        <strong>
+                            ${progress === null
+                                ? "Not configured"
+                                : progress + "% COMPLETED"}
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="session-term-timeline">
+                    ${termMarkup}
+                </div>
+
+                <div class="session-activities-row">
+
+                    <div class="session-ongoing-section">
+
+                        <div class="session-activities-label">
+                            ONGOING
+                        </div>
+
+                        <strong
+                            class="session-activities-names"
+                            id="sessionOngoingTitle">
+                            Loading...
+                        </strong>
+
+                        <span id="sessionOngoingTime">
+                            Loading...
+                        </span>
+
+                        <a href="events.html"
+                           class="session-ongoing-button">
+                            ONGOING
+                        </a>
+
+                    </div>
+
+                    <div class="session-upcoming-section">
+
+                        <div class="session-activities-label">
+                            UPCOMING
+                        </div>
+
+                        <strong id="sessionUpcomingTitle">
+                            Loading...
+                        </strong>
+
+                        <span id="sessionUpcomingTime">
+                            Loading...
+                        </span>
+
+                    </div>
+
                 </div>
 
             </div>
-
-
-            <div class="session-year-block">
-                <span>ACADEMIC YEAR</span>
-                <strong id="sessionAcademicYear">
-                    ${progress.year}
-                </strong>
-            </div>
-
-
-            <div class="session-progress-layout">
-
-                <div class="session-progress-description">
-                    <span>ANNUAL SESSION PROGRESS</span>
-                </div>
-
-                <div
-                    class="session-progress-bar"
-                    role="progressbar"
-                    aria-valuemin="0"
-                    aria-valuemax="100"
-                    aria-valuenow="${progress.percentage}"
-                >
-                    <div
-                        class="session-progress-fill"
-                        style="width: ${progress.percentage}%"
-                    ></div>
-                </div>
-
-                <strong class="session-progress-percent">
-                    ${progress.percentage}%
-                </strong>
-
-            </div>
-
-
-            <div
-                class="session-term-timeline"
-                id="sessionTermTimeline"
-            >
-                ${termMarkup}
-            </div>
-
-
-            <div class="session-activities-row">
-
-                <div class="session-ongoing-section">
-                    <span class="session-section-label">
-                        ONGOING
-                    </span>
-
-                    <strong id="sessionOngoingTitle">
-                        Loading...
-                    </strong>
-
-                    <small id="sessionOngoingTime">
-                        Retrieving school calendar
-                    </small>
-
-                    <a
-                        href="events.html"
-                        class="session-ongoing-button"
-                    >
-                        ONGOING
-                    </a>
-                </div>
-
-
-                <div class="session-upcoming-section">
-                    <span class="session-section-label">
-                        UPCOMING
-                    </span>
-
-                    <strong id="sessionUpcomingTitle">
-                        Loading...
-                    </strong>
-
-                    <small id="sessionUpcomingTime">
-                        Retrieving school calendar
-                    </small>
-                </div>
-
-            </div>
-
 
             <div class="session-card-clock">
-                <strong id="sessionLiveTime"></strong>
+                <strong id="sessionLiveTime">Loading time...</strong>
             </div>
 
         </section>
     `;
 
-
-    // Start live clock.
     updateSessionClock();
 
-    if (sessionProgressClock) {
-        clearInterval(sessionProgressClock);
+    if (window.sessionProgressClock) {
+        clearInterval(window.sessionProgressClock);
     }
 
-    sessionProgressClock = setInterval(
+    window.sessionProgressClock = setInterval(
         updateSessionClock,
         1000
     );
 
-
-    // Load published school calendar and events.
     loadSessionEvents();
 
     if (sessionEventsRefreshTimer) {
@@ -1333,6 +914,45 @@ function renderSessionProgressCard(role) {
         60000
     );
 }
+
+// =====================================================
+// LIVE SESSION CLOCK
+// =====================================================
+
+function updateSessionClock() {
+    const dateElement = document.getElementById("sessionLiveDate");
+    const timeElement = document.getElementById("sessionLiveTime");
+
+    if (!dateElement || !timeElement) return;
+
+    const now = new Date();
+
+    const weekLabel = getAcademicTermWeek();
+
+    const dayLabel = new Intl.DateTimeFormat("en-KE", {
+        timeZone: "Africa/Nairobi",
+        weekday: "short"
+    }).format(now).toUpperCase();
+
+    const dateLabel = new Intl.DateTimeFormat("en-KE", {
+        timeZone: "Africa/Nairobi",
+        day: "2-digit",
+        month: "short",
+        year: "numeric"
+    }).format(now).toUpperCase();
+
+    dateElement.textContent =
+        `${weekLabel} · ${dayLabel} · ${dateLabel}`;
+
+    timeElement.textContent = new Intl.DateTimeFormat("en-KE", {
+        timeZone: "Africa/Nairobi",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: true
+    }).format(now);
+}
+
 // Initialize dashboard after the page loads
 document.addEventListener("DOMContentLoaded", function () {
     const sidebar = document.getElementById("dashboardSidebar");
