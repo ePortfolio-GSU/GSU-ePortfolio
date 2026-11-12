@@ -808,31 +808,29 @@ function renderSessionProgressCard(role) {
 
                 <div class="session-progress-layout">
 
-                    <div
-    class="session-progress-bar"
-    role="progressbar"
-    aria-label="Session progress"
-    aria-valuemin="0"
-    aria-valuemax="100"
-    aria-valuenow="${progress === null ? 0 : progress}"
->
+    <div class="session-progress-description">
+        <span>SESSION PROGRESS</span>
+
+        <strong>
+            ${progress === null ? "—" : progress + "%"}
+        </strong>
+    </div>
+
     <div
-        class="session-progress-fill"
-        style="width: ${progress ?? 0}%"
-    ></div>
+        class="session-progress-bar"
+        role="progressbar"
+        aria-label="Session progress"
+        aria-valuemin="0"
+        aria-valuemax="100"
+        aria-valuenow="${progress === null ? 0 : progress}"
+    >
+        <div
+            class="session-progress-fill"
+            style="width: ${progress ?? 0}%"
+        ></div>
+    </div>
+
 </div>
-
-                    <div class="session-progress-description">
-                        <span>SESSION PROGRESS</span>
-
-                        <strong>
-                            ${progress === null
-                                ? "Not configured"
-                                : progress + "% COMPLETED"}
-                        </strong>
-                    </div>
-
-                </div>
 
                 <div class="session-term-timeline">
                     ${termMarkup}
