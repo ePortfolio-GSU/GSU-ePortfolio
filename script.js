@@ -799,10 +799,6 @@ function renderSessionProgressCard(role) {
 
             </header>
 
-            <div class="session-card-role">
-                ${SESSION_ROLE_CONTEXT[role] || "ACADEMIC SESSION"}
-            </div>
-
             <div class="session-card-main">
 
                 <div class="session-year-block">
