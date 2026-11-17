@@ -1110,11 +1110,23 @@ function loadDashboard(role) {
     if (heading) heading.textContent = config.title;
 
     if (welcomeHeading) {
-    const loggedUser = sessionStorage.getItem("loggedUser") || "";
-    const firstName = loggedUser.trim().split(/\s+/)[0];
+        const loggedUser = sessionStorage.getItem("loggedUser") || "";
+        const firstName = loggedUser.trim().split(/\s+/)[0];
+        const currentHour = new Date().getHours();
 
-    welcomeHeading.textContent = "WELCOME BACK, " + firstName.toUpperCase();
-}
+        let greeting;
+
+        if (currentHour >= 5 && currentHour < 12) {
+            greeting = "GOOD MORNING";
+        } else if (currentHour >= 12 && currentHour < 17) {
+            greeting = "GOOD AFTERNOON";
+        } else {
+            greeting = "GOOD EVENING";
+        }
+
+        welcomeHeading.textContent =
+            greeting + ", " + firstName.toUpperCase();
+    }
 
     if (welcomeMessage) {
     welcomeMessage.textContent =
