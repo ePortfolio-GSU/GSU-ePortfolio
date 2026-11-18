@@ -118,8 +118,8 @@ async function loadCalendarData() {
         renderSchoolEvents();
 
     } catch (error) {
-        schoolList.textContent = error.message;
-        eventList.textContent = error.message;
+        schoolList.innerHTML = "";
+        eventList.innerHTML = "";
     }
 }
 
