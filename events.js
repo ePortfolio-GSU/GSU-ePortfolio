@@ -82,9 +82,7 @@ async function calendarRequest(action, extra = {}) {
     if (!result.success &&
         result.message &&
         result.message.toLowerCase().includes("session")) {
-        sessionStorage.clear();
         alert(result.message);
-        window.location.href = "index.html";
     }
 
     return result;
