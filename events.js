@@ -77,15 +77,7 @@ async function calendarRequest(action, extra = {}) {
         throw new Error("Unable to communicate with the calendar service.");
     }
 
-    const result = await response.json();
-
-    if (!result.success &&
-        result.message &&
-        result.message.toLowerCase().includes("session")) {
-        alert(result.message);
-    }
-
-    return result;
+    return await response.json();
 }
 
 
