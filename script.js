@@ -918,10 +918,10 @@ async function loadSessionEvents() {
         console.error("Session events error:", error);
 
         ongoingTitle.textContent = "Events temporarily unavailable";
-        ongoingTime.textContent = "Unable to retrieve event information";
+        ongoingTime.textContent = "";
 
         upcomingTitle.textContent = "Events temporarily unavailable";
-        upcomingTime.textContent = "Unable to retrieve event information";
+        upcomingTime.textContent = "";
     }
 }
 
