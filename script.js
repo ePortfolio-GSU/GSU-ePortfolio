@@ -867,16 +867,26 @@ function renderSessionProgressCard(role) {
     const config = ACADEMIC_SESSION_CONFIG;
     const progress = calculateSessionProgress();
 
-    const termMarkup = config.terms.map(term => {
-        const status = getAcademicTermStatus(term);
+    const permanentTermLabels = [
+    "TERM I",
+    "TERM II",
+    "TERM III"
+];
 
-        return `
-            <div class="session-term">
-                <span>${term.label}</span>
-                <strong>${status}</strong>
-            </div>
-        `;
-    }).join("");
+const termMarkup = permanentTermLabels.map((label, index) => {
+    const term = config.terms[index];
+
+    const status = term
+        ? getAcademicTermStatus(term)
+        : "DATES PENDING";
+
+    return `
+        <div class="session-term">
+            <span>${label}</span>
+            <strong>${status}</strong>
+        </div>
+    `;
+}).join("");
 
     host.innerHTML = `
         <section class="session-progress-card">
