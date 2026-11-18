@@ -986,13 +986,6 @@ const termMarkup = permanentTermLabels.map((label, index) => {
                     <strong>${config.academicYear}</strong>
                 </div>
 
-                <div class="session-year-block">
-                    <span>CURRENT ACADEMIC PERIOD</span>
-                    <strong id="sessionCurrentAcademicPeriod">
-                        Loading...
-                    </strong>
-                </div>
-
                 <div class="session-progress-layout">
 
     <div class="session-progress-description">
@@ -1120,8 +1113,7 @@ function updateSessionClock() {
     const dateLabel = new Intl.DateTimeFormat("en-KE", {
         timeZone: "Africa/Nairobi",
         day: "2-digit",
-        month: "short",
-        year: "numeric"
+        month: "short"
     }).format(now).toUpperCase();
 
     dateElement.textContent =
@@ -1135,7 +1127,6 @@ function updateSessionClock() {
         hour12: true
     }).format(now);
 }
-
 // Initialize dashboard after the page loads
 document.addEventListener("DOMContentLoaded", function () {
     const sidebar = document.getElementById("dashboardSidebar");
