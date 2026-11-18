@@ -4,7 +4,7 @@
  ************************************************/
 
 const CALENDAR_API_URL =
-    "https://script.google.com/macros/s/AKfycbwcYc2v0rRVF_AFDtluOVFCTja89vOH0HBtcI9rLGs0PCd7D3YpI5K4EVrb7XKaH_AL/exec";
+    "https://script.google.com/macros/s/AKfycbxUwPcVHRuqufNCBjKdvf_TP5FzmOr5TYAmPmbdOvnnr-iGRV8HgjcGaYEe_YpZ2oAE/exec";
 const calendarToken = sessionStorage.getItem("sessionToken");
 const calendarRole = sessionStorage.getItem("userRole");
 const calendarUsername = sessionStorage.getItem("username");
