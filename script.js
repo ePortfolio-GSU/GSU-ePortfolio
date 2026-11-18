@@ -429,16 +429,11 @@ const DASHBOARD_ROLES = {
 // =====================================================
 
 const ACADEMIC_SESSION_CONFIG = {
-    academicYear: "2026",
-    sessionStartDate: "2026-01-01",
-    sessionEndDate: "2026-12-31",
+    academicYear: getNairobiDateString().slice(0, 4),
+    sessionStartDate: `${getNairobiDateString().slice(0, 4)}-01-01`,
+    sessionEndDate: `${getNairobiDateString().slice(0, 4)}-12-31`,
     nextMilestone: "Year Closure",
-
-    terms: [
-        { label: "TERM I", startDate: "2026-01-05", endDate: "2026-04-02" },
-        { label: "TERM II", startDate: "2026-04-27", endDate: "2026-07-31" },
-        { label: "TERM III", startDate: "2026-08-24", endDate: "2026-10-23" }
-    ]
+    terms: []
 };
 
 const SESSION_ROLE_CONTEXT = {
@@ -484,6 +479,66 @@ function parseSessionDate(value) {
     const date = new Date(`${value}T00:00:00+03:00`);
 
     return Number.isNaN(date.getTime()) ? null : date;
+}
+
+
+function updateAcademicTermsFromCalendar(records) {
+    const currentYear = getNairobiDateString().slice(0, 4);
+
+    const romanLabels = [
+        "TERM I",
+        "TERM II",
+        "TERM III"
+    ];
+
+    const terms = (records || [])
+        .filter(record =>
+            String(record.recordType || "").toUpperCase() === "TERM" &&
+            String(record.status || "").toUpperCase() === "PUBLISHED"
+        )
+        .map(record => {
+            const start = getSessionEventDate(record.startDate);
+            const end = getSessionEventDate(record.endDate);
+
+            if (!start || !end) return null;
+
+            return {
+                startDate: getNairobiDateString(start),
+                endDate: getNairobiDateString(end)
+            };
+        })
+        .filter(term =>
+            term &&
+            term.startDate.slice(0, 4) === currentYear &&
+            term.endDate >= term.startDate
+        )
+        .sort((a, b) =>
+            a.startDate.localeCompare(b.startDate)
+        )
+        .map((term, index) => ({
+            ...term,
+            label: romanLabels[index] || `TERM ${index + 1}`
+        }));
+
+    ACADEMIC_SESSION_CONFIG.terms = terms;
+
+    const timeline = document.querySelector(".session-term-timeline");
+
+    if (timeline) {
+        timeline.innerHTML = terms.length
+            ? terms.map(term => `
+                <div class="session-term">
+                    <span>${term.label}</span>
+                    <strong>${getAcademicTermStatus(term)}</strong>
+                </div>
+            `).join("")
+            : `
+                <div class="session-term">
+                    <span>ACADEMIC TERMS</span>
+                    <strong>DATES PENDING</strong>
+                </div>
+            `;
+    }
 }
 
 
@@ -670,6 +725,10 @@ async function loadSessionEvents() {
                 result.message || "Unable to load school events"
             );
         }
+
+        updateAcademicTermsFromCalendar(
+            result.schoolCalendar || []
+        );
 
         const now = new Date();
 
