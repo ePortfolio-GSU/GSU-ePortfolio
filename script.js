@@ -483,7 +483,9 @@ function parseSessionDate(value) {
 
 
 function updateAcademicTermsFromCalendar(records) {
-    const currentYear = getNairobiDateString().slice(0, 4);
+    const currentYear = Number(
+        getNairobiDateString().slice(0, 4)
+    );
 
     const romanLabels = [
         "TERM I",
@@ -491,10 +493,13 @@ function updateAcademicTermsFromCalendar(records) {
         "TERM III"
     ];
 
-    const terms = (records || [])
+    // Retrieve all valid academic term records.
+    // Do not exclude terms based on publication status.
+    const validTerms = (records || [])
         .filter(record =>
-            String(record.recordType || "").toUpperCase() === "TERM" &&
-            String(record.status || "").toUpperCase() === "PUBLISHED"
+            String(record.recordType || "")
+                .trim()
+                .toUpperCase() === "TERM"
         )
         .map(record => {
             const start = getSessionEventDate(record.startDate);
@@ -502,27 +507,66 @@ function updateAcademicTermsFromCalendar(records) {
 
             if (!start || !end) return null;
 
+            const startDate = getNairobiDateString(start);
+            const endDate = getNairobiDateString(end);
+
+            if (endDate < startDate) return null;
+
             return {
-                startDate: getNairobiDateString(start),
-                endDate: getNairobiDateString(end)
+                startDate,
+                endDate,
+                year: Number(startDate.slice(0, 4))
             };
         })
-        .filter(term =>
-            term &&
-            term.startDate.slice(0, 4) === currentYear &&
-            term.endDate >= term.startDate
-        )
+        .filter(Boolean);
+
+    // Identify the academic year to display.
+    const availableYears = [
+        ...new Set(validTerms.map(term => term.year))
+    ].sort((a, b) => a - b);
+
+    let selectedYear = currentYear;
+
+    if (!availableYears.includes(currentYear)) {
+        const futureYears = availableYears.filter(
+            year => year > currentYear
+        );
+
+        selectedYear = futureYears.length
+            ? futureYears[0]
+            : availableYears.length
+                ? availableYears[availableYears.length - 1]
+                : currentYear;
+    }
+
+    // Select and arrange the terms chronologically.
+    const terms = validTerms
+        .filter(term => term.year === selectedYear)
         .sort((a, b) =>
             a.startDate.localeCompare(b.startDate)
         )
         .map((term, index) => ({
-            ...term,
+            startDate: term.startDate,
+            endDate: term.endDate,
             label: romanLabels[index] || `TERM ${index + 1}`
         }));
 
+    // Update the academic session configuration.
+    ACADEMIC_SESSION_CONFIG.academicYear =
+        String(selectedYear);
+
+    ACADEMIC_SESSION_CONFIG.sessionStartDate =
+        `${selectedYear}-01-01`;
+
+    ACADEMIC_SESSION_CONFIG.sessionEndDate =
+        `${selectedYear}-12-31`;
+
     ACADEMIC_SESSION_CONFIG.terms = terms;
 
-    const timeline = document.querySelector(".session-term-timeline");
+    // Refresh the existing LIVE SESSION timeline.
+    const timeline = document.querySelector(
+        ".session-term-timeline"
+    );
 
     if (timeline) {
         timeline.innerHTML = terms.length
