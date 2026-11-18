@@ -1388,38 +1388,44 @@ function buildSidebar(menuItems) {
         link.append(icon, label);
 
         link.addEventListener("click", function (event) {
-            event.preventDefault();
+    event.preventDefault();
 
-            if (item[2] === "logout") {
-                logoutUser();
-                return;
-            }
+    if (item[2] === "logout") {
+        logoutUser();
+        return;
+    }
 
-            sidebar.querySelectorAll("a").forEach(function (menuLink) {
-                menuLink.classList.remove("active");
-            });
+    sidebar.querySelectorAll("a").forEach(function (menuLink) {
+        menuLink.classList.remove("active");
+    });
 
-            link.classList.add("active");
+    link.classList.add("active");
 
-            if (item[1] === "Dashboard Overview") {
-                const role = sessionStorage.getItem("userRole");
-                const heading = document.getElementById("dashboardHeading");
+    if (item[1] === "Dashboard Overview") {
+        const role = sessionStorage.getItem("userRole");
+        const config = DASHBOARD_ROLES[role];
 
-                if (heading && DASHBOARD_ROLES[role]) {
-                    heading.textContent = DASHBOARD_ROLES[role].title;
-                }
-            } else {
-                link.classList.remove("unlinked-shake");
-                void link.offsetWidth;
-                link.classList.add("unlinked-shake");
+        if (!config) return;
 
-                link.addEventListener("animationend", function cleanup() {
-                    link.classList.remove("unlinked-shake");
-                    link.removeEventListener("animationend", cleanup);
-                }, { once: true });
-            }
-        });
+        document.getElementById("dashboardHeading").textContent = config.title;
 
+        document.querySelector(".dashboard-welcome").hidden = false;
+        document.getElementById("dashboardCards").hidden = false;
+        document.getElementById("dashboardWorkspace").hidden = false;
+        document.getElementById("dashboardActivity").hidden = false;
+
+        document.querySelector(".dashboard-breadcrumb").textContent = "Home";
+    } else {
+        link.classList.remove("unlinked-shake");
+        void link.offsetWidth;
+        link.classList.add("unlinked-shake");
+
+        link.addEventListener("animationend", function cleanup() {
+            link.classList.remove("unlinked-shake");
+            link.removeEventListener("animationend", cleanup);
+        }, { once: true });
+    }
+});
         li.appendChild(link);
         sidebar.appendChild(li);
 
