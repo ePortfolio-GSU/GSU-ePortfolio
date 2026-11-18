@@ -820,6 +820,27 @@ async function loadSessionEvents() {
             result.schoolCalendar || []
         );
 
+        // Display the current academic term or holiday.
+        const currentPeriodDisplay = document.getElementById(
+            "sessionCurrentAcademicPeriod"
+        );
+
+        if (currentPeriodDisplay) {
+            const currentPeriod = result.currentAcademicPeriod;
+
+            if (currentPeriod) {
+                currentPeriodDisplay.textContent =
+                    currentPeriod.title || (
+                        currentPeriod.periodType === "HOLIDAY"
+                            ? "HOLIDAY"
+                            : "TERM"
+                    );
+            } else {
+                currentPeriodDisplay.textContent =
+                    "DATES PENDING";
+            }
+        }
+
         const now = new Date();
 
         // Only published events are eligible for display.
@@ -963,6 +984,13 @@ const termMarkup = permanentTermLabels.map((label, index) => {
                 <div class="session-year-block">
                     <span>ACADEMIC YEAR</span>
                     <strong>${config.academicYear}</strong>
+                </div>
+
+                <div class="session-year-block">
+                    <span>CURRENT ACADEMIC PERIOD</span>
+                    <strong id="sessionCurrentAcademicPeriod">
+                        Loading...
+                    </strong>
                 </div>
 
                 <div class="session-progress-layout">
