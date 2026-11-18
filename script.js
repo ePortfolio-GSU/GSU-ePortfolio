@@ -587,6 +587,48 @@ function updateAcademicTermsFromCalendar(records) {
             </div>
         `).join("");
     }
+
+    // Refresh the academic year displayed on the card.
+    const academicYearDisplay = document.querySelector(
+        ".session-year-block strong"
+    );
+
+    if (academicYearDisplay) {
+        academicYearDisplay.textContent =
+            ACADEMIC_SESSION_CONFIG.academicYear;
+    }
+
+    // Recalculate session progress using the loaded academic year.
+    const progress = calculateSessionProgress();
+
+    const progressDisplay = document.querySelector(
+        ".session-progress-description strong"
+    );
+
+    const progressBar = document.querySelector(
+        ".session-progress-bar"
+    );
+
+    const progressFill = document.querySelector(
+        ".session-progress-fill"
+    );
+
+    if (progressDisplay) {
+        progressDisplay.textContent =
+            progress === null ? "—" : `${progress}%`;
+    }
+
+    if (progressBar) {
+        progressBar.setAttribute(
+            "aria-valuenow",
+            progress === null ? "0" : String(progress)
+        );
+    }
+
+    if (progressFill) {
+        progressFill.style.width =
+            `${progress === null ? 0 : progress}%`;
+    }
 }
 
 
