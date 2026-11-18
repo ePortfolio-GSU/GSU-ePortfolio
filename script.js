@@ -539,17 +539,28 @@ function updateAcademicTermsFromCalendar(records) {
                 : currentYear;
     }
 
-    // Select and arrange the terms chronologically.
-    const terms = validTerms
+    // Select and arrange available terms chronologically.
+    const selectedTerms = validTerms
         .filter(term => term.year === selectedYear)
         .sort((a, b) =>
             a.startDate.localeCompare(b.startDate)
-        )
-        .map((term, index) => ({
-            startDate: term.startDate,
-            endDate: term.endDate,
-            label: romanLabels[index] || `TERM ${index + 1}`
-        }));
+        );
+
+    // Always create exactly three term entries.
+    // Calendar records supply dates, not the term labels.
+    const terms = romanLabels.map((label, index) => {
+        const calendarTerm = selectedTerms[index];
+
+        return {
+            label,
+            startDate: calendarTerm
+                ? calendarTerm.startDate
+                : null,
+            endDate: calendarTerm
+                ? calendarTerm.endDate
+                : null
+        };
+    });
 
     // Update the academic session configuration.
     ACADEMIC_SESSION_CONFIG.academicYear =
@@ -569,19 +580,12 @@ function updateAcademicTermsFromCalendar(records) {
     );
 
     if (timeline) {
-        timeline.innerHTML = terms.length
-            ? terms.map(term => `
-                <div class="session-term">
-                    <span>${term.label}</span>
-                    <strong>${getAcademicTermStatus(term)}</strong>
-                </div>
-            `).join("")
-            : `
-                <div class="session-term">
-                    <span>ACADEMIC TERMS</span>
-                    <strong>DATES PENDING</strong>
-                </div>
-            `;
+        timeline.innerHTML = terms.map(term => `
+            <div class="session-term">
+                <span>${term.label}</span>
+                <strong>${getAcademicTermStatus(term)}</strong>
+            </div>
+        `).join("");
     }
 }
 
