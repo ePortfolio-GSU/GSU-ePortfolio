@@ -435,9 +435,9 @@ const ACADEMIC_SESSION_CONFIG = {
     nextMilestone: "Year Closure",
 
     terms: [
-        { label: "TERM 01", startDate: "2026-01-05", endDate: "2026-04-02" },
-        { label: "TERM 02", startDate: "2026-04-27", endDate: "2026-07-31" },
-        { label: "TERM 03", startDate: "2026-08-24", endDate: "2026-10-23" }
+        { label: "TERM I", startDate: "2026-01-05", endDate: "2026-04-02" },
+        { label: "TERM II", startDate: "2026-04-27", endDate: "2026-07-31" },
+        { label: "TERM III", startDate: "2026-08-24", endDate: "2026-10-23" }
     ]
 };
 
@@ -536,9 +536,9 @@ function getAcademicTermStatus(term) {
     }
 
     if (today < term.startDate) return "UPCOMING";
-    if (today > term.endDate) return "COMPLETED";
+    if (today > term.endDate) return "✓";
 
-    return "IN PROGRESS";
+    return "ONGOING";
 }
 
 
