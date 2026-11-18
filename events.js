@@ -135,14 +135,28 @@ function renderAcademicContext() {
     const container =
         document.getElementById("calendarAcademicContext");
 
-    const term = calendarData.currentTerm;
+    if (!container) return;
 
-    if (!term) {
-        container.textContent = "No current academic term recorded.";
+    const period = calendarData.currentAcademicPeriod;
+
+    if (period) {
+        const label = period.periodType === "HOLIDAY"
+            ? "CURRENT HOLIDAY: "
+            : "CURRENT TERM: ";
+
+        container.textContent = label + period.title;
         return;
     }
 
-    container.textContent = "Current Term: " + term.title;
+    const term = calendarData.currentTerm;
+
+    if (term) {
+        container.textContent = "CURRENT TERM: " + term.title;
+        return;
+    }
+
+    container.textContent =
+        "No current academic period recorded.";
 }
 
 
