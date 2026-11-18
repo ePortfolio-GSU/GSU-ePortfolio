@@ -167,7 +167,7 @@ function renderAcademicContext() {
 function populateEventTermOptions(selectedTermId = "") {
     const selector = document.getElementById("schoolEventTerm");
 
-    const terms = (calendarData.schoolCalendar || []).filter(record =>
+    const terms = (calendarData?.schoolCalendar || []).filter(record =>
         record.recordType === "TERM" &&
         record.status === "PUBLISHED"
     );
@@ -184,12 +184,11 @@ function populateEventTermOptions(selectedTermId = "") {
         selector.appendChild(option);
     });
 
-    const currentTerm = calendarData.currentTerm;
+    const currentTerm = calendarData?.currentTerm;
 
     selector.value = selectedTermId ||
         (currentTerm ? currentTerm.termId : "");
 }
-
 
 /************************************************
  * DATE FORMATTING
