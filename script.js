@@ -1324,9 +1324,7 @@ function buildSidebar(menuItems) {
 
     sidebar.replaceChildren();
 
-    if (quickIcons) {
-        quickIcons.replaceChildren();
-    }
+    if (quickIcons) quickIcons.replaceChildren();
 
     const content = document.querySelector(".dashboard-content");
 
@@ -1376,7 +1374,10 @@ function buildSidebar(menuItems) {
         if (breadcrumb) breadcrumb.textContent = "Home";
 
         dashboardSections.forEach(section => {
-            if (section) section.hidden = false;
+            if (section) {
+                section.hidden = false;
+                section.style.display = "";
+            }
         });
     }
 
@@ -1388,7 +1389,10 @@ function buildSidebar(menuItems) {
         if (existingView) existingView.remove();
 
         dashboardSections.forEach(section => {
-            if (section) section.hidden = true;
+            if (section) {
+                section.hidden = true;
+                section.style.display = "none";
+            }
         });
 
         const heading = document.getElementById("dashboardHeading");
@@ -1417,7 +1421,7 @@ function buildSidebar(menuItems) {
         content.appendChild(moduleView);
     }
 
-    // Close Menu row
+    // Close Menu
     const closeItem = document.createElement("li");
     const closeLink = document.createElement("a");
 
@@ -1442,7 +1446,7 @@ function buildSidebar(menuItems) {
     closeItem.appendChild(closeLink);
     sidebar.appendChild(closeItem);
 
-    // Build role-specific navigation
+    // Role-specific navigation
     menuItems.forEach(function (item) {
         const li = document.createElement("li");
         const link = document.createElement("a");
@@ -1467,7 +1471,7 @@ function buildSidebar(menuItems) {
                 return;
             }
 
-            sidebar.querySelectorAll("a").forEach(function (menuLink) {
+            sidebar.querySelectorAll("a").forEach(menuLink => {
                 menuLink.classList.remove("active");
             });
 
