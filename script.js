@@ -1319,21 +1319,20 @@ function loadDashboard(role) {
 function buildSidebar(menuItems) {
     const sidebar = document.getElementById("sidebarMenu");
     const quickIcons = document.getElementById("sidebarQuickIcons");
+    const content = document.querySelector(".dashboard-content");
 
-    if (!sidebar) return;
+    if (!sidebar || !content) return;
 
     sidebar.replaceChildren();
 
     if (quickIcons) quickIcons.replaceChildren();
 
-    const content = document.querySelector(".dashboard-content");
-
     const dashboardSections = [
-        content?.querySelector(".dashboard-welcome"),
+        content.querySelector(".dashboard-welcome"),
         document.getElementById("dashboardCards"),
         document.getElementById("dashboardWorkspace"),
         document.getElementById("dashboardActivity")
-    ];
+    ].filter(Boolean);
 
     function closeSidebar() {
         const panel = document.getElementById("dashboardSidebar");
@@ -1359,54 +1358,39 @@ function buildSidebar(menuItems) {
         const role = sessionStorage.getItem("userRole");
         const config = DASHBOARD_ROLES[role];
 
-        if (!config || !content) return;
+        if (!config) return;
 
         const moduleView = document.getElementById("dashboardModuleView");
-
         if (moduleView) moduleView.remove();
 
-        const heading = document.getElementById("dashboardHeading");
+        dashboardSections.forEach(section => {
+            section.hidden = false;
+            section.style.removeProperty("display");
+        });
 
+        const heading = document.getElementById("dashboardHeading");
         if (heading) heading.textContent = config.title;
 
         const breadcrumb = content.querySelector(".dashboard-breadcrumb");
-
         if (breadcrumb) breadcrumb.textContent = "Home";
-
-        dashboardSections.forEach(section => {
-            if (section) {
-                section.hidden = false;
-                section.style.display = "";
-            }
-        });
     }
 
     function showModulePage(title) {
-        if (!content) return;
-
-        const existingView = document.getElementById("dashboardModuleView");
-
-        if (existingView) existingView.remove();
+        const oldView = document.getElementById("dashboardModuleView");
+        if (oldView) oldView.remove();
 
         dashboardSections.forEach(section => {
-            if (section) {
-                section.hidden = true;
-                section.style.display = "none";
-            }
+            section.hidden = true;
+            section.style.setProperty("display", "none", "important");
         });
 
         const heading = document.getElementById("dashboardHeading");
-
         if (heading) heading.textContent = title;
 
         const breadcrumb = content.querySelector(".dashboard-breadcrumb");
-
-        if (breadcrumb) {
-            breadcrumb.textContent = "Home / " + title;
-        }
+        if (breadcrumb) breadcrumb.textContent = "Home / " + title;
 
         const moduleView = document.createElement("section");
-
         moduleView.id = "dashboardModuleView";
         moduleView.className = "dashboard-module-view";
 
@@ -1415,7 +1399,7 @@ function buildSidebar(menuItems) {
 
         const moduleMessage = document.createElement("p");
         moduleMessage.textContent =
-            title + " module content is awaiting implementation.";
+            "The " + title + " workspace is being prepared.";
 
         moduleView.append(moduleHeading, moduleMessage);
         content.appendChild(moduleView);
@@ -1425,7 +1409,7 @@ function buildSidebar(menuItems) {
     const closeItem = document.createElement("li");
     const closeLink = document.createElement("a");
 
-    closeLink.href = "#";
+    closeLink.href = "#close-menu";
     closeLink.className = "sidebar-close-link";
 
     const closeIcon = document.createElement("span");
@@ -1438,7 +1422,7 @@ function buildSidebar(menuItems) {
 
     closeLink.append(closeIcon, closeLabel);
 
-    closeLink.addEventListener("click", function (event) {
+    closeLink.addEventListener("click", function(event) {
         event.preventDefault();
         closeSidebar();
     });
@@ -1447,11 +1431,13 @@ function buildSidebar(menuItems) {
     sidebar.appendChild(closeItem);
 
     // Role-specific navigation
-    menuItems.forEach(function (item) {
+    menuItems.forEach(function(item) {
         const li = document.createElement("li");
         const link = document.createElement("a");
 
-        link.href = "#";
+        link.href = item[1] === "Dashboard Overview"
+            ? "#dashboard-overview"
+            : "#module-" + item[1].toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
         const icon = document.createElement("span");
         icon.className = "sidebar-item-icon";
@@ -1463,7 +1449,7 @@ function buildSidebar(menuItems) {
 
         link.append(icon, label);
 
-        link.addEventListener("click", function (event) {
+        link.addEventListener("click", function(event) {
             event.preventDefault();
 
             if (item[2] === "logout") {
@@ -1499,7 +1485,7 @@ function buildSidebar(menuItems) {
             iconButton.disabled = true;
             iconButton.setAttribute("aria-disabled", "true");
 
-            iconButton.addEventListener("click", function () {
+            iconButton.addEventListener("click", function() {
                 if (!iconButton.disabled) link.click();
             });
 
