@@ -1328,6 +1328,95 @@ function buildSidebar(menuItems) {
         quickIcons.replaceChildren();
     }
 
+    const content = document.querySelector(".dashboard-content");
+
+    const dashboardSections = [
+        content?.querySelector(".dashboard-welcome"),
+        document.getElementById("dashboardCards"),
+        document.getElementById("dashboardWorkspace"),
+        document.getElementById("dashboardActivity")
+    ];
+
+    function closeSidebar() {
+        const panel = document.getElementById("dashboardSidebar");
+        const toggle = document.getElementById("menuToggle");
+
+        if (panel) panel.classList.remove("active");
+
+        if (toggle) {
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Open navigation menu");
+            toggle.textContent = "☰ Menu";
+        }
+
+        if (quickIcons) {
+            quickIcons.querySelectorAll("button").forEach(button => {
+                button.disabled = true;
+                button.setAttribute("aria-disabled", "true");
+            });
+        }
+    }
+
+    function showDashboardOverview() {
+        const role = sessionStorage.getItem("userRole");
+        const config = DASHBOARD_ROLES[role];
+
+        if (!config || !content) return;
+
+        const moduleView = document.getElementById("dashboardModuleView");
+
+        if (moduleView) moduleView.remove();
+
+        const heading = document.getElementById("dashboardHeading");
+
+        if (heading) heading.textContent = config.title;
+
+        const breadcrumb = content.querySelector(".dashboard-breadcrumb");
+
+        if (breadcrumb) breadcrumb.textContent = "Home";
+
+        dashboardSections.forEach(section => {
+            if (section) section.hidden = false;
+        });
+    }
+
+    function showModulePage(title) {
+        if (!content) return;
+
+        const existingView = document.getElementById("dashboardModuleView");
+
+        if (existingView) existingView.remove();
+
+        dashboardSections.forEach(section => {
+            if (section) section.hidden = true;
+        });
+
+        const heading = document.getElementById("dashboardHeading");
+
+        if (heading) heading.textContent = title;
+
+        const breadcrumb = content.querySelector(".dashboard-breadcrumb");
+
+        if (breadcrumb) {
+            breadcrumb.textContent = "Home / " + title;
+        }
+
+        const moduleView = document.createElement("section");
+
+        moduleView.id = "dashboardModuleView";
+        moduleView.className = "dashboard-module-view";
+
+        const moduleHeading = document.createElement("h2");
+        moduleHeading.textContent = title;
+
+        const moduleMessage = document.createElement("p");
+        moduleMessage.textContent =
+            title + " module content is awaiting implementation.";
+
+        moduleView.append(moduleHeading, moduleMessage);
+        content.appendChild(moduleView);
+    }
+
     // Close Menu row
     const closeItem = document.createElement("li");
     const closeLink = document.createElement("a");
@@ -1347,30 +1436,13 @@ function buildSidebar(menuItems) {
 
     closeLink.addEventListener("click", function (event) {
         event.preventDefault();
-
-        const sidebarPanel = document.getElementById("dashboardSidebar");
-        const menuToggle = document.getElementById("menuToggle");
-
-        if (sidebarPanel) sidebarPanel.classList.remove("active");
-
-        if (menuToggle) {
-            menuToggle.setAttribute("aria-expanded", "false");
-            menuToggle.setAttribute("aria-label", "Open navigation menu");
-            menuToggle.textContent = "☰ Menu";
-        }
-
-        if (quickIcons) {
-            quickIcons.querySelectorAll("button").forEach(function (button) {
-                button.disabled = true;
-                button.setAttribute("aria-disabled", "true");
-            });
-        }
+        closeSidebar();
     });
 
     closeItem.appendChild(closeLink);
     sidebar.appendChild(closeItem);
 
-// Menu rows and matching quick-strip icons
+    // Build role-specific navigation
     menuItems.forEach(function (item) {
         const li = document.createElement("li");
         const link = document.createElement("a");
@@ -1388,44 +1460,28 @@ function buildSidebar(menuItems) {
         link.append(icon, label);
 
         link.addEventListener("click", function (event) {
-    event.preventDefault();
+            event.preventDefault();
 
-    if (item[2] === "logout") {
-        logoutUser();
-        return;
-    }
+            if (item[2] === "logout") {
+                logoutUser();
+                return;
+            }
 
-    sidebar.querySelectorAll("a").forEach(function (menuLink) {
-        menuLink.classList.remove("active");
-    });
+            sidebar.querySelectorAll("a").forEach(function (menuLink) {
+                menuLink.classList.remove("active");
+            });
 
-    link.classList.add("active");
+            link.classList.add("active");
 
-    if (item[1] === "Dashboard Overview") {
-        const role = sessionStorage.getItem("userRole");
-        const config = DASHBOARD_ROLES[role];
+            if (item[1] === "Dashboard Overview") {
+                showDashboardOverview();
+            } else {
+                showModulePage(item[1]);
+            }
 
-        if (!config) return;
+            closeSidebar();
+        });
 
-        document.getElementById("dashboardHeading").textContent = config.title;
-
-        document.querySelector(".dashboard-welcome").hidden = false;
-        document.getElementById("dashboardCards").hidden = false;
-        document.getElementById("dashboardWorkspace").hidden = false;
-        document.getElementById("dashboardActivity").hidden = false;
-
-        document.querySelector(".dashboard-breadcrumb").textContent = "Home";
-    } else {
-        link.classList.remove("unlinked-shake");
-        void link.offsetWidth;
-        link.classList.add("unlinked-shake");
-
-        link.addEventListener("animationend", function cleanup() {
-            link.classList.remove("unlinked-shake");
-            link.removeEventListener("animationend", cleanup);
-        }, { once: true });
-    }
-});
         li.appendChild(link);
         sidebar.appendChild(li);
 
