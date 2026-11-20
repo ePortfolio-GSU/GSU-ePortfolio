@@ -1376,34 +1376,42 @@ function buildSidebar(menuItems) {
     }
 
     function showModulePage(title) {
-        const oldView = document.getElementById("dashboardModuleView");
-        if (oldView) oldView.remove();
+    const oldView = document.getElementById("dashboardModuleView");
+    if (oldView) oldView.remove();
 
-        dashboardSections.forEach(section => {
-            section.hidden = true;
-            section.style.setProperty("display", "none", "important");
-        });
+    dashboardSections.forEach(section => {
+        section.hidden = true;
+        section.style.setProperty("display", "none", "important");
+    });
 
-        const heading = document.getElementById("dashboardHeading");
-        if (heading) heading.textContent = title;
+    const heading = document.getElementById("dashboardHeading");
+    if (heading) heading.textContent = title;
 
-        const breadcrumb = content.querySelector(".dashboard-breadcrumb");
-        if (breadcrumb) breadcrumb.textContent = "Home / " + title;
+    const breadcrumb = content.querySelector(".dashboard-breadcrumb");
+    if (breadcrumb) breadcrumb.textContent = "Home / " + title;
 
-        const moduleView = document.createElement("section");
-        moduleView.id = "dashboardModuleView";
-        moduleView.className = "dashboard-module-view";
+    const moduleView = document.createElement("section");
+    moduleView.id = "dashboardModuleView";
+    moduleView.className = "dashboard-module-view";
 
-        const moduleHeading = document.createElement("h2");
-        moduleHeading.textContent = title;
+    content.appendChild(moduleView);
 
-        const moduleMessage = document.createElement("p");
-        moduleMessage.textContent =
-            "The " + title + " workspace is being prepared.";
+    const role = sessionStorage.getItem("userRole");
 
-        moduleView.append(moduleHeading, moduleMessage);
-        content.appendChild(moduleView);
+    if (role === "ICT_ADMIN" && title === "User Management") {
+        renderUserManagementModule(moduleView);
+        return;
     }
+
+    const moduleHeading = document.createElement("h2");
+    moduleHeading.textContent = title;
+
+    const moduleMessage = document.createElement("p");
+    moduleMessage.textContent =
+        "The " + title + " workspace is being prepared.";
+
+    moduleView.append(moduleHeading, moduleMessage);
+}
 
     // Close Menu
     const closeItem = document.createElement("li");
@@ -1591,3 +1599,345 @@ window.addEventListener("pageshow", function () {
     }
 
 });
+const USER_MANAGEMENT_API_URL =
+    "https://script.google.com/macros/s/AKfycbwcYc2v0rRVF_AFDtluOVFCTja89vOH0HBtcI9rLGs0PCd7D3YpI5K4EVrb7XKaH_AL/exec";
+
+
+async function userManagementRequest(action, data = {}) {
+    const response = await fetch(USER_MANAGEMENT_API_URL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "text/plain;charset=UTF-8"
+        },
+        body: JSON.stringify({
+            action: action,
+            sessionToken: sessionStorage.getItem("sessionToken"),
+            ...data
+        })
+    });
+
+    if (!response.ok) {
+        throw new Error("User Management service is unavailable.");
+    }
+
+    return response.json();
+}
+
+
+function renderUserManagementModule(container) {
+    container.innerHTML = `
+        <div class="user-management-module">
+            <div class="um-header">
+                <div>
+                    <h2>User Management</h2>
+                    <p>Manage system accounts and access.</p>
+                </div>
+                <button type="button" id="umRefresh">↻ Refresh</button>
+            </div>
+
+            <div class="um-summary">
+                <div><strong id="umTotal">0</strong><span>Total Users</span></div>
+                <div><strong id="umActive">0</strong><span>Active</span></div>
+                <div><strong id="umLocked">0</strong><span>Locked</span></div>
+                <div><strong id="umDisabled">0</strong><span>Disabled</span></div>
+            </div>
+
+            <div class="um-create-panel">
+                <h3>Create New Account</h3>
+
+                <form id="umCreateForm">
+                    <label>Full Name</label>
+                    <input name="fullName" required maxlength="100">
+
+                    <label>Username</label>
+                    <input name="username" required maxlength="60">
+
+                    <label>Role</label>
+                    <select name="role" required>
+                        <option value="">Select role</option>
+                        <option value="ICT_ADMIN">ICT Administrator</option>
+                        <option value="SCHOOL_ADMIN">School Administrator</option>
+                        <option value="TEACHER">Teacher</option>
+                        <option value="LEARNER">Learner</option>
+                        <option value="PARENT">Parent</option>
+                    </select>
+
+                    <label>Class (where applicable)</label>
+                    <input name="className" maxlength="60">
+
+                    <button type="submit" id="umCreateButton">
+                        Create Account
+                    </button>
+                </form>
+            </div>
+
+            <div class="um-users-panel">
+                <div class="um-list-heading">
+                    <h3>Registered Users</h3>
+                    <input id="umSearch" type="search"
+                           placeholder="Search users...">
+                </div>
+
+                <p id="umMessage" role="status"></p>
+
+                <div class="um-table-wrap">
+                    <table class="um-table">
+                        <thead>
+                            <tr>
+                                <th>Name / Username</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="umUsersBody">
+                            <tr><td colspan="4">Loading users...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const message = container.querySelector("#umMessage");
+    const usersBody = container.querySelector("#umUsersBody");
+    const searchInput = container.querySelector("#umSearch");
+
+    let users = [];
+
+    function showMessage(text, isError = false) {
+        message.textContent = text;
+        message.style.color = isError ? "#b42318" : "#167c45";
+    }
+
+    function updateSummary() {
+        container.querySelector("#umTotal").textContent = users.length;
+        container.querySelector("#umActive").textContent =
+            users.filter(user => user.status.toLowerCase() === "active").length;
+        container.querySelector("#umLocked").textContent =
+            users.filter(user => user.status.toLowerCase() === "locked").length;
+        container.querySelector("#umDisabled").textContent =
+            users.filter(user => user.status.toLowerCase() === "disabled").length;
+    }
+
+    function renderUsers() {
+        const query = searchInput.value.trim().toLowerCase();
+
+        const filtered = users.filter(user =>
+            user.fullName.toLowerCase().includes(query) ||
+            user.username.toLowerCase().includes(query) ||
+            user.role.toLowerCase().includes(query)
+        );
+
+        usersBody.replaceChildren();
+
+        if (!filtered.length) {
+            const row = usersBody.insertRow();
+            const cell = row.insertCell();
+            cell.colSpan = 4;
+            cell.textContent = "No matching users found.";
+            return;
+        }
+
+        filtered.forEach(user => {
+            const row = usersBody.insertRow();
+
+            const identity = row.insertCell();
+            const name = document.createElement("strong");
+            name.textContent = user.fullName || "Unnamed user";
+
+            const username = document.createElement("small");
+            username.textContent = user.username;
+
+            identity.append(name, document.createElement("br"), username);
+
+            row.insertCell().textContent = user.role;
+
+            const statusCell = row.insertCell();
+            statusCell.textContent = user.status;
+
+            const actions = row.insertCell();
+
+            const resetButton = document.createElement("button");
+            resetButton.type = "button";
+            resetButton.textContent = "Reset Password";
+            resetButton.addEventListener("click", async () => {
+                if (!confirm("Reset password for " + user.username + "?")) return;
+
+                try {
+                    const result = await userManagementRequest(
+                        "resetManagedUserPassword",
+                        { username: user.username }
+                    );
+
+                    if (!result.success) throw new Error(result.message);
+
+                    const temporaryPassword =
+                        result.temporaryPassword || result.tempPassword || "";
+
+                    alert(
+                        "Password reset successfully." +
+                        (temporaryPassword
+                            ? "\nTemporary password: " + temporaryPassword
+                            : "")
+                    );
+
+                    showMessage("Password reset for " + user.username);
+                } catch (error) {
+                    showMessage(error.message, true);
+                }
+            });
+
+            const statusButton = document.createElement("button");
+            statusButton.type = "button";
+
+            const normalizedStatus = user.status.toLowerCase();
+
+            statusButton.textContent =
+                normalizedStatus === "active" ? "Lock" :
+                normalizedStatus === "locked" ? "Activate" :
+                "Activate";
+
+            statusButton.addEventListener("click", async () => {
+                const nextStatus =
+                    normalizedStatus === "active" ? "Locked" : "Active";
+
+                if (!confirm(
+                    nextStatus + " account " + user.username + "?"
+                )) return;
+
+                try {
+                    const result = await userManagementRequest(
+                        "updateManagedUserStatus",
+                        {
+                            username: user.username,
+                            status: nextStatus
+                        }
+                    );
+
+                    if (!result.success) throw new Error(result.message);
+
+                    showMessage("Account status updated.");
+                    await loadUsers();
+                } catch (error) {
+                    showMessage(error.message, true);
+                }
+            });
+
+            const disableButton = document.createElement("button");
+            disableButton.type = "button";
+            disableButton.textContent = "Disable";
+
+            disableButton.addEventListener("click", async () => {
+                if (!confirm("Disable " + user.username + "?")) return;
+
+                try {
+                    const result = await userManagementRequest(
+                        "updateManagedUserStatus",
+                        {
+                            username: user.username,
+                            status: "Disabled"
+                        }
+                    );
+
+                    if (!result.success) throw new Error(result.message);
+
+                    showMessage("Account disabled.");
+                    await loadUsers();
+                } catch (error) {
+                    showMessage(error.message, true);
+                }
+            });
+
+            actions.append(resetButton, statusButton, disableButton);
+        });
+    }
+
+    async function loadUsers() {
+        usersBody.innerHTML =
+            '<tr><td colspan="4">Loading users...</td></tr>';
+
+        try {
+            const result = await userManagementRequest("getManagedUsers");
+
+            if (!result.success) throw new Error(result.message);
+
+            users = (result.users || []).map(user => ({
+                ...user,
+                fullName: String(user.fullName || ""),
+                username: String(user.username || ""),
+                role: String(user.role || ""),
+                status: String(user.status || "")
+            }));
+
+            updateSummary();
+            renderUsers();
+
+        } catch (error) {
+            usersBody.innerHTML =
+                '<tr><td colspan="4">Unable to load users.</td></tr>';
+            showMessage(error.message, true);
+        }
+    }
+
+    container.querySelector("#umCreateForm").addEventListener(
+        "submit",
+        async event => {
+            event.preventDefault();
+
+            const form = event.currentTarget;
+            const formData = new FormData(form);
+
+            const userData = {
+                fullName: String(formData.get("fullName") || "").trim(),
+                username: String(formData.get("username") || "").trim(),
+                role: String(formData.get("role") || ""),
+                className: String(formData.get("className") || "").trim()
+            };
+
+            const button = container.querySelector("#umCreateButton");
+            button.disabled = true;
+            button.textContent = "Creating...";
+
+            try {
+                const result = await userManagementRequest(
+                    "createManagedUser",
+                    { userData: userData }
+                );
+
+                if (!result.success) throw new Error(result.message);
+
+                const temporaryPassword =
+                    result.temporaryPassword || result.tempPassword || "";
+
+                showMessage("Account created successfully.");
+
+                if (temporaryPassword) {
+                    alert(
+                        "Account created successfully.\n" +
+                        "Username: " + userData.username +
+                        "\nTemporary password: " + temporaryPassword
+                    );
+                }
+
+                form.reset();
+                await loadUsers();
+
+            } catch (error) {
+                showMessage(error.message, true);
+            } finally {
+                button.disabled = false;
+                button.textContent = "Create Account";
+            }
+        }
+    );
+
+    searchInput.addEventListener("input", renderUsers);
+
+    container.querySelector("#umRefresh").addEventListener(
+        "click",
+        loadUsers
+    );
+
+    loadUsers();
+}
