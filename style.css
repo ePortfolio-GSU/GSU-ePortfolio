@@ -4483,6 +4483,10 @@ body:has(.login-card) footer {
     }
 }
 
+/* =========================================
+   AEGIS — RESPONSIVE DIGITAL INTERFACE
+========================================= */
+
 @media (max-width: 480px) {
 
     .aegis-hero-heading {
@@ -4520,5 +4524,455 @@ body:has(.login-card) footer {
 
     .aegis-section-heading h3 {
         font-size: 17px;
+    }
+}
+
+/* Modern layered workspace cards */
+
+.aegis-panel {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(74, 37, 47, .12);
+    border-radius: 20px;
+    background: #FFFFFF;
+    box-shadow:
+        0 12px 30px rgba(74, 37, 47, .055),
+        0 2px 6px rgba(74, 37, 47, .035);
+}
+
+.aegis-panel::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(
+        90deg,
+        #4A252F 0%,
+        #38BDF8 55%,
+        #8A929B 100%
+    );
+}
+
+.aegis-stat {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(56, 189, 248, .28);
+    border-radius: 16px;
+    background: linear-gradient(
+        145deg,
+        #603A45,
+        #4A252F 75%
+    );
+    box-shadow: 0 7px 18px rgba(0, 0, 0, .12);
+}
+
+.aegis-stat::after {
+    content: "";
+    position: absolute;
+    right: -24px;
+    bottom: -34px;
+    width: 90px;
+    height: 90px;
+    border: 1px solid rgba(56, 189, 248, .25);
+    border-radius: 50%;
+    box-shadow:
+        0 0 0 12px rgba(56, 189, 248, .045),
+        0 0 0 25px rgba(56, 189, 248, .025);
+    pointer-events: none;
+}
+
+.aegis-operation-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(74, 37, 47, .13);
+    border-radius: 15px;
+    background: linear-gradient(
+        145deg,
+        #FFFFFF,
+        #F3F8FB
+    );
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        box-shadow .2s ease;
+}
+
+.aegis-operation-card:hover {
+    transform: translateY(-2px);
+    border-color: #38BDF8;
+    box-shadow: 0 8px 20px rgba(74, 37, 47, .08);
+}
+
+.aegis-create-button {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(56, 189, 248, .35);
+    background: linear-gradient(
+        115deg,
+        #4A252F,
+        #603A45
+    );
+    box-shadow: 0 8px 20px rgba(74, 37, 47, .14);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.aegis-create-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(74, 37, 47, .2);
+}
+
+/* User identity and avatar */
+
+.aegis-user-identity {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-width: 170px;
+}
+
+.aegis-user-avatar {
+    display: grid;
+    place-items: center;
+    flex: 0 0 39px;
+    width: 39px;
+    height: 39px;
+    border: 1px solid rgba(56, 189, 248, .55);
+    border-radius: 12px;
+    background: linear-gradient(
+        145deg,
+        #DDF5FF,
+        #FFFFFF
+    );
+    color: #4A252F;
+}
+
+.aegis-user-avatar svg {
+    width: 22px;
+    height: 22px;
+}
+
+.aegis-user-details {
+    display: block;
+    min-width: 0;
+}
+
+.aegis-user-details strong,
+.aegis-user-details small {
+    display: block;
+    overflow-wrap: anywhere;
+}
+
+/* Directory table */
+
+.aegis-table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid #E4E7EB;
+    border-radius: 13px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.aegis-table {
+    min-width: 650px;
+}
+
+.aegis-table tbody tr {
+    transition: background .18s ease;
+}
+
+.aegis-table tbody tr:hover {
+    background: #F3F8FB;
+}
+
+.aegis-table td {
+    padding-top: 14px;
+    padding-bottom: 14px;
+}
+
+/* Account status colours remain within the approved palette */
+
+.aegis-status {
+    border: 1px solid rgba(56, 189, 248, .45);
+    background: #DDF5FF;
+    color: #4A252F;
+}
+
+.aegis-status.locked {
+    border: 1px solid #8A929B;
+    background: #EEF0F2;
+    color: #4A252F;
+}
+
+.aegis-status.disabled {
+    border: 1px solid rgba(74, 37, 47, .35);
+    background: #F1E8EB;
+    color: #4A252F;
+}
+
+/* Safeguards panel */
+
+.aegis-integrity {
+    gap: 0;
+    border-color: rgba(56, 189, 248, .3);
+    background: linear-gradient(
+        145deg,
+        #FFFFFF,
+        #F4FAFD
+    );
+}
+
+.aegis-integrity-title {
+    padding-bottom: 13px;
+    border-bottom: 1px solid #E4E7EB;
+}
+
+.aegis-integrity-row {
+    min-width: 0;
+    flex-wrap: wrap;
+    padding: 15px 0;
+    line-height: 1.6;
+}
+
+.aegis-integrity-row span {
+    flex: 1 1 190px;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.aegis-integrity-row b {
+    flex: 0 1 auto;
+    max-width: 100%;
+    padding: 5px 8px;
+    border: 1px solid rgba(56, 189, 248, .4);
+    border-radius: 20px;
+    background: #DDF5FF;
+    color: #4A252F;
+    font-size: 8px;
+    overflow-wrap: anywhere;
+}
+
+/* Responsive closing footer */
+
+.aegis-footer-panel {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px 20px;
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid rgba(56, 189, 248, .35);
+    border-radius: 18px;
+    background: linear-gradient(
+        115deg,
+        #4A252F,
+        #603A45
+    );
+    box-shadow: 0 10px 24px rgba(74, 37, 47, .13);
+}
+
+.aegis-footer-panel::after {
+    content: "AEGIS";
+    display: grid;
+    place-items: center;
+    width: 66px;
+    height: 66px;
+    border: 1px solid rgba(56, 189, 248, .55);
+    border-radius: 17px;
+    background: rgba(56, 189, 248, .12);
+    color: #38BDF8;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.aegis-footer-panel strong {
+    display: block;
+    color: #FFFFFF;
+    font-size: 12px;
+    letter-spacing: 1px;
+    overflow-wrap: anywhere;
+}
+
+.aegis-footer-panel p {
+    grid-column: 1 / -1;
+    max-width: 620px;
+    margin: 0;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, .17);
+    color: #FFFFFF;
+    font-size: 11px;
+    line-height: 1.8;
+    overflow-wrap: anywhere;
+}
+
+/* Modern icon treatment using inline SVG masks */
+
+.aegis-brand-icon,
+.aegis-fingerprint,
+.aegis-stat > span,
+.aegis-operation-icon,
+.aegis-operation-card > span,
+.aegis-search-row > span,
+.aegis-search-row button,
+.aegis-integrity-title span,
+.aegis-empty span {
+    position: relative;
+    display: inline-grid;
+    place-items: center;
+    font-size: 0 !important;
+}
+
+.aegis-brand-icon::before,
+.aegis-fingerprint::before,
+.aegis-stat > span::before,
+.aegis-operation-icon::before,
+.aegis-operation-card > span::before,
+.aegis-search-row > span::before,
+.aegis-search-row button::before,
+.aegis-integrity-title span::before,
+.aegis-empty span::before {
+    content: "";
+    display: block;
+    width: 1em;
+    height: 1em;
+    background: currentColor;
+    -webkit-mask: var(--aegis-icon) center / contain no-repeat;
+    mask: var(--aegis-icon) center / contain no-repeat;
+}
+
+/* Brand identity */
+
+.aegis-brand-icon {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4 21c.8-4.5 3.4-6.5 8-6.5s7.2 2 8 6.5'/%3E%3C/svg%3E");
+}
+
+.aegis-fingerprint {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+    width: 64px;
+    height: 64px;
+}
+
+/* Summary icons */
+
+.aegis-stat:nth-child(1) > span {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='9' cy='8' r='3'/%3E%3Cpath d='M3 20c.5-3.5 2.5-5 6-5s5.5 1.5 6 5M16 5a3 3 0 0 1 0 6M18 15c2 .5 3 2 3 5'/%3E%3C/svg%3E");
+}
+
+.aegis-stat:nth-child(2) > span {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='8' r='3.5'/%3E%3Cpath d='M2.5 20c.5-3.7 2.7-5.5 6.5-5.5 2.2 0 3.8.6 4.9 1.8M16 17l2 2 4-4'/%3E%3C/svg%3E");
+}
+
+.aegis-stat:nth-child(3) > span {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='10' width='16' height='11' rx='2'/%3E%3Cpath d='M8 10V7a4 4 0 0 1 8 0v3M12 14v3'/%3E%3C/svg%3E");
+}
+
+.aegis-stat:nth-child(4) > span {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m5.5 5.5 13 13'/%3E%3C/svg%3E");
+}
+
+/* Operations and directory icons */
+
+.aegis-operation-icon {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='9' cy='8' r='3.5'/%3E%3Cpath d='M2.5 20c.5-3.7 2.7-5.5 6.5-5.5M19 8v8M15 12h8'/%3E%3C/svg%3E");
+}
+
+.aegis-operation-card:nth-child(1) > span {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='8' cy='15' r='4'/%3E%3Cpath d='m11 12 9-9M16 7l2 2M13 10l2 2'/%3E%3C/svg%3E");
+}
+
+.aegis-operation-card:nth-child(2) > span {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M4 6h16M4 12h16M4 18h16'/%3E%3Ccircle cx='9' cy='6' r='2' fill='white'/%3E%3Ccircle cx='15' cy='12' r='2' fill='white'/%3E%3Ccircle cx='11' cy='18' r='2' fill='white'/%3E%3C/svg%3E");
+}
+
+.aegis-search-row > span {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Ccircle cx='10.5' cy='10.5' r='6.5'/%3E%3Cpath d='m16 16 5 5'/%3E%3C/svg%3E");
+}
+
+.aegis-search-row button {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 11a8 8 0 0 0-14-5L4 8M4 4v4h4M4 13a8 8 0 0 0 14 5l2-2m0 4v-4h-4'/%3E%3C/svg%3E");
+    width: 28px;
+    height: 28px;
+}
+
+.aegis-integrity-title span {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3 20 6v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V6z'/%3E%3Cpath d='m9 12 2 2 4-4'/%3E%3C/svg%3E");
+}
+
+.aegis-empty span {
+    --aegis-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 8v4m0 4h.01'/%3E%3C/svg%3E");
+}
+
+/* Footer and mobile refinements */
+
+@media (max-width: 760px) {
+
+    .aegis-footer-panel {
+        grid-template-columns: minmax(0, 1fr) 48px;
+        gap: 10px;
+        padding: 17px;
+    }
+
+    .aegis-footer-panel::after {
+        width: 48px;
+        height: 48px;
+        border-radius: 13px;
+        font-size: 10px;
+    }
+
+    .aegis-integrity-row {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .aegis-integrity-row b {
+        text-align: right;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .aegis-footer-panel {
+        grid-template-columns: minmax(0, 1fr) 42px;
+        padding: 15px;
+    }
+
+    .aegis-footer-panel::after {
+        width: 42px;
+        height: 42px;
+        font-size: 9px;
+    }
+
+    .aegis-footer-panel p {
+        font-size: 10px;
+    }
+
+    .aegis-integrity-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .aegis-integrity-row b {
+        text-align: left;
+    }
+
+    .aegis-user-identity {
+        min-width: 150px;
+        gap: 8px;
+    }
+
+    .aegis-user-avatar {
+        flex-basis: 34px;
+        width: 34px;
+        height: 34px;
+    }
+
+    .aegis-user-avatar svg {
+        width: 19px;
+        height: 19px;
     }
 }
