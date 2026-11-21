@@ -1976,52 +1976,109 @@ function renderUserManagementWorkspace(root) {
 
             <section class="aegis-hero">
 
-                <div class="aegis-brand-row">
-                    <div class="aegis-brand">
-                        <span class="aegis-brand-icon">♙</span>
-                        <div>
-                            <strong>GSU AEGIS</strong>
-                            <small>IDENTITY CONTROL</small>
-                        </div>
-                    </div>
-                    <span class="aegis-session-badge">
-                        ● ADMIN SESSION
-                    </span>
-                </div>
-                
+    <div class="aegis-brand-row">
+        <div class="aegis-brand">
+            <span class="aegis-brand-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2.8 20 6v5.5c0 5-3.4 8.3-8 9.7-4.6-1.4-8-4.7-8-9.7V6l8-3.2Z"/>
+                    <path d="m8.5 12 2.2 2.2 4.8-4.8"/>
+                </svg>
+            </span>
+            <div>
+                <strong>GSU AEGIS</strong>
+                <small>IDENTITY CONTROL</small>
+            </div>
+        </div>
 
-    <div class="aegis-fingerprint">◎</div>
-</div>
+        <span class="aegis-session-badge">
+            ● ADMIN SESSION
+        </span>
+    </div>
 
-                <div class="aegis-stat-grid">
+    <div class="aegis-hero-heading">
+        <div>
+            <span>ICT ADMINISTRATION / IDENTITY CONTROL</span>
+            <p>
+                Account provisioning, identity records
+                and access lifecycle management.
+            </p>
+        </div>
 
-                    <div class="aegis-stat">
-                        <span>♙</span>
-                        <strong id="aegisTotal">—</strong>
-                        <small>TOTAL USERS</small>
-                    </div>
+        <div class="aegis-fingerprint" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="1.5"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3a9 9 0 0 0-9 9"/>
+                <path d="M12 6a6 6 0 0 0-6 6"/>
+                <path d="M12 9a3 3 0 0 0-3 3"/>
+                <path d="M12 3a9 9 0 0 1 9 9"/>
+                <path d="M12 6a6 6 0 0 1 6 6"/>
+                <path d="M12 9a3 3 0 0 1 3 3"/>
+                <path d="M12 12v9"/>
+            </svg>
+        </div>
+    </div>
 
-                    <div class="aegis-stat">
-                        <span>✓</span>
-                        <strong id="aegisActive">—</strong>
-                        <small>ACTIVE USERS</small>
-                    </div>
+    <div class="aegis-stat-grid">
 
-                    <div class="aegis-stat">
-                        <span>▣</span>
-                        <strong id="aegisLocked">—</strong>
-                        <small>LOCKED USERS</small>
-                    </div>
+        <div class="aegis-stat">
+            <span aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="9" cy="8" r="3.5"/>
+                    <path d="M2.5 20c.5-3.5 2.7-5.3 6.5-5.3"/>
+                    <path d="M16 11a3 3 0 1 0 0-6"/>
+                    <path d="M16 15c3.2 0 5 1.7 5.5 5"/>
+                </svg>
+            </span>
+            <strong id="aegisTotal">—</strong>
+            <small>TOTAL USERS</small>
+        </div>
 
-                    <div class="aegis-stat">
-                        <span>⊘</span>
-                        <strong id="aegisDisabled">—</strong>
-                        <small>DISABLED USERS</small>
-                    </div>
+        <div class="aegis-stat">
+            <span aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="m8 12 2.5 2.5L16 9"/>
+                </svg>
+            </span>
+            <strong id="aegisActive">—</strong>
+            <small>ACTIVE USERS</small>
+        </div>
 
-                </div>
-            </section>
+        <div class="aegis-stat">
+            <span aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="10" width="16" height="11" rx="2"/>
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+                </svg>
+            </span>
+            <strong id="aegisLocked">—</strong>
+            <small>LOCKED USERS</small>
+        </div>
 
+        <div class="aegis-stat">
+            <span aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.8"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="9"/>
+                    <path d="m9 9 6 6m0-6-6 6"/>
+                </svg>
+            </span>
+            <strong id="aegisDisabled">—</strong>
+            <small>DISABLED USERS</small>
+        </div>
+
+    </div>
+</section>
             <div class="aegis-workspace">
 
                 <div class="aegis-section-heading">
