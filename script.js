@@ -1385,10 +1385,17 @@ function buildSidebar(menuItems) {
     });
 
     const heading = document.getElementById("dashboardHeading");
-    if (heading) heading.textContent = title;
+
+    if (heading) {
+        heading.textContent =
+            title === "User Management" ? "" : title;
+    }
 
     const breadcrumb = content.querySelector(".dashboard-breadcrumb");
-    if (breadcrumb) breadcrumb.textContent = "Home / " + title;
+
+    if (breadcrumb) {
+        breadcrumb.textContent = "Home / " + title;
+    }
 
     const moduleView = document.createElement("section");
     moduleView.id = "dashboardModuleView";
