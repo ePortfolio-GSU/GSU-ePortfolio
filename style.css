@@ -5312,3 +5312,347 @@ body:has(.login-card) footer {
         white-space: nowrap;
     }
 }
+/* =========================================
+   GSU AEGIS — ACCOUNT INTEGRITY CENTRE
+========================================= */
+
+.aegis-integrity-centre {
+    display: grid;
+    gap: 16px;
+    padding: 18px;
+    border: 1px solid #E1E6EB;
+    border-radius: 15px;
+    background: #FFFFFF;
+}
+
+.aegis-integrity-hero {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 17px;
+    border-radius: 12px;
+    background: #4A252F;
+    color: #FFFFFF;
+}
+
+.aegis-integrity-hero-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 43px;
+    height: 43px;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 11px;
+    color: #38BDF8;
+    font-size: 27px;
+}
+
+.aegis-integrity-hero > div:nth-child(2) {
+    flex: 1;
+}
+
+.aegis-integrity-hero strong {
+    font-size: 11px;
+    letter-spacing: .8px;
+}
+
+.aegis-integrity-hero p {
+    margin: 5px 0 0;
+    color: #E6DDE0;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.aegis-monitor-state {
+    align-self: flex-start;
+    padding: 6px 8px;
+    border: 1px solid rgba(56,189,248,.45);
+    border-radius: 6px;
+    color: #7DD3FC;
+    font-size: 8px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.aegis-integrity-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 13px;
+    border: 1px solid #D9EAF4;
+    border-radius: 9px;
+    background: #F2F9FD;
+}
+
+.aegis-integrity-notice > span {
+    color: #38BDF8;
+    font-size: 15px;
+}
+
+.aegis-integrity-notice strong {
+    color: #31556A;
+    font-size: 11px;
+}
+
+.aegis-integrity-notice p {
+    margin: 5px 0 0;
+    color: #667985;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.aegis-integrity-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.aegis-integrity-card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
+    padding: 17px;
+    overflow: hidden;
+    border: 1px solid #E2E7EC;
+    border-radius: 11px;
+    background: #FFFFFF;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .2s, transform .2s, box-shadow .2s;
+}
+
+.aegis-integrity-card:hover {
+    border-color: #38BDF8;
+    box-shadow: 0 5px 17px rgba(56,189,248,.12);
+    transform: translateY(-2px);
+}
+
+.aegis-integrity-card:focus-visible {
+    outline: 2px solid #38BDF8;
+    outline-offset: 3px;
+}
+
+.aegis-integrity-card-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 39px;
+    height: 39px;
+    border-radius: 9px;
+    background: #EAF7FD;
+    color: #168CC0;
+    font-size: 21px;
+}
+
+.aegis-integrity-card-content {
+    display: grid;
+    gap: 7px;
+    min-width: 0;
+}
+
+.aegis-integrity-card-content strong {
+    color: #4A252F;
+    font-size: 10px;
+    letter-spacing: .45px;
+}
+
+.aegis-integrity-card-content small {
+    color: #727D87;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.aegis-integrity-card-content b {
+    margin-top: 3px;
+    color: #168CC0;
+    font-size: 9px;
+    letter-spacing: .4px;
+}
+
+.aegis-integrity-card-number {
+    position: absolute;
+    top: 9px;
+    right: 11px;
+    color: #DDE4E9;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+.aegis-integrity-detail {
+    padding: 17px;
+    border: 1px solid #DCE5EB;
+    border-radius: 11px;
+    background: #F8FAFC;
+    scroll-margin-top: 20px;
+}
+
+.aegis-integrity-detail[hidden] {
+    display: none !important;
+}
+
+.aegis-integrity-detail-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.aegis-integrity-detail-heading span {
+    color: #168CC0;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .7px;
+}
+
+.aegis-integrity-detail-heading h3 {
+    margin: 6px 0;
+    color: #4A252F;
+    font-size: 17px;
+}
+
+#aegisIntegrityClose {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #DCE2E7;
+    border-radius: 7px;
+    background: #FFFFFF;
+    color: #4A252F;
+    cursor: pointer;
+}
+
+.aegis-integrity-detail > p {
+    color: #68747E;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.aegis-integrity-data-state {
+    display: flex;
+    gap: 10px;
+    padding: 13px;
+    border: 1px solid #E4D9C7;
+    border-radius: 8px;
+    background: #FFF9EF;
+}
+
+.aegis-integrity-data-state > span {
+    color: #C18B35;
+    font-size: 13px;
+}
+
+.aegis-integrity-data-state strong {
+    display: block;
+    color: #85612C;
+    font-size: 9px;
+    letter-spacing: .4px;
+}
+
+.aegis-integrity-data-state small {
+    display: block;
+    margin-top: 5px;
+    color: #897D6B;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+.aegis-integrity-detail-list {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.aegis-integrity-detail-item {
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    gap: 5px 8px;
+    padding: 11px;
+    border: 1px solid #E7EBEF;
+    border-radius: 8px;
+    background: #FFFFFF;
+}
+
+.aegis-integrity-detail-item > span {
+    grid-row: span 2;
+    color: #38BDF8;
+}
+
+.aegis-integrity-detail-item strong {
+    color: #4A252F;
+    font-size: 10px;
+}
+
+.aegis-integrity-detail-item small {
+    color: #9099A1;
+    font-size: 8px;
+    letter-spacing: .4px;
+}
+
+.aegis-integrity-detail-footer {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+    padding-top: 12px;
+    border-top: 1px solid #E1E6EB;
+    color: #929BA3;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: .5px;
+}
+
+.aegis-integrity-boundary {
+    padding: 14px;
+    border-left: 3px solid #38BDF8;
+    border-radius: 5px;
+    background: #F5F7F9;
+}
+
+.aegis-integrity-boundary strong {
+    color: #4A252F;
+    font-size: 9px;
+    letter-spacing: .6px;
+}
+
+.aegis-integrity-boundary p {
+    margin: 6px 0 0;
+    color: #737E87;
+    font-size: 10px;
+    line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+
+    .aegis-integrity-centre {
+        padding: 11px;
+        gap: 12px;
+    }
+
+    .aegis-integrity-hero {
+        flex-wrap: wrap;
+        padding: 13px;
+    }
+
+    .aegis-monitor-state {
+        margin-left: 55px;
+    }
+
+    .aegis-integrity-grid {
+        grid-template-columns: 1fr;
+        gap: 9px;
+    }
+
+    .aegis-integrity-card {
+        padding: 14px;
+    }
+
+    .aegis-integrity-detail {
+        padding: 13px;
+    }
+
+    .aegis-integrity-detail-heading h3 {
+        font-size: 15px;
+    }
+}
