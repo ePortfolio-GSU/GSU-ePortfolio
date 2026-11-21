@@ -3736,3 +3736,789 @@ body:has(.login-card) footer {
         font-size: 10px;
     }
 }
+/************************************************
+ * GSU AEGIS - USER MANAGEMENT INTERFACE
+ ************************************************/
+
+.aegis-user-management {
+    --aegis-blue: #38BDF8;
+    --aegis-maroon: #4A252F;
+    --aegis-grey: #8A929B;
+    --aegis-white: #FFFFFF;
+    --aegis-bg: #F1F3F6;
+    width: 100%;
+    color: #303944;
+    font-family: inherit;
+}
+
+.aegis-user-management *,
+.aegis-user-management *::before,
+.aegis-user-management *::after {
+    box-sizing: border-box;
+}
+
+.aegis-hero {
+    background: var(--aegis-maroon);
+    color: var(--aegis-white);
+    padding: 25px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.aegis-brand-row,
+.aegis-brand,
+.aegis-hero-heading,
+.aegis-section-heading,
+.aegis-create-heading,
+.aegis-directory-heading,
+.aegis-integrity-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+}
+
+.aegis-brand {
+    justify-content: flex-start;
+}
+
+.aegis-brand-icon {
+    width: 43px;
+    height: 43px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    background: var(--aegis-blue);
+    color: var(--aegis-maroon);
+    font-size: 25px;
+}
+
+.aegis-brand strong,
+.aegis-brand small {
+    display: block;
+}
+
+.aegis-brand strong {
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+.aegis-brand small {
+    margin-top: 4px;
+    color: #D9C9CD;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+}
+
+.aegis-session-badge {
+    border: 1px solid #80616A;
+    border-radius: 30px;
+    padding: 7px 10px;
+    color: #FFFFFF;
+    font-size: 9px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.aegis-hero-heading {
+    margin: 29px 0 23px;
+}
+
+.aegis-hero-heading > div:first-child {
+    min-width: 0;
+}
+
+.aegis-hero-heading span,
+.aegis-section-heading span:first-child {
+    color: #D9C9CD;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.1px;
+}
+
+.aegis-hero-heading h2 {
+    margin: 8px 0;
+    color: #FFFFFF;
+    font-size: clamp(25px, 4vw, 34px);
+    line-height: 1.15;
+}
+
+.aegis-hero-heading p {
+    max-width: 520px;
+    margin: 0;
+    color: #E9DDE0;
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+.aegis-fingerprint {
+    color: var(--aegis-blue);
+    font-size: 64px;
+    flex-shrink: 0;
+}
+
+.aegis-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.aegis-stat {
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #79535E;
+    border-radius: 13px;
+    background: #603A45;
+}
+
+.aegis-stat > span {
+    display: block;
+    color: var(--aegis-blue);
+    font-size: 20px;
+}
+
+.aegis-stat strong {
+    display: block;
+    margin: 9px 0 4px;
+    color: #FFFFFF;
+    font-size: 27px;
+}
+
+.aegis-stat small {
+    color: #E9DDE0;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: .6px;
+}
+
+.aegis-workspace {
+    display: grid;
+    gap: 17px;
+    margin-top: 20px;
+}
+
+.aegis-section-heading {
+    padding: 5px 2px 0;
+}
+
+.aegis-section-heading > div {
+    display: grid;
+    gap: 5px;
+}
+
+.aegis-section-heading span:first-child {
+    color: var(--aegis-grey);
+}
+
+.aegis-section-heading h3 {
+    margin: 0;
+    color: var(--aegis-maroon);
+    font-size: 19px;
+}
+
+.aegis-section-number {
+    color: #C2C8CE;
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.aegis-panel {
+    min-width: 0;
+    padding: 20px;
+    border: 1px solid #E4E7EB;
+    border-radius: 17px;
+    background: #FFFFFF;
+    box-shadow: 0 5px 18px rgba(35, 45, 55, .045);
+}
+
+.aegis-create-heading h3,
+.aegis-directory-heading h3 {
+    margin: 0;
+    color: var(--aegis-maroon);
+    font-size: 16px;
+}
+
+.aegis-create-heading p {
+    margin: 5px 0 0;
+    color: var(--aegis-grey);
+    font-size: 11px;
+}
+
+.aegis-operation-icon {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 13px;
+    background: #DDF5FF;
+    color: var(--aegis-maroon);
+    font-size: 25px;
+}
+
+.aegis-create-button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 17px 0;
+    padding: 17px;
+    border: 0;
+    border-radius: 12px;
+    background: var(--aegis-maroon);
+    color: #FFFFFF;
+    text-align: left;
+    cursor: pointer;
+}
+
+.aegis-create-button strong,
+.aegis-create-button small {
+    display: block;
+}
+
+.aegis-create-button strong {
+    font-size: 12px;
+    letter-spacing: .5px;
+}
+
+.aegis-create-button small {
+    margin-top: 6px;
+    color: #E9DDE0;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.aegis-create-button b {
+    color: var(--aegis-blue);
+    font-size: 23px;
+}
+
+.aegis-create-form {
+    margin: 17px 0;
+    padding: 18px;
+    border: 1px solid #DCE6EC;
+    border-radius: 13px;
+    background: #F7FAFC;
+}
+
+.aegis-create-form[hidden] {
+    display: none !important;
+}
+
+.aegis-form-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.aegis-form-heading h3 {
+    margin: 0;
+    color: var(--aegis-maroon);
+    font-size: 15px;
+}
+
+.aegis-form-heading button {
+    border: 0;
+    background: transparent;
+    color: var(--aegis-grey);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.aegis-create-form form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.aegis-create-form label {
+    display: grid;
+    gap: 7px;
+    color: var(--aegis-maroon);
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.aegis-create-form input,
+.aegis-create-form select,
+.aegis-status-filter {
+    width: 100%;
+    min-width: 0;
+    min-height: 43px;
+    padding: 10px 12px;
+    border: 1px solid #DCE1E6;
+    border-radius: 8px;
+    background: #FFFFFF;
+    color: #303944;
+    font: inherit;
+    font-size: 12px;
+}
+
+.aegis-create-form input:focus,
+.aegis-create-form select:focus,
+.aegis-search-row input:focus,
+.aegis-status-filter:focus {
+    outline: 2px solid rgba(56, 189, 248, .35);
+    border-color: var(--aegis-blue);
+}
+
+.aegis-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    grid-column: 1 / -1;
+    margin-top: 5px;
+}
+
+.aegis-primary-button,
+.aegis-secondary-button {
+    min-height: 40px;
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.aegis-primary-button {
+    background: var(--aegis-maroon);
+    color: #FFFFFF;
+}
+
+.aegis-secondary-button {
+    background: #E9EDF1;
+    color: var(--aegis-maroon);
+}
+
+.aegis-primary-button:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.aegis-operation-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 11px;
+}
+
+.aegis-operation-card {
+    display: grid;
+    justify-items: start;
+    gap: 7px;
+    padding: 15px;
+    border: 1px solid #E7EAEE;
+    border-radius: 12px;
+    background: #F5F7F9;
+    text-align: left;
+    cursor: pointer;
+}
+
+.aegis-operation-card > span {
+    color: var(--aegis-maroon);
+    font-size: 23px;
+}
+
+.aegis-operation-card strong {
+    color: var(--aegis-maroon);
+    font-size: 12px;
+}
+
+.aegis-operation-card small {
+    color: var(--aegis-grey);
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.aegis-search-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 47px;
+    padding: 0 12px;
+    border: 1px solid #DCE1E6;
+    border-radius: 9px;
+}
+
+.aegis-search-row > span {
+    color: var(--aegis-grey);
+    font-size: 22px;
+}
+
+.aegis-search-row input {
+    flex: 1;
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: #303944;
+    font-size: 12px;
+}
+
+.aegis-search-row button {
+    border: 0;
+    background: transparent;
+    color: var(--aegis-maroon);
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.aegis-filter-heading {
+    margin: 20px 0 9px;
+    color: var(--aegis-grey);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .8px;
+}
+
+.aegis-filter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.aegis-filter-list button {
+    padding: 7px 10px;
+    border: 1px solid #E0E4E8;
+    border-radius: 20px;
+    background: #FFFFFF;
+    color: #606B76;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.aegis-filter-list button.active {
+    border-color: var(--aegis-blue);
+    background: #DDF5FF;
+    color: var(--aegis-maroon);
+    font-weight: 800;
+}
+
+.aegis-status-filter {
+    max-width: 260px;
+}
+
+.aegis-directory-heading {
+    margin: 23px 0 13px;
+}
+
+.aegis-directory-heading small {
+    display: block;
+    margin-top: 5px;
+    color: var(--aegis-grey);
+    font-size: 10px;
+}
+
+.aegis-directory-heading > span {
+    color: var(--aegis-grey);
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.aegis-directory {
+    min-width: 0;
+}
+
+.aegis-table-wrap {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.aegis-table {
+    width: 100%;
+    min-width: 650px;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.aegis-table th {
+    padding: 12px 10px;
+    border-bottom: 1px solid #E3E7EB;
+    color: var(--aegis-grey);
+    font-size: 9px;
+    letter-spacing: .5px;
+}
+
+.aegis-table td {
+    padding: 13px 10px;
+    border-bottom: 1px solid #EDF0F2;
+    color: #4C5661;
+    font-size: 11px;
+    vertical-align: middle;
+}
+
+.aegis-table td strong,
+.aegis-table td small {
+    display: block;
+}
+
+.aegis-table td strong {
+    color: var(--aegis-maroon);
+    font-size: 11px;
+}
+
+.aegis-table td small {
+    margin-top: 4px;
+    color: var(--aegis-grey);
+    font-size: 10px;
+}
+
+.aegis-status {
+    display: inline-block;
+    padding: 5px 8px;
+    border-radius: 20px;
+    background: #E8F7ED;
+    color: #247A43;
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.aegis-status.locked {
+    background: #FFF3D9;
+    color: #986800;
+}
+
+.aegis-status.disabled {
+    background: #FBE8E9;
+    color: #A52D37;
+}
+
+.aegis-row-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.aegis-row-actions button {
+    padding: 6px 8px;
+    border: 1px solid #E0E4E8;
+    border-radius: 6px;
+    background: #FFFFFF;
+    color: var(--aegis-maroon);
+    font-size: 9px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.aegis-row-actions button:hover {
+    border-color: var(--aegis-blue);
+    background: #DDF5FF;
+}
+
+.aegis-row-actions button:disabled {
+    opacity: .5;
+    cursor: wait;
+}
+
+.aegis-loading,
+.aegis-empty,
+.aegis-error {
+    padding: 25px 12px;
+    border-radius: 10px;
+    background: #F5F7F9;
+    text-align: center;
+}
+
+.aegis-loading {
+    color: var(--aegis-grey);
+    font-size: 12px;
+}
+
+.aegis-empty span {
+    display: block;
+    color: var(--aegis-blue);
+    font-size: 30px;
+}
+
+.aegis-empty strong,
+.aegis-empty small {
+    display: block;
+    margin-top: 7px;
+}
+
+.aegis-empty strong,
+.aegis-error strong {
+    color: var(--aegis-maroon);
+    font-size: 12px;
+}
+
+.aegis-empty small,
+.aegis-error p {
+    color: var(--aegis-grey);
+    font-size: 11px;
+}
+
+.aegis-error button {
+    padding: 9px 14px;
+    border: 0;
+    border-radius: 7px;
+    background: var(--aegis-maroon);
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.aegis-integrity {
+    display: grid;
+    gap: 0;
+}
+
+.aegis-integrity-title {
+    justify-content: flex-start;
+    margin-bottom: 9px;
+    color: var(--aegis-maroon);
+}
+
+.aegis-integrity-title span {
+    color: var(--aegis-blue);
+    font-size: 25px;
+}
+
+.aegis-integrity-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 0;
+    border-bottom: 1px solid #E9ECEF;
+    color: #4C5661;
+    font-size: 11px;
+}
+
+.aegis-integrity-row:last-child {
+    border-bottom: 0;
+}
+
+.aegis-integrity-row b {
+    color: #287B4A;
+    font-size: 9px;
+    text-align: right;
+}
+
+.aegis-footer-panel {
+    padding: 19px;
+    border-radius: 13px;
+    background: var(--aegis-maroon);
+    color: #FFFFFF;
+}
+
+.aegis-footer-panel strong {
+    color: #FFFFFF;
+    font-size: 12px;
+    letter-spacing: .7px;
+}
+
+.aegis-footer-panel p {
+    margin: 7px 0 0;
+    color: #E9DDE0;
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+.aegis-notice {
+    display: none;
+    padding: 13px 15px;
+    border-radius: 9px;
+    font-size: 11px;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.aegis-notice.visible {
+    display: block;
+}
+
+.aegis-notice.success {
+    background: #E8F7ED;
+    color: #247A43;
+}
+
+.aegis-notice.error {
+    background: #FBE8E9;
+    color: #A52D37;
+}
+
+.aegis-notice.info {
+    background: #DDF5FF;
+    color: var(--aegis-maroon);
+}
+
+@media (max-width: 760px) {
+
+    .aegis-hero {
+        padding: 18px;
+        border-radius: 15px;
+    }
+
+    .aegis-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 9px;
+    }
+
+    .aegis-stat {
+        padding: 13px;
+    }
+
+    .aegis-stat strong {
+        font-size: 24px;
+    }
+
+    .aegis-fingerprint {
+        font-size: 45px;
+    }
+
+    .aegis-panel {
+        padding: 15px;
+    }
+
+    .aegis-integrity-row {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .aegis-integrity-row b {
+        text-align: left;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .aegis-hero-heading {
+        gap: 5px;
+    }
+
+    .aegis-hero-heading h2 {
+        font-size: 25px;
+    }
+
+    .aegis-hero-heading p {
+        font-size: 11px;
+    }
+
+    .aegis-brand strong {
+        font-size: 14px;
+    }
+
+    .aegis-session-badge {
+        padding: 6px 8px;
+        font-size: 8px;
+    }
+
+    .aegis-create-form form {
+        grid-template-columns: 1fr;
+    }
+
+    .aegis-operation-grid {
+        gap: 8px;
+    }
+
+    .aegis-operation-card {
+        padding: 12px;
+    }
+
+    .aegis-section-heading h3 {
+        font-size: 17px;
+    }
+}
