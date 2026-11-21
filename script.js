@@ -1984,17 +1984,16 @@ function renderUserManagementWorkspace(root) {
                 </div>
 
                 <div class="aegis-hero-heading">
-                    <div>
-                        <span>ICT ADMINISTRATION / IDENTITY CONTROL</span>
-                        <h2>User Management</h2>
-                        <p>
-                            Account provisioning, identity records
-                            and access lifecycle management.
-                        </p>
-                    </div>
+    <div>
+        <span>ICT ADMINISTRATION / IDENTITY CONTROL</span>
+        <p>
+            Account provisioning, identity records
+            and access lifecycle management.
+        </p>
+    </div>
 
-                    <div class="aegis-fingerprint">◎</div>
-                </div>
+    <div class="aegis-fingerprint">◎</div>
+</div>
 
                 <div class="aegis-stat-grid">
 
