@@ -5018,3 +5018,178 @@ body:has(.login-card) footer {
         height: 19px;
     }
 }
+/* =========================================
+   GSU AEGIS - COMPACT HERO AND SVG ICONS
+========================================= */
+
+.aegis-user-management .aegis-hero {
+    padding: 19px;
+    border-radius: 17px;
+}
+
+.aegis-user-management .aegis-brand-icon {
+    width: 39px;
+    height: 39px;
+}
+
+.aegis-user-management .aegis-brand-icon svg {
+    width: 25px;
+    height: 25px;
+    display: block;
+}
+
+.aegis-user-management .aegis-hero-heading {
+    margin: 17px 0 16px;
+    min-height: 55px;
+}
+
+.aegis-user-management .aegis-hero-heading p {
+    margin-top: 6px;
+}
+
+.aegis-user-management .aegis-fingerprint svg {
+    display: block;
+    width: 43px;
+    height: 43px;
+}
+
+.aegis-user-management .aegis-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 9px;
+}
+
+.aegis-user-management .aegis-stat {
+    min-height: 91px;
+    padding: 11px;
+    border-radius: 11px;
+}
+
+.aegis-user-management .aegis-stat > span {
+    display: flex;
+    align-items: center;
+    width: 23px;
+    height: 23px;
+    color: #38BDF8;
+}
+
+.aegis-user-management .aegis-stat > span svg {
+    display: block;
+    width: 22px;
+    height: 22px;
+    stroke: currentColor;
+    visibility: visible;
+    opacity: 1;
+}
+
+.aegis-user-management .aegis-stat strong {
+    margin: 5px 0 3px;
+    font-size: 23px;
+}
+
+.aegis-user-management .aegis-stat small {
+    font-size: 8px;
+}
+
+/* Create Account icon */
+
+.aegis-user-management .aegis-operation-icon svg {
+    display: block;
+    width: 26px;
+    height: 26px;
+    stroke: currentColor;
+}
+
+/* Create Account submit button visibility */
+
+.aegis-user-management .aegis-form-actions {
+    display: flex !important;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 9px;
+}
+
+.aegis-user-management .aegis-form-actions .aegis-primary-button {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    width: auto !important;
+    min-width: 125px;
+    min-height: 42px;
+    padding: 11px 16px !important;
+    background: #4A252F !important;
+    color: #FFFFFF !important;
+    border: 1px solid #4A252F !important;
+    border-radius: 8px;
+    font-size: 12px !important;
+    font-weight: 700;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Phone layout */
+
+@media (max-width: 760px) {
+
+    .aegis-user-management .aegis-hero {
+        padding: 15px;
+    }
+
+    .aegis-user-management .aegis-stat-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 9px;
+    }
+
+    .aegis-user-management .aegis-stat {
+        min-height: 84px;
+        padding: 10px;
+    }
+
+    .aegis-user-management .aegis-stat strong {
+        font-size: 21px;
+    }
+
+    .aegis-user-management .aegis-hero-heading {
+        margin: 14px 0;
+    }
+
+    .aegis-user-management .aegis-fingerprint svg {
+        width: 34px;
+        height: 34px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .aegis-user-management .aegis-hero {
+        padding: 13px;
+        border-radius: 13px;
+    }
+
+    .aegis-user-management .aegis-brand-icon {
+        width: 35px;
+        height: 35px;
+    }
+
+    .aegis-user-management .aegis-brand strong {
+        font-size: 13px;
+    }
+
+    .aegis-user-management .aegis-session-badge {
+        font-size: 7px;
+    }
+
+    .aegis-user-management .aegis-stat {
+        min-height: 78px;
+        padding: 9px;
+    }
+
+    .aegis-user-management .aegis-stat strong {
+        font-size: 19px;
+    }
+
+    .aegis-user-management .aegis-stat small {
+        font-size: 7px;
+    }
+}
