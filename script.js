@@ -2437,28 +2437,9 @@ function renderUserManagementWorkspace(root) {
                 <tbody>
                     ${filtered.map(user => `
                         <tr>
-                            <td>
-                                <div class="aegis-user-identity">
-
-                                    <span class="aegis-user-avatar"
-                                        aria-hidden="true">
-                                        <svg viewBox="0 0 24 24"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            stroke-width="1.7"
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round">
-                                            <circle cx="12" cy="8" r="3.5"/>
-                                            <path d="M5 20c.6-3.6 3.1-5.5 7-5.5s6.4 1.9 7 5.5"/>
-                                        </svg>
-                                    </span>
-
-                                    <span class="aegis-user-details">
-                                        <strong>${escapeHTML(user.fullName)}</strong>
-                                        <small>${escapeHTML(user.username)}</small>
-                                    </span>
-
-                                </div>
+                            <td class="aegis-identity-cell">
+                                <strong>${escapeHTML(user.fullName)}</strong>
+                                <small>${escapeHTML(user.username)}</small>
                             </td>
 
                             <td>${escapeHTML(user.role)}</td>
@@ -2473,37 +2454,29 @@ function renderUserManagementWorkspace(root) {
 
                             <td>
                                 <div class="aegis-row-actions">
-
                                     <button type="button"
                                         data-action="reset"
                                         data-username="${escapeHTML(user.username)}">
                                         Reset
                                     </button>
 
-                                    ${user.status !== "Active" ? `
-                                        <button type="button"
-                                            data-action="activate"
-                                            data-username="${escapeHTML(user.username)}">
-                                            Activate
-                                        </button>
-                                    ` : ""}
+                                    <button type="button"
+                                        data-action="activate"
+                                        data-username="${escapeHTML(user.username)}">
+                                        Activate
+                                    </button>
 
-                                    ${user.status !== "Locked" ? `
-                                        <button type="button"
-                                            data-action="lock"
-                                            data-username="${escapeHTML(user.username)}">
-                                            Lock
-                                        </button>
-                                    ` : ""}
+                                    <button type="button"
+                                        data-action="lock"
+                                        data-username="${escapeHTML(user.username)}">
+                                        Lock
+                                    </button>
 
-                                    ${user.status !== "Disabled" ? `
-                                        <button type="button"
-                                            data-action="disable"
-                                            data-username="${escapeHTML(user.username)}">
-                                            Disable
-                                        </button>
-                                    ` : ""}
-
+                                    <button type="button"
+                                        data-action="disable"
+                                        data-username="${escapeHTML(user.username)}">
+                                        Disable
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -2513,7 +2486,6 @@ function renderUserManagementWorkspace(root) {
         </div>
     `;
 }
-
     async function loadUsers() {
 
         directory.innerHTML = `
