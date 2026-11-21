@@ -1983,19 +1983,20 @@ function renderUserManagementWorkspace(root) {
                             <strong>GSU AEGIS</strong>
                             <small>ICT ADMINISTRATION / IDENTITY CONTROL</small>
                         </div>
-                    </div>
-
-                    <span class="aegis-session-badge">
-                        ● ADMIN SESSION
-                    </span>
-                </div>
-                <div class="aegis-hero-heading">
+                        <div class="aegis-hero-heading">
     <div>
         <p>
             Account provisioning, identity records
             and access lifecycle management.
         </p>
     </div>
+                    </div>
+
+                    <span class="aegis-session-badge">
+                        ● ADMIN SESSION
+                    </span>
+                </div>
+                
 
     <div class="aegis-fingerprint">◎</div>
 </div>
