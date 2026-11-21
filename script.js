@@ -1974,7 +1974,7 @@ function renderUserManagementWorkspace(root) {
                         <span class="aegis-brand-icon">♙</span>
                         <div>
                             <strong>GSU AEGIS</strong>
-                            <small>USER MANAGEMENT</small>
+                            <small>ICT ADMINISTRATION / IDENTITY CONTROL</small>
                         </div>
                     </div>
 
@@ -1982,10 +1982,8 @@ function renderUserManagementWorkspace(root) {
                         ● ADMIN SESSION
                     </span>
                 </div>
-
                 <div class="aegis-hero-heading">
     <div>
-        <span>ICT ADMINISTRATION / IDENTITY CONTROL</span>
         <p>
             Account provisioning, identity records
             and access lifecycle management.
