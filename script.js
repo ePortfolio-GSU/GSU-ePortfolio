@@ -1396,10 +1396,11 @@ function buildSidebar(menuItems) {
 
     content.appendChild(moduleView);
 
-    const role = sessionStorage.getItem("userRole");
-
-    if (role === "ICT_ADMIN" && title === "User Management") {
-        renderUserManagementModule(moduleView);
+    if (
+        title === "User Management" &&
+        sessionStorage.getItem("userRole") === "ICT_ADMIN"
+    ) {
+        renderUserManagementWorkspace(moduleView);
         return;
     }
 
@@ -1412,7 +1413,6 @@ function buildSidebar(menuItems) {
 
     moduleView.append(moduleHeading, moduleMessage);
 }
-
     // Close Menu
     const closeItem = document.createElement("li");
     const closeLink = document.createElement("a");
@@ -1938,6 +1938,716 @@ function renderUserManagementModule(container) {
         "click",
         loadUsers
     );
+
+    loadUsers();
+}
+/************************************************
+ * GSU AEGIS
+ * ICT USER MANAGEMENT WORKSPACE
+ ************************************************/
+
+function renderUserManagementWorkspace(root) {
+
+    const API_URL =
+        "https://script.google.com/macros/s/AKfycbwcYc2v0rRVF_AFDtluOVFCTja89vOH0HBtcI9rLGs0PCd7D3YpI5K4EVrb7XKaH_AL/exec";
+
+    const sessionToken = sessionStorage.getItem("sessionToken");
+
+    let managedUsers = [];
+
+    const escapeHTML = value =>
+        String(value ?? "").replace(/[&<>"']/g, char => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[char]);
+
+    root.innerHTML = `
+        <div class="aegis-user-management">
+
+            <section class="aegis-hero">
+
+                <div class="aegis-brand-row">
+                    <div class="aegis-brand">
+                        <span class="aegis-brand-icon">♙</span>
+                        <div>
+                            <strong>GSU AEGIS</strong>
+                            <small>USER MANAGEMENT</small>
+                        </div>
+                    </div>
+
+                    <span class="aegis-session-badge">
+                        ● ADMIN SESSION
+                    </span>
+                </div>
+
+                <div class="aegis-hero-heading">
+                    <div>
+                        <span>ICT ADMINISTRATION / IDENTITY CONTROL</span>
+                        <h2>User Management</h2>
+                        <p>
+                            Account provisioning, identity records
+                            and access lifecycle management.
+                        </p>
+                    </div>
+
+                    <div class="aegis-fingerprint">◎</div>
+                </div>
+
+                <div class="aegis-stat-grid">
+
+                    <div class="aegis-stat">
+                        <span>♙</span>
+                        <strong id="aegisTotal">—</strong>
+                        <small>TOTAL USERS</small>
+                    </div>
+
+                    <div class="aegis-stat">
+                        <span>✓</span>
+                        <strong id="aegisActive">—</strong>
+                        <small>ACTIVE USERS</small>
+                    </div>
+
+                    <div class="aegis-stat">
+                        <span>▣</span>
+                        <strong id="aegisLocked">—</strong>
+                        <small>LOCKED USERS</small>
+                    </div>
+
+                    <div class="aegis-stat">
+                        <span>⊘</span>
+                        <strong id="aegisDisabled">—</strong>
+                        <small>DISABLED USERS</small>
+                    </div>
+
+                </div>
+            </section>
+
+            <div class="aegis-workspace">
+
+                <div class="aegis-section-heading">
+                    <div>
+                        <span>01 / CONTROL</span>
+                        <h3>Account Operations</h3>
+                    </div>
+                    <span class="aegis-section-number">01</span>
+                </div>
+
+                <section class="aegis-panel">
+
+                    <div class="aegis-create-heading">
+                        <div>
+                            <h3>Create New Account</h3>
+                            <p>Register a new school system identity.</p>
+                        </div>
+
+                        <div class="aegis-operation-icon">♙+</div>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="aegis-create-button"
+                        id="aegisShowCreate">
+                        <span>
+                            <strong>ACCOUNT PROVISIONING</strong>
+                            <small>
+                                Create username, assign a role and
+                                generate temporary credentials.
+                            </small>
+                        </span>
+                        <b>↗</b>
+                    </button>
+
+                    <div class="aegis-create-form" id="aegisCreatePanel" hidden>
+
+                        <div class="aegis-form-heading">
+                            <h3>New Identity Registration</h3>
+                            <button type="button" id="aegisCloseCreate"
+                                aria-label="Close form">✕</button>
+                        </div>
+
+                        <form id="aegisCreateForm">
+
+                            <label>
+                                Full Name
+                                <input name="fullName" type="text"
+                                    maxlength="100" required
+                                    placeholder="Enter full name">
+                            </label>
+
+                            <label>
+                                Username
+                                <input name="username" type="text"
+                                    minlength="4" maxlength="60" required
+                                    placeholder="Enter unique username">
+                            </label>
+
+                            <label>
+                                Account Role
+                                <select name="role" required>
+                                    <option value="">Select role</option>
+                                    <option value="SCHOOL_ADMIN">School Admin</option>
+                                    <option value="TEACHER">Teacher</option>
+                                    <option value="LEARNER">Learner</option>
+                                    <option value="PARENT">Parent</option>
+                                </select>
+                            </label>
+
+                            <label>
+                                Class / Assignment
+                                <input name="className" type="text"
+                                    maxlength="60"
+                                    placeholder="Enter class or N/A">
+                            </label>
+
+                            <div class="aegis-form-actions">
+                                <button type="button"
+                                    class="aegis-secondary-button"
+                                    id="aegisCancelCreate">
+                                    Cancel
+                                </button>
+
+                                <button type="submit"
+                                    class="aegis-primary-button"
+                                    id="aegisSubmitCreate">
+                                    Create Account
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                    <div class="aegis-operation-grid">
+
+                        <button type="button" class="aegis-operation-card"
+                            data-operation="password">
+                            <span>⌘</span>
+                            <strong>Reset Password</strong>
+                            <small>Issue temporary credentials.</small>
+                        </button>
+
+                        <button type="button" class="aegis-operation-card"
+                            data-operation="status">
+                            <span>⚙</span>
+                            <strong>Account Controls</strong>
+                            <small>Activate, lock or disable accounts.</small>
+                        </button>
+
+                    </div>
+
+                </section>
+
+                <div class="aegis-section-heading">
+                    <div>
+                        <span>02 / REGISTRY</span>
+                        <h3>Identity Directory</h3>
+                    </div>
+                    <span class="aegis-section-number">02</span>
+                </div>
+
+                <section class="aegis-panel">
+
+                    <div class="aegis-search-row">
+                        <span>⌕</span>
+                        <input id="aegisSearch" type="search"
+                            placeholder="Search by name or username...">
+                        <button type="button" id="aegisRefresh"
+                            title="Refresh directory">↻</button>
+                    </div>
+
+                    <div class="aegis-filter-heading">
+                        FILTER BY ROLE
+                    </div>
+
+                    <div class="aegis-filter-list" id="aegisRoleFilters">
+                        <button class="active" data-role="ALL">All</button>
+                        <button data-role="ICT_ADMIN">ICT Admin</button>
+                        <button data-role="SCHOOL_ADMIN">School Admin</button>
+                        <button data-role="TEACHER">Teacher</button>
+                        <button data-role="LEARNER">Learner</button>
+                        <button data-role="PARENT">Parent</button>
+                    </div>
+
+                    <div class="aegis-filter-heading">
+                        FILTER BY STATUS
+                    </div>
+
+                    <select id="aegisStatusFilter"
+                        class="aegis-status-filter">
+                        <option value="ALL">All account statuses</option>
+                        <option value="Active">Active</option>
+                        <option value="Locked">Locked</option>
+                        <option value="Disabled">Disabled</option>
+                    </select>
+
+                    <div class="aegis-directory-heading">
+                        <div>
+                            <h3>Account Records</h3>
+                            <small>Existing USERS database</small>
+                        </div>
+                        <span id="aegisRecordCount">0 RECORDS</span>
+                    </div>
+
+                    <div id="aegisDirectory" class="aegis-directory">
+                        <div class="aegis-loading">
+                            Loading account records...
+                        </div>
+                    </div>
+
+                </section>
+
+                <div class="aegis-section-heading">
+                    <div>
+                        <span>03 / SAFEGUARDS</span>
+                        <h3>Account Integrity</h3>
+                    </div>
+                    <span class="aegis-section-number">03</span>
+                </div>
+
+                <section class="aegis-panel aegis-integrity">
+
+                    <div class="aegis-integrity-title">
+                        <span>◇</span>
+                        <strong>Account Protection</strong>
+                    </div>
+
+                    <div class="aegis-integrity-row">
+                        <span>Verified administrator session</span>
+                        <b>BACKEND ENFORCED</b>
+                    </div>
+
+                    <div class="aegis-integrity-row">
+                        <span>First-login password change</span>
+                        <b>ACCOUNT CONTROL</b>
+                    </div>
+
+                    <div class="aegis-integrity-row">
+                        <span>Last active ICT admin protection</span>
+                        <b>ACCOUNT CONTROL</b>
+                    </div>
+
+                    <div class="aegis-integrity-row">
+                        <span>Account action logging</span>
+                        <b>EXISTING AUDIT SERVICE</b>
+                    </div>
+
+                </section>
+
+                <div class="aegis-footer-panel">
+                    <strong>IDENTITY MANAGEMENT</strong>
+                    <p>
+                        One centralized account directory.
+                        Controlled account lifecycle.
+                        No duplicate administration modules.
+                    </p>
+                </div>
+
+                <div id="aegisNotice" class="aegis-notice"
+                    role="status" aria-live="polite"></div>
+
+            </div>
+        </div>
+    `;
+
+    const directory = root.querySelector("#aegisDirectory");
+    const notice = root.querySelector("#aegisNotice");
+    const createPanel = root.querySelector("#aegisCreatePanel");
+
+    let selectedRole = "ALL";
+    let selectedUser = null;
+
+    function showNotice(message, type = "info") {
+        notice.textContent = message;
+        notice.className = "aegis-notice visible " + type;
+    }
+
+    async function apiRequest(action, extra = {}) {
+
+        if (!sessionToken) {
+            throw new Error(
+                "Your administrator session is missing. Please sign in again."
+            );
+        }
+
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/plain;charset=UTF-8"
+            },
+            body: JSON.stringify({
+                action,
+                sessionToken,
+                ...extra
+            })
+        });
+
+        if (!response.ok) {
+            throw new Error(
+                "The server could not complete the request. Please try again."
+            );
+        }
+
+        const result = await response.json();
+
+        if (!result || typeof result.success !== "boolean") {
+            throw new Error(
+                "The server returned an unexpected response. Check the deployed API version."
+            );
+        }
+
+        if (!result.success) {
+            throw new Error(
+                result.message || "The requested operation could not be completed."
+            );
+        }
+
+        return result;
+    }
+
+    function updateCounters() {
+
+        const count = status =>
+            managedUsers.filter(user => user.status === status).length;
+
+        root.querySelector("#aegisTotal").textContent =
+            managedUsers.length;
+
+        root.querySelector("#aegisActive").textContent =
+            count("Active");
+
+        root.querySelector("#aegisLocked").textContent =
+            count("Locked");
+
+        root.querySelector("#aegisDisabled").textContent =
+            count("Disabled");
+    }
+
+    function renderDirectory() {
+
+        const search = root.querySelector("#aegisSearch")
+            .value.trim().toLowerCase();
+
+        const status = root.querySelector("#aegisStatusFilter").value;
+
+        const filtered = managedUsers.filter(user => {
+
+            const matchesSearch =
+                String(user.username || "").toLowerCase().includes(search) ||
+                String(user.fullName || "").toLowerCase().includes(search);
+
+            const matchesRole =
+                selectedRole === "ALL" || user.role === selectedRole;
+
+            const matchesStatus =
+                status === "ALL" || user.status === status;
+
+            return matchesSearch && matchesRole && matchesStatus;
+        });
+
+        root.querySelector("#aegisRecordCount").textContent =
+            filtered.length + " RECORDS";
+
+        if (!filtered.length) {
+            directory.innerHTML = `
+                <div class="aegis-empty">
+                    <span>◎</span>
+                    <strong>No matching accounts</strong>
+                    <small>Try changing your search or filters.</small>
+                </div>
+            `;
+            return;
+        }
+
+        directory.innerHTML = `
+            <div class="aegis-table-wrap">
+                <table class="aegis-table">
+                    <thead>
+                        <tr>
+                            <th>IDENTITY</th>
+                            <th>ROLE</th>
+                            <th>STATUS</th>
+                            <th>LAST LOGIN</th>
+                            <th>ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${filtered.map(user => `
+                            <tr>
+                                <td>
+                                    <strong>${escapeHTML(user.fullName)}</strong>
+                                    <small>${escapeHTML(user.username)}</small>
+                                </td>
+                                <td>${escapeHTML(user.role)}</td>
+                                <td>
+                                    <span class="aegis-status ${String(user.status).toLowerCase()}">
+                                        ${escapeHTML(user.status)}
+                                    </span>
+                                </td>
+                                <td>${escapeHTML(user.lastLogin || "Never")}</td>
+                                <td>
+                                    <div class="aegis-row-actions">
+                                        <button type="button"
+                                            data-action="reset"
+                                            data-username="${escapeHTML(user.username)}">
+                                            Reset
+                                        </button>
+
+                                        <button type="button"
+                                            data-action="activate"
+                                            data-username="${escapeHTML(user.username)}">
+                                            Activate
+                                        </button>
+
+                                        <button type="button"
+                                            data-action="lock"
+                                            data-username="${escapeHTML(user.username)}">
+                                            Lock
+                                        </button>
+
+                                        <button type="button"
+                                            data-action="disable"
+                                            data-username="${escapeHTML(user.username)}">
+                                            Disable
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        `).join("")}
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    async function loadUsers() {
+
+        directory.innerHTML = `
+            <div class="aegis-loading">
+                Loading account records...
+            </div>
+        `;
+
+        try {
+            const result = await apiRequest("getManagedUsers");
+
+            managedUsers = Array.isArray(result.users)
+                ? result.users
+                : [];
+
+            updateCounters();
+            renderDirectory();
+
+        } catch (error) {
+            directory.innerHTML = `
+                <div class="aegis-error">
+                    <strong>Unable to load account records</strong>
+                    <p>${escapeHTML(error.message)}</p>
+                    <button type="button" id="aegisRetry">
+                        Try Again
+                    </button>
+                </div>
+            `;
+
+            showNotice(error.message, "error");
+        }
+    }
+
+    function closeCreateForm() {
+        createPanel.hidden = true;
+        root.querySelector("#aegisCreateForm").reset();
+    }
+
+    root.querySelector("#aegisShowCreate")
+        .addEventListener("click", () => {
+            createPanel.hidden = false;
+            createPanel.scrollIntoView({
+                behavior: "smooth",
+                block: "nearest"
+            });
+        });
+
+    root.querySelector("#aegisCloseCreate")
+        .addEventListener("click", closeCreateForm);
+
+    root.querySelector("#aegisCancelCreate")
+        .addEventListener("click", closeCreateForm);
+
+    root.querySelector("#aegisCreateForm")
+        .addEventListener("submit", async event => {
+
+            event.preventDefault();
+
+            const form = event.currentTarget;
+            const submitButton =
+                root.querySelector("#aegisSubmitCreate");
+
+            const formData = new FormData(form);
+
+            const userData = {
+                fullName: formData.get("fullName").trim(),
+                username: formData.get("username").trim(),
+                role: formData.get("role"),
+                className: formData.get("className").trim() || "N/A"
+            };
+
+            submitButton.disabled = true;
+            submitButton.textContent = "Creating account...";
+
+            try {
+                const result = await apiRequest(
+                    "createManagedUser",
+                    { userData }
+                );
+
+                closeCreateForm();
+
+                showNotice(
+                    "Account created successfully. Temporary password: " +
+                    result.temporaryPassword,
+                    "success"
+                );
+
+                await loadUsers();
+
+            } catch (error) {
+                showNotice(error.message, "error");
+
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = "Create Account";
+            }
+        });
+
+    root.querySelector("#aegisSearch")
+        .addEventListener("input", renderDirectory);
+
+    root.querySelector("#aegisStatusFilter")
+        .addEventListener("change", renderDirectory);
+
+    root.querySelector("#aegisRoleFilters")
+        .addEventListener("click", event => {
+
+            const button = event.target.closest("[data-role]");
+            if (!button) return;
+
+            selectedRole = button.dataset.role;
+
+            root.querySelectorAll("#aegisRoleFilters button")
+                .forEach(item => item.classList.remove("active"));
+
+            button.classList.add("active");
+
+            renderDirectory();
+        });
+
+    root.querySelector("#aegisRefresh")
+        .addEventListener("click", loadUsers);
+
+    directory.addEventListener("click", async event => {
+
+        if (event.target.id === "aegisRetry") {
+            loadUsers();
+            return;
+        }
+
+        const button = event.target.closest("[data-action]");
+        if (!button) return;
+
+        const username = button.dataset.username;
+        const action = button.dataset.action;
+
+        if (!username) return;
+
+        if (action === "reset") {
+
+            if (!confirm(
+                "Reset the password for " + username + "?"
+            )) return;
+
+            button.disabled = true;
+
+            try {
+                const result = await apiRequest(
+                    "resetManagedUserPassword",
+                    { username }
+                );
+
+                showNotice(
+                    "Password reset successfully. Temporary password: " +
+                    result.temporaryPassword,
+                    "success"
+                );
+
+            } catch (error) {
+                showNotice(error.message, "error");
+
+            } finally {
+                button.disabled = false;
+            }
+
+            return;
+        }
+
+        const statusMap = {
+            activate: "Active",
+            lock: "Locked",
+            disable: "Disabled"
+        };
+
+        const newStatus = statusMap[action];
+
+        if (!newStatus) return;
+
+        if (!confirm(
+            "Change " + username + "'s account status to " +
+            newStatus + "?"
+        )) return;
+
+        button.disabled = true;
+
+        try {
+            await apiRequest(
+                "updateManagedUserStatus",
+                { username, status: newStatus }
+            );
+
+            showNotice(
+                "Account status updated successfully.",
+                "success"
+            );
+
+            await loadUsers();
+
+        } catch (error) {
+            showNotice(error.message, "error");
+            button.disabled = false;
+        }
+    });
+
+    root.querySelectorAll("[data-operation]").forEach(button => {
+        button.addEventListener("click", () => {
+
+            if (button.dataset.operation === "password") {
+                root.querySelector("#aegisSearch").focus();
+
+                showNotice(
+                    "Find the account in the directory and select Reset.",
+                    "info"
+                );
+            }
+
+            if (button.dataset.operation === "status") {
+                root.querySelector("#aegisStatusFilter").focus();
+
+                showNotice(
+                    "Select an account in the directory to manage its status.",
+                    "info"
+                );
+            }
+        });
+    });
 
     loadUsers();
 }
