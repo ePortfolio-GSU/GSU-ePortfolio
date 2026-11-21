@@ -1981,10 +1981,9 @@ function renderUserManagementWorkspace(root) {
                         <span class="aegis-brand-icon">♙</span>
                         <div>
                             <strong>GSU AEGIS</strong>
-                            <small>ICT ADMINISTRATION / IDENTITY CONTROL</small>
+                            <small>IDENTITY CONTROL</small>
                         </div>
                     </div>
-
                     <span class="aegis-session-badge">
                         ● ADMIN SESSION
                     </span>
