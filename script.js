@@ -2326,100 +2326,131 @@ function renderUserManagementWorkspace(root) {
 
     function renderDirectory() {
 
-        const search = root.querySelector("#aegisSearch")
-            .value.trim().toLowerCase();
+    const search = root.querySelector("#aegisSearch")
+        .value.trim().toLowerCase();
 
-        const status = root.querySelector("#aegisStatusFilter").value;
+    const status = root.querySelector("#aegisStatusFilter").value;
 
-        const filtered = managedUsers.filter(user => {
+    const filtered = managedUsers.filter(user => {
 
-            const matchesSearch =
-                String(user.username || "").toLowerCase().includes(search) ||
-                String(user.fullName || "").toLowerCase().includes(search);
+        const matchesSearch =
+            String(user.username || "").toLowerCase().includes(search) ||
+            String(user.fullName || "").toLowerCase().includes(search);
 
-            const matchesRole =
-                selectedRole === "ALL" || user.role === selectedRole;
+        const matchesRole =
+            selectedRole === "ALL" || user.role === selectedRole;
 
-            const matchesStatus =
-                status === "ALL" || user.status === status;
+        const matchesStatus =
+            status === "ALL" || user.status === status;
 
-            return matchesSearch && matchesRole && matchesStatus;
-        });
+        return matchesSearch && matchesRole && matchesStatus;
+    });
 
-        root.querySelector("#aegisRecordCount").textContent =
-            filtered.length + " RECORDS";
+    root.querySelector("#aegisRecordCount").textContent =
+        filtered.length + " RECORDS";
 
-        if (!filtered.length) {
-            directory.innerHTML = `
-                <div class="aegis-empty">
-                    <span>◎</span>
-                    <strong>No matching accounts</strong>
-                    <small>Try changing your search or filters.</small>
-                </div>
-            `;
-            return;
-        }
-
+    if (!filtered.length) {
         directory.innerHTML = `
-            <div class="aegis-table-wrap">
-                <table class="aegis-table">
-                    <thead>
-                        <tr>
-                            <th>IDENTITY</th>
-                            <th>ROLE</th>
-                            <th>STATUS</th>
-                            <th>LAST LOGIN</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${filtered.map(user => `
-                            <tr>
-                                <td>
-                                    <strong>${escapeHTML(user.fullName)}</strong>
-                                    <small>${escapeHTML(user.username)}</small>
-                                </td>
-                                <td>${escapeHTML(user.role)}</td>
-                                <td>
-                                    <span class="aegis-status ${String(user.status).toLowerCase()}">
-                                        ${escapeHTML(user.status)}
-                                    </span>
-                                </td>
-                                <td>${escapeHTML(user.lastLogin || "Never")}</td>
-                                <td>
-                                    <div class="aegis-row-actions">
-                                        <button type="button"
-                                            data-action="reset"
-                                            data-username="${escapeHTML(user.username)}">
-                                            Reset
-                                        </button>
+            <div class="aegis-empty">
+                <span>◎</span>
+                <strong>No matching accounts</strong>
+                <small>Try changing your search or filters.</small>
+            </div>
+        `;
+        return;
+    }
 
+    directory.innerHTML = `
+        <div class="aegis-table-wrap">
+            <table class="aegis-table">
+                <thead>
+                    <tr>
+                        <th>IDENTITY</th>
+                        <th>ROLE</th>
+                        <th>STATUS</th>
+                        <th>LAST LOGIN</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${filtered.map(user => `
+                        <tr>
+                            <td>
+                                <div class="aegis-user-identity">
+
+                                    <span class="aegis-user-avatar"
+                                        aria-hidden="true">
+                                        <svg viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.7"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round">
+                                            <circle cx="12" cy="8" r="3.5"/>
+                                            <path d="M5 20c.6-3.6 3.1-5.5 7-5.5s6.4 1.9 7 5.5"/>
+                                        </svg>
+                                    </span>
+
+                                    <span class="aegis-user-details">
+                                        <strong>${escapeHTML(user.fullName)}</strong>
+                                        <small>${escapeHTML(user.username)}</small>
+                                    </span>
+
+                                </div>
+                            </td>
+
+                            <td>${escapeHTML(user.role)}</td>
+
+                            <td>
+                                <span class="aegis-status ${String(user.status).toLowerCase()}">
+                                    ${escapeHTML(user.status)}
+                                </span>
+                            </td>
+
+                            <td>${escapeHTML(user.lastLogin || "Never")}</td>
+
+                            <td>
+                                <div class="aegis-row-actions">
+
+                                    <button type="button"
+                                        data-action="reset"
+                                        data-username="${escapeHTML(user.username)}">
+                                        Reset
+                                    </button>
+
+                                    ${user.status !== "Active" ? `
                                         <button type="button"
                                             data-action="activate"
                                             data-username="${escapeHTML(user.username)}">
                                             Activate
                                         </button>
+                                    ` : ""}
 
+                                    ${user.status !== "Locked" ? `
                                         <button type="button"
                                             data-action="lock"
                                             data-username="${escapeHTML(user.username)}">
                                             Lock
                                         </button>
+                                    ` : ""}
 
+                                    ${user.status !== "Disabled" ? `
                                         <button type="button"
                                             data-action="disable"
                                             data-username="${escapeHTML(user.username)}">
                                             Disable
                                         </button>
-                                    </div>
-                                </td>
-                            </tr>
-                        `).join("")}
-                    </tbody>
-                </table>
-            </div>
-        `;
-    }
+                                    ` : ""}
+
+                                </div>
+                            </td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
 
     async function loadUsers() {
 
