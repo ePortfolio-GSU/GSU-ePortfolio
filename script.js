@@ -2263,28 +2263,172 @@ function renderUserManagementWorkspace(root) {
                 <div class="aegis-section-heading">
                     <div>
                         <span>03 / SAFEGUARDS</span>
-                        <h3>Account Integrity</h3>
+                        <h3>Account Integrity Centre</h3>
                     </div>
                     <span class="aegis-section-number">03</span>
                 </div>
 
-                <section class="aegis-panel aegis-integrity">
+                <section class="aegis-integrity-centre">
 
-                    <div class="aegis-integrity-title">
-                        <span>◇</span>
-                        <strong>Account Protection</strong>
+                    <div class="aegis-integrity-hero">
+                        <div class="aegis-integrity-hero-icon">◇</div>
+
+                        <div>
+                            <strong>IDENTITY ASSURANCE & ACCESS INTELLIGENCE</strong>
+                            <p>
+                                Monitor account integrity, role compliance
+                                and system access activity.
+                            </p>
+                        </div>
+
+                        <span class="aegis-monitor-state">
+                            MONITORING
+                        </span>
                     </div>
 
-                    <div class="aegis-integrity-row">
-                        <span>Verified administrator session</span>
-                        <b>BACKEND ENFORCED</b>
+                    <div class="aegis-integrity-notice">
+                        <span>●</span>
+                        <div>
+                            <strong>Monitoring data verification</strong>
+                            <p>
+                                Live security records will appear when
+                                connected to verified backend evidence.
+                                No activity or alert counts are assumed.
+                            </p>
+                        </div>
                     </div>
 
-                    <div class="aegis-integrity-row">
-                        <span>First-login password change</span>
-                        <b>ACCOUNT CONTROL</b>
+                    <div class="aegis-integrity-grid">
+
+                        <button type="button"
+                            class="aegis-integrity-card"
+                            data-integrity="roles">
+
+                            <span class="aegis-integrity-card-icon">♙</span>
+
+                            <span class="aegis-integrity-card-content">
+                                <strong>ROLE COMPLIANCE</strong>
+                                <small>
+                                    Role assignments, permission changes
+                                    and privilege violations.
+                                </small>
+                                <b>INVESTIGATE ↗</b>
+                            </span>
+
+                            <span class="aegis-integrity-card-number">01</span>
+                        </button>
+
+                        <button type="button"
+                            class="aegis-integrity-card"
+                            data-integrity="access">
+
+                            <span class="aegis-integrity-card-icon">⌁</span>
+
+                            <span class="aegis-integrity-card-content">
+                                <strong>SYSTEM ACCESS</strong>
+                                <small>
+                                    Login activity, module access,
+                                    denied requests and sessions.
+                                </small>
+                                <b>INVESTIGATE ↗</b>
+                            </span>
+
+                            <span class="aegis-integrity-card-number">02</span>
+                        </button>
+
+                        <button type="button"
+                            class="aegis-integrity-card"
+                            data-integrity="alerts">
+
+                            <span class="aegis-integrity-card-icon">⚠</span>
+
+                            <span class="aegis-integrity-card-content">
+                                <strong>SECURITY ALERTS</strong>
+                                <small>
+                                    Suspicious access patterns and
+                                    account-related security warnings.
+                                </small>
+                                <b>INVESTIGATE ↗</b>
+                            </span>
+
+                            <span class="aegis-integrity-card-number">03</span>
+                        </button>
+
+                        <button type="button"
+                            class="aegis-integrity-card"
+                            data-integrity="incidents">
+
+                            <span class="aegis-integrity-card-icon">▤</span>
+
+                            <span class="aegis-integrity-card-content">
+                                <strong>INCIDENT COORDINATION</strong>
+                                <small>
+                                    Investigations, affected accounts,
+                                    recommendations and resolution.
+                                </small>
+                                <b>INVESTIGATE ↗</b>
+                            </span>
+
+                            <span class="aegis-integrity-card-number">04</span>
+                        </button>
+
                     </div>
 
+                    <div class="aegis-integrity-detail"
+                        id="aegisIntegrityDetail" hidden>
+
+                        <div class="aegis-integrity-detail-heading">
+                            <div>
+                                <span>INVESTIGATION WORKSPACE</span>
+                                <h3 id="aegisIntegrityDetailTitle">
+                                    Integrity Investigation
+                                </h3>
+                            </div>
+
+                            <button type="button"
+                                id="aegisIntegrityClose"
+                                aria-label="Close investigation">
+                                ✕
+                            </button>
+                        </div>
+
+                        <p id="aegisIntegrityDetailDescription"></p>
+
+                        <div class="aegis-integrity-data-state">
+                            <span>●</span>
+                            <div>
+                                <strong>LIVE EVIDENCE NOT YET CONNECTED</strong>
+                                <small>
+                                    This section is ready for backend
+                                    records. No incidents or events
+                                    have been fabricated.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="aegis-integrity-detail-list"
+                            id="aegisIntegrityDetailList">
+                        </div>
+
+                        <div class="aegis-integrity-detail-footer">
+                            <span>GSU AEGIS / ACCOUNT INTEGRITY</span>
+                            <span>ICT ADMINISTRATION</span>
+                        </div>
+
+                    </div>
+
+                    <div class="aegis-integrity-boundary">
+                        <strong>ADMINISTRATIVE RESPONSIBILITY</strong>
+                        <p>
+                            Account Integrity detects and coordinates.
+                            Account changes remain in User Management;
+                            security controls remain in Security Centre;
+                            historical evidence remains in Audit Logs;
+                            system configuration remains in System Settings.
+                        </p>
+                    </div>
+
+                </section>
                     <div class="aegis-integrity-row">
                         <span>Last active ICT admin protection</span>
                         <b>ACCOUNT CONTROL</b>
@@ -2691,7 +2835,7 @@ function renderUserManagementWorkspace(root) {
         }
     });
 
-    root.querySelectorAll("[data-operation]").forEach(button => {
+   root.querySelectorAll("[data-operation]").forEach(button => {
         button.addEventListener("click", () => {
 
             if (button.dataset.operation === "password") {
@@ -2713,6 +2857,122 @@ function renderUserManagementWorkspace(root) {
             }
         });
     });
+
+
+    // ACCOUNT INTEGRITY CENTRE
+
+    const integritySections = {
+
+        roles: {
+            title: "Role Compliance",
+            description:
+                "Monitor account roles, permission assignments, " +
+                "privilege changes and attempts to access restricted functions.",
+            items: [
+                "Role assignment history",
+                "Permission changes",
+                "Unauthorized privilege escalation",
+                "Restricted function access attempts",
+                "Role-policy violations",
+                "Administrator privilege changes"
+            ]
+        },
+
+        access: {
+            title: "System Access Monitoring",
+            description:
+                "Monitor authentication and access activity across " +
+                "the school e-Portfolio system.",
+            items: [
+                "Successful login activity",
+                "Failed login attempts",
+                "Module and resource access",
+                "Unauthorized access attempts",
+                "Session creation and termination",
+                "Session expiry activity"
+            ]
+        },
+
+        alerts: {
+            title: "Security Alerts",
+            description:
+                "Review account-related security warnings and " +
+                "suspicious activity detected by verified security rules.",
+            items: [
+                "Repeated failed authentication",
+                "Suspicious access patterns",
+                "Potential account compromise",
+                "Unauthorized access warnings",
+                "Privilege-related alerts",
+                "Unresolved security warnings"
+            ]
+        },
+
+        incidents: {
+            title: "Incident Coordination",
+            description:
+                "Coordinate investigations and track the responsible " +
+                "administrative module for each verified incident.",
+            items: [
+                "Affected account identification",
+                "Incident evidence and event references",
+                "Severity and investigation status",
+                "Recommended administrative action",
+                "Responsible resolution module",
+                "Resolution and follow-up status"
+            ]
+        }
+    };
+
+
+    const integrityDetail =
+        root.querySelector("#aegisIntegrityDetail");
+
+    root.querySelectorAll("[data-integrity]").forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const section =
+                integritySections[button.dataset.integrity];
+
+            if (!section) return;
+
+            root.querySelector("#aegisIntegrityDetailTitle")
+                .textContent = section.title;
+
+            root.querySelector("#aegisIntegrityDetailDescription")
+                .textContent = section.description;
+
+            const detailList =
+                root.querySelector("#aegisIntegrityDetailList");
+
+            detailList.innerHTML = section.items.map(item => `
+                <div class="aegis-integrity-detail-item">
+                    <span>◇</span>
+                    <strong>${escapeHTML(item)}</strong>
+                    <small>AWAITING VERIFIED BACKEND DATA</small>
+                </div>
+            `).join("");
+
+            integrityDetail.hidden = false;
+
+            integrityDetail.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        });
+
+    });
+
+
+    root.querySelector("#aegisIntegrityClose")
+        .addEventListener("click", () => {
+
+            integrityDetail.hidden = true;
+
+        });
+
 
     loadUsers();
 }
