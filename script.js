@@ -2615,6 +2615,10 @@ function renderUserManagementWorkspace(root) {
                                                 1.7 7 5.2"/>
 
                                         </svg>
+
+                                        ${user.isOnline ? `
+                                            <span class="aegis-online-dot"></span>
+                                        ` : ""}
                                     </span>
 
                                     <span class="aegis-user-details">
