@@ -3002,12 +3002,38 @@ function renderUserManagementWorkspace(root) {
             "result", "status", "outcome"
         ]);
 
+        const role = findField(["role"]);
+
+        const isRoleDistribution =
+            String(findField(["recordtype"]) || "")
+                .toLowerCase() === "current role distribution";
+
         const heading =
+            (isRoleDistribution && role) ||
             eventType ||
             record.username ||
             record.affectedAccount ||
             record.administrator ||
             label;
+
+        const roleDescriptions = {
+            "System Admin":
+                "Accounts assigned system-wide administration responsibilities.",
+            "School Admin":
+                "Accounts assigned school-level administration responsibilities.",
+            "Staff":
+                "Staff accounts registered to support school activities.",
+            "Learners":
+                "Learner accounts registered in the e-Portfolio system.",
+            "Parent/Guardian":
+                "Parent and guardian accounts associated with learner profiles."
+        };
+
+        const evidenceMessage =
+            isRoleDistribution && role
+                ? roleDescriptions[role] ||
+                  "Recorded account information for this role."
+                : "Additional recorded evidence is available below.";
 
         const metadata = [
             ["Actor", actor],
@@ -3036,7 +3062,7 @@ function renderUserManagementWorkspace(root) {
                                 )}</strong>
                             </div>
                         `).join("")
-                        : `<p>Additional recorded evidence is available below.</p>`
+                        : `<p>${escapeHTML(evidenceMessage)}</p>`
                     }
                 </div>
 
@@ -3149,10 +3175,18 @@ function renderUserManagementWorkspace(root) {
 
             const roleCounts = roles.roleCounts || {};
 
+            const roleTitles = {
+                ICT_ADMIN: "System Admin Role",
+                SCHOOL_ADMIN: "School Admin Role",
+                TEACHER: "Staff role",
+                LEARNER: "Learners Role",
+                PARENT: "Parent/Guardian Role"
+            };
+
             Object.entries(roleCounts).forEach(([role, count]) => {
                 records.push({
                     recordType: "Current role distribution",
-                    role,
+                    role: roleTitles[role] || role,
                     accountCount: count
                 });
             });
