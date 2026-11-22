@@ -3143,22 +3143,8 @@ function renderUserManagementWorkspace(root) {
 
         if (view === "access") {
 
-            const recentEvents = integrityArray(data.recentEvents);
-
-            const accessRecords = integrityArray(access.accessEvents);
-
-            const sessionRecords = recentEvents.filter(record => {
-                const type = String(record.eventType || "");
-                const action = String(record.action || "");
-
-                return /LOGIN|ACCESS|SESSION|LOGOUT/i.test(
-                    type + " " + action
-                );
-            });
-
-            const combined = accessRecords.length
-                ? accessRecords
-                : sessionRecords;
+            const accessRecords =
+                integrityArray(access.accessEvents);
 
             records.push({
                 recordType: "Successful logins",
@@ -3171,7 +3157,7 @@ function renderUserManagementWorkspace(root) {
             });
 
             records.push({
-                recordType: "Access events",
+                recordType: "Recorded access events",
                 count: integrityCount(summary.accessEvents)
             });
 
@@ -3180,7 +3166,9 @@ function renderUserManagementWorkspace(root) {
                 count: integrityCount(summary.logoutEvents)
             });
 
-            combined.forEach(record => records.push(record));
+            accessRecords.forEach(record => {
+                records.push(record);
+            });
 
             renderIntegrityCoverage(data.monitoringCoverage)
                 .forEach(record => {
@@ -3191,17 +3179,19 @@ function renderUserManagementWorkspace(root) {
                 });
 
             integrityStatus(
-                "Recorded authentication and access evidence. " +
-                "Coverage indicators show what the backend reports; " +
-                "unsupported monitoring is not assumed."
+                "Access monitoring only. Showing authentication, " +
+                "access and session evidence returned by the backend. " +
+                "General administrative audit events are shown under " +
+                "Event Investigation."
             );
 
             renderIntegrityRecords(
                 records,
-                "No access or session evidence was returned."
+                "No dedicated access records were returned. " +
+                "The summary and monitoring coverage above are the " +
+                "only available access indicators."
             );
         }
-
 
         if (view === "alerts") {
 
@@ -3223,19 +3213,54 @@ function renderUserManagementWorkspace(root) {
 
         if (view === "incidents") {
 
-            integrityArray(data.recentEvents).forEach(record => {
+            const recentEvents =
+                integrityArray(data.recentEvents);
+
+            const accessPattern =
+                /LOGIN|ACCESS|SESSION|LOGOUT/i;
+
+            const seenEvents = new Set();
+
+            recentEvents.forEach(record => {
+
+                const eventType =
+                    String(record.eventType || "");
+
+                const action =
+                    String(record.action || "");
+
+                const category =
+                    String(record.category || "");
+
+                // Access events belong in System Access.
+                if (
+                    accessPattern.test(eventType) ||
+                    accessPattern.test(action) ||
+                    accessPattern.test(category)
+                ) {
+                    return;
+                }
+
+                // Prevent duplicate copies of the same audit record.
+                const fingerprint = JSON.stringify(record);
+
+                if (seenEvents.has(fingerprint)) {
+                    return;
+                }
+
+                seenEvents.add(fingerprint);
                 records.push(record);
             });
 
             integrityStatus(
-                "Showing recent audit evidence returned by the backend. " +
-                "A separate incident case-management feed is not part " +
-                "of the current backend response."
+                "Administrative and security audit evidence. " +
+                "Authentication, access and session records are " +
+                "presented separately under System Access."
             );
 
             renderIntegrityRecords(
                 records,
-                "No recent audit events were returned."
+                "No non-access audit events were returned."
             );
         }
 
