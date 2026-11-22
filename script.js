@@ -2632,6 +2632,7 @@ function renderUserManagementWorkspace(root) {
             </table>
         </div>
     `;
+    }
 
     async function loadUsers() {
         directory.innerHTML = `
