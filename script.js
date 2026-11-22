@@ -2276,26 +2276,32 @@ function renderUserManagementWorkspace(root) {
                         <div>
                             <strong>IDENTITY ASSURANCE & ACCESS INTELLIGENCE</strong>
                             <p>
-                                Monitor account integrity, role compliance
-                                and system access activity.
+                                Verified account, role and access intelligence
+                                from the existing security audit service.
                             </p>
                         </div>
 
                         <span class="aegis-monitor-state">
-                            MONITORING
+                            BACKEND LINKED
                         </span>
                     </div>
 
                     <div class="aegis-integrity-notice">
                         <span>●</span>
+
                         <div>
-                            <strong>Monitoring data verification</strong>
-                            <p>
-                                Live security records will appear when
-                                connected to verified backend evidence.
-                                No activity or alert counts are assumed.
+                            <strong id="aegisIntegrityStatus">
+                                Retrieving integrity records
+                            </strong>
+                            <p id="aegisIntegrityUpdated">
+                                Connecting to the account integrity service.
                             </p>
                         </div>
+
+                        <button type="button"
+                            id="aegisIntegrityRefresh">
+                            Refresh
+                        </button>
                     </div>
 
                     <div class="aegis-integrity-grid">
@@ -2309,13 +2315,14 @@ function renderUserManagementWorkspace(root) {
                             <span class="aegis-integrity-card-content">
                                 <strong>ROLE COMPLIANCE</strong>
                                 <small>
-                                    Role assignments, permission changes
-                                    and privilege violations.
+                                    Role assignments, account anomalies
+                                    and recorded role changes.
                                 </small>
                                 <b>INVESTIGATE ↗</b>
                             </span>
 
-                            <span class="aegis-integrity-card-number">01</span>
+                            <span class="aegis-integrity-card-number"
+                                id="aegisRoleCount">—</span>
                         </button>
 
                         <button type="button"
@@ -2327,13 +2334,14 @@ function renderUserManagementWorkspace(root) {
                             <span class="aegis-integrity-card-content">
                                 <strong>SYSTEM ACCESS</strong>
                                 <small>
-                                    Login activity, module access,
-                                    denied requests and sessions.
+                                    Authentication, access attempts
+                                    and recorded session activity.
                                 </small>
                                 <b>INVESTIGATE ↗</b>
                             </span>
 
-                            <span class="aegis-integrity-card-number">02</span>
+                            <span class="aegis-integrity-card-number"
+                                id="aegisAccessCount">—</span>
                         </button>
 
                         <button type="button"
@@ -2345,13 +2353,14 @@ function renderUserManagementWorkspace(root) {
                             <span class="aegis-integrity-card-content">
                                 <strong>SECURITY ALERTS</strong>
                                 <small>
-                                    Suspicious access patterns and
-                                    account-related security warnings.
+                                    Security warnings and recorded
+                                    account-related events.
                                 </small>
                                 <b>INVESTIGATE ↗</b>
                             </span>
 
-                            <span class="aegis-integrity-card-number">03</span>
+                            <span class="aegis-integrity-card-number"
+                                id="aegisAlertCount">—</span>
                         </button>
 
                         <button type="button"
@@ -2361,15 +2370,16 @@ function renderUserManagementWorkspace(root) {
                             <span class="aegis-integrity-card-icon">▤</span>
 
                             <span class="aegis-integrity-card-content">
-                                <strong>INCIDENT COORDINATION</strong>
+                                <strong>EVENT INVESTIGATION</strong>
                                 <small>
-                                    Investigations, affected accounts,
-                                    recommendations and resolution.
+                                    Traceable audit evidence and
+                                    recent account activity.
                                 </small>
                                 <b>INVESTIGATE ↗</b>
                             </span>
 
-                            <span class="aegis-integrity-card-number">04</span>
+                            <span class="aegis-integrity-card-number"
+                                id="aegisEventCount">—</span>
                         </button>
 
                     </div>
@@ -2394,14 +2404,18 @@ function renderUserManagementWorkspace(root) {
 
                         <p id="aegisIntegrityDetailDescription"></p>
 
-                        <div class="aegis-integrity-data-state">
+                        <div class="aegis-integrity-data-state"
+                            id="aegisIntegrityDataState">
+
                             <span>●</span>
+
                             <div>
-                                <strong>LIVE EVIDENCE NOT YET CONNECTED</strong>
-                                <small>
-                                    This section is ready for backend
-                                    records. No incidents or events
-                                    have been fabricated.
+                                <strong id="aegisIntegrityDataHeading">
+                                    WAITING FOR BACKEND DATA
+                                </strong>
+
+                                <small id="aegisIntegrityDataMessage">
+                                    Select a category to inspect its records.
                                 </small>
                             </div>
                         </div>
@@ -2420,27 +2434,16 @@ function renderUserManagementWorkspace(root) {
                     <div class="aegis-integrity-boundary">
                         <strong>ADMINISTRATIVE RESPONSIBILITY</strong>
                         <p>
-                            Account Integrity detects and coordinates.
                             Account changes remain in User Management;
                             security controls remain in Security Centre;
                             historical evidence remains in Audit Logs;
                             system configuration remains in System Settings.
+                            This centre presents verified intelligence and
+                            investigation evidence, not duplicate controls.
                         </p>
                     </div>
 
                 </section>
-                    <div class="aegis-integrity-row">
-                        <span>Last active ICT admin protection</span>
-                        <b>ACCOUNT CONTROL</b>
-                    </div>
-
-                    <div class="aegis-integrity-row">
-                        <span>Account action logging</span>
-                        <b>EXISTING AUDIT SERVICE</b>
-                    </div>
-
-                </section>
-
                 <div class="aegis-footer-panel">
                     <strong>IDENTITY MANAGEMENT</strong>
                     <p>
@@ -2861,118 +2864,524 @@ function renderUserManagementWorkspace(root) {
 
     // ACCOUNT INTEGRITY CENTRE
 
+    let integrityData = null;
+    let integrityLoading = false;
+
+    const integrityDetail =
+        root.querySelector("#aegisIntegrityDetail");
+
+    const integrityDetailList =
+        root.querySelector("#aegisIntegrityDetailList");
+
     const integritySections = {
 
         roles: {
             title: "Role Compliance",
             description:
-                "Monitor account roles, permission assignments, " +
-                "privilege changes and attempts to access restricted functions.",
-            items: [
-                "Role assignment history",
-                "Permission changes",
-                "Unauthorized privilege escalation",
-                "Restricted function access attempts",
-                "Role-policy violations",
-                "Administrator privilege changes"
-            ]
+                "Recorded role assignments, role changes, " +
+                "invalid roles, duplicate usernames and account anomalies."
         },
 
         access: {
-            title: "System Access Monitoring",
+            title: "System Access",
             description:
-                "Monitor authentication and access activity across " +
-                "the school e-Portfolio system.",
-            items: [
-                "Successful login activity",
-                "Failed login attempts",
-                "Module and resource access",
-                "Unauthorized access attempts",
-                "Session creation and termination",
-                "Session expiry activity"
-            ]
+                "Recorded login outcomes, access attempts, session activity " +
+                "and the current monitoring coverage."
         },
 
         alerts: {
             title: "Security Alerts",
             description:
-                "Review account-related security warnings and " +
-                "suspicious activity detected by verified security rules.",
-            items: [
-                "Repeated failed authentication",
-                "Suspicious access patterns",
-                "Potential account compromise",
-                "Unauthorized access warnings",
-                "Privilege-related alerts",
-                "Unresolved security warnings"
-            ]
+                "Security alert records returned by the existing audit service."
         },
 
         incidents: {
-            title: "Incident Coordination",
+            title: "Event Investigation",
             description:
-                "Coordinate investigations and track the responsible " +
-                "administrative module for each verified incident.",
-            items: [
-                "Affected account identification",
-                "Incident evidence and event references",
-                "Severity and investigation status",
-                "Recommended administrative action",
-                "Responsible resolution module",
-                "Resolution and follow-up status"
-            ]
+                "Recent traceable audit events. This view does not create " +
+                "or imply a separate incident-management record."
         }
     };
 
 
-    const integrityDetail =
-        root.querySelector("#aegisIntegrityDetail");
+    function integrityArray(value) {
+        return Array.isArray(value) ? value : [];
+    }
+
+
+    function integrityCount(value) {
+
+        if (Array.isArray(value)) {
+            return value.length;
+        }
+
+        return Number.isFinite(Number(value))
+            ? Number(value)
+            : 0;
+    }
+
+
+    function integrityValue(value) {
+
+        if (value === null || value === undefined || value === "") {
+            return "Not recorded";
+        }
+
+        if (typeof value === "boolean") {
+            return value ? "Enabled" : "Not enabled";
+        }
+
+        if (typeof value === "object") {
+            return JSON.stringify(value);
+        }
+
+        return String(value);
+    }
+
+
+    function integrityTimestamp(value) {
+
+        if (!value) return "Time not recorded";
+
+        const date = new Date(value);
+
+        if (Number.isNaN(date.getTime())) {
+            return integrityValue(value);
+        }
+
+        return date.toLocaleString();
+    }
+
+
+    function integrityRecordMarkup(record, label) {
+
+        if (typeof record !== "object" || record === null) {
+            return `
+                <div class="aegis-integrity-detail-item">
+                    <span>◇</span>
+                    <strong>${escapeHTML(label)}</strong>
+                    <small>${escapeHTML(integrityValue(record))}</small>
+                </div>
+            `;
+        }
+
+        const fields = Object.entries(record)
+            .filter(([key, value]) =>
+                value !== undefined &&
+                value !== null &&
+                value !== ""
+            );
+
+        const heading =
+            record.username ||
+            record.affectedAccount ||
+            record.administrator ||
+            record.action ||
+            label;
+
+        return `
+            <div class="aegis-integrity-detail-item">
+                <span>◇</span>
+
+                <strong>${escapeHTML(heading)}</strong>
+
+                <small>
+                    ${fields.map(([key, value]) => `
+                        <span>
+                            ${escapeHTML(key)}:
+                            ${escapeHTML(integrityValue(value))}
+                        </span>
+                    `).join(" · ")}
+                </small>
+            </div>
+        `;
+    }
+
+
+    function integrityStatus(message, heading = "BACKEND EVIDENCE") {
+
+        root.querySelector("#aegisIntegrityDataHeading")
+            .textContent = heading;
+
+        root.querySelector("#aegisIntegrityDataMessage")
+            .textContent = message;
+    }
+
+
+    function renderIntegrityRecords(records, emptyMessage) {
+
+        if (!records.length) {
+            integrityDetailList.innerHTML = `
+                <div class="aegis-integrity-detail-item">
+                    <span>◇</span>
+                    <strong>No records returned</strong>
+                    <small>${escapeHTML(emptyMessage)}</small>
+                </div>
+            `;
+            return;
+        }
+
+        integrityDetailList.innerHTML = records
+            .map((record, index) =>
+                integrityRecordMarkup(record, "Record " + (index + 1))
+            )
+            .join("");
+    }
+
+
+    function renderIntegrityCoverage(coverage) {
+
+        const entries = Object.entries(coverage || {});
+
+        if (!entries.length) {
+            return [{
+                label: "Monitoring coverage",
+                value: "Not returned by backend"
+            }];
+        }
+
+        return entries.map(([key, value]) => ({
+            label: key,
+            value: integrityValue(value)
+        }));
+    }
+
+
+    function renderIntegrityView(view) {
+
+        if (!integrityData) {
+            integrityStatus(
+                "Integrity records have not been loaded. Refresh and try again.",
+                "DATA UNAVAILABLE"
+            );
+            return;
+        }
+
+        const section = integritySections[view];
+
+        if (!section) return;
+
+        const data = integrityData;
+        const summary = data.summary || {};
+        const roles = data.roleCompliance || {};
+        const access = data.systemAccess || {};
+
+        root.querySelector("#aegisIntegrityDetailTitle")
+            .textContent = section.title;
+
+        root.querySelector("#aegisIntegrityDetailDescription")
+            .textContent = section.description;
+
+        integrityDetailList.innerHTML = "";
+
+        const records = [];
+
+        if (view === "roles") {
+
+            const roleCounts = roles.roleCounts || {};
+
+            Object.entries(roleCounts).forEach(([role, count]) => {
+                records.push({
+                    recordType: "Current role distribution",
+                    role,
+                    accountCount: count
+                });
+            });
+
+            integrityArray(roles.invalidAccounts).forEach(record => {
+                records.push({
+                    recordType: "Invalid role account",
+                    ...(
+                        typeof record === "object" && record !== null
+                            ? record
+                            : { account: record }
+                    )
+                });
+            });
+
+            integrityArray(roles.duplicateUsernames).forEach(record => {
+                records.push({
+                    recordType: "Duplicate username",
+                    ...(
+                        typeof record === "object" && record !== null
+                            ? record
+                            : { username: record }
+                    )
+                });
+            });
+
+            integrityArray(roles.invalidStatusAccounts).forEach(record => {
+                records.push({
+                    recordType: "Invalid account status",
+                    ...(
+                        typeof record === "object" && record !== null
+                            ? record
+                            : { account: record }
+                    )
+                });
+            });
+
+            integrityArray(roles.roleChangeRecords).forEach(record => {
+                records.push({
+                    recordType: "Role change",
+                    ...record
+                });
+            });
+
+            integrityStatus(
+                "Role compliance records returned by the backend. " +
+                "Summary role-change events: " +
+                integrityCount(summary.roleChangeEvents) + "."
+            );
+
+            renderIntegrityRecords(
+                records,
+                "No role compliance records were returned."
+            );
+        }
+
+
+        if (view === "access") {
+
+            const recentEvents = integrityArray(data.recentEvents);
+
+            const accessRecords = integrityArray(access.accessEvents);
+
+            const sessionRecords = recentEvents.filter(record => {
+                const type = String(record.eventType || "");
+                const action = String(record.action || "");
+
+                return /LOGIN|ACCESS|SESSION|LOGOUT/i.test(
+                    type + " " + action
+                );
+            });
+
+            const combined = accessRecords.length
+                ? accessRecords
+                : sessionRecords;
+
+            records.push({
+                recordType: "Successful logins",
+                count: integrityCount(summary.successfulLogins)
+            });
+
+            records.push({
+                recordType: "Failed logins",
+                count: integrityCount(summary.failedLogins)
+            });
+
+            records.push({
+                recordType: "Access events",
+                count: integrityCount(summary.accessEvents)
+            });
+
+            records.push({
+                recordType: "Logout events",
+                count: integrityCount(summary.logoutEvents)
+            });
+
+            combined.forEach(record => records.push(record));
+
+            renderIntegrityCoverage(data.monitoringCoverage)
+                .forEach(record => {
+                    records.push({
+                        recordType: "Monitoring coverage",
+                        ...record
+                    });
+                });
+
+            integrityStatus(
+                "Recorded authentication and access evidence. " +
+                "Coverage indicators show what the backend reports; " +
+                "unsupported monitoring is not assumed."
+            );
+
+            renderIntegrityRecords(
+                records,
+                "No access or session evidence was returned."
+            );
+        }
+
+
+        if (view === "alerts") {
+
+            integrityArray(data.securityAlerts).forEach(record => {
+                records.push(record);
+            });
+
+            integrityStatus(
+                integrityCount(summary.securityAlertEvents) +
+                " security alert events reported in the backend summary."
+            );
+
+            renderIntegrityRecords(
+                records,
+                "No security alert records were returned."
+            );
+        }
+
+
+        if (view === "incidents") {
+
+            integrityArray(data.recentEvents).forEach(record => {
+                records.push(record);
+            });
+
+            integrityStatus(
+                "Showing recent audit evidence returned by the backend. " +
+                "A separate incident case-management feed is not part " +
+                "of the current backend response."
+            );
+
+            renderIntegrityRecords(
+                records,
+                "No recent audit events were returned."
+            );
+        }
+
+        integrityDetail.hidden = false;
+
+        integrityDetail.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+
+
+    function updateIntegrityCounters(data) {
+
+        const summary = data.summary || {};
+        const roles = data.roleCompliance || {};
+
+        const roleCount =
+            integrityCount(summary.roleChangeEvents) +
+            integrityCount(summary.invalidRoleAccounts) +
+            integrityCount(summary.invalidStatusAccounts) +
+            integrityCount(summary.duplicateUsernames);
+
+        root.querySelector("#aegisRoleCount").textContent =
+            roleCount;
+
+        root.querySelector("#aegisAccessCount").textContent =
+            integrityCount(summary.accessEvents);
+
+        root.querySelector("#aegisAlertCount").textContent =
+            integrityCount(summary.securityAlertEvents);
+
+        root.querySelector("#aegisEventCount").textContent =
+            integrityArray(data.recentEvents).length;
+    }
+
+
+    async function loadAccountIntegrity() {
+
+        if (integrityLoading) return;
+
+        integrityLoading = true;
+
+        const refreshButton =
+            root.querySelector("#aegisIntegrityRefresh");
+
+        refreshButton.disabled = true;
+        refreshButton.textContent = "Loading...";
+
+        root.querySelector("#aegisIntegrityStatus")
+            .textContent = "Retrieving integrity records";
+
+        try {
+
+            const result = await apiRequest(
+                "getAccountIntegrityData"
+            );
+
+            if (!result.summary || !result.roleCompliance) {
+                throw new Error(
+                    "The integrity response is incomplete. Check the deployed backend version."
+                );
+            }
+
+            integrityData = result;
+
+            updateIntegrityCounters(result);
+
+            root.querySelector("#aegisIntegrityStatus")
+                .textContent = "Integrity records loaded";
+
+            root.querySelector("#aegisIntegrityUpdated")
+                .textContent = result.generatedAt
+                    ? "Last updated: " + integrityTimestamp(result.generatedAt)
+                    : "Backend records retrieved successfully.";
+
+            if (!integrityDetail.hidden) {
+                const activeView = Object.keys(integritySections).find(
+                    key =>
+                        integritySections[key].title ===
+                        root.querySelector("#aegisIntegrityDetailTitle")
+                            .textContent
+                );
+
+                if (activeView) {
+                    renderIntegrityView(activeView);
+                }
+            }
+
+        } catch (error) {
+
+            integrityData = null;
+
+            root.querySelector("#aegisIntegrityStatus")
+                .textContent = "Integrity data unavailable";
+
+            root.querySelector("#aegisIntegrityUpdated")
+                .textContent = error.message;
+
+            root.querySelector("#aegisRoleCount").textContent = "—";
+            root.querySelector("#aegisAccessCount").textContent = "—";
+            root.querySelector("#aegisAlertCount").textContent = "—";
+            root.querySelector("#aegisEventCount").textContent = "—";
+
+            if (!integrityDetail.hidden) {
+                integrityStatus(
+                    error.message,
+                    "UNABLE TO RETRIEVE EVIDENCE"
+                );
+
+                integrityDetailList.innerHTML = "";
+            }
+
+            showNotice(
+                "Account integrity data could not be loaded. " +
+                "Refresh and try again.",
+                "error"
+            );
+
+        } finally {
+
+            integrityLoading = false;
+            refreshButton.disabled = false;
+            refreshButton.textContent = "Refresh";
+        }
+    }
+
 
     root.querySelectorAll("[data-integrity]").forEach(button => {
 
         button.addEventListener("click", () => {
-
-            const section =
-                integritySections[button.dataset.integrity];
-
-            if (!section) return;
-
-            root.querySelector("#aegisIntegrityDetailTitle")
-                .textContent = section.title;
-
-            root.querySelector("#aegisIntegrityDetailDescription")
-                .textContent = section.description;
-
-            const detailList =
-                root.querySelector("#aegisIntegrityDetailList");
-
-            detailList.innerHTML = section.items.map(item => `
-                <div class="aegis-integrity-detail-item">
-                    <span>◇</span>
-                    <strong>${escapeHTML(item)}</strong>
-                    <small>AWAITING VERIFIED BACKEND DATA</small>
-                </div>
-            `).join("");
-
-            integrityDetail.hidden = false;
-
-            integrityDetail.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-
+            renderIntegrityView(button.dataset.integrity);
         });
 
     });
 
 
+    root.querySelector("#aegisIntegrityRefresh")
+        .addEventListener("click", loadAccountIntegrity);
+
+
     root.querySelector("#aegisIntegrityClose")
         .addEventListener("click", () => {
-
             integrityDetail.hidden = true;
-
         });
 
 
     loadUsers();
-}
+    loadAccountIntegrity();
