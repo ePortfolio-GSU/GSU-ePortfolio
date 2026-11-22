@@ -3108,13 +3108,7 @@ function renderUserManagementWorkspace(root) {
         }));
     }
 
-        return entries.map(([key, value]) => ({
-            label: key,
-            value: integrityValue(value)
-        }));
-    }
-
-
+       
     function renderIntegrityView(view) {
 
         if (!integrityData) {
