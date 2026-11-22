@@ -3098,25 +3098,15 @@ function renderUserManagementWorkspace(root) {
 
         if (!entries.length) {
             return [{
-                recordType: "MONITORING COVERAGE",
-                label: "Coverage information",
+                label: "Monitoring coverage",
                 value: "Not returned by backend"
             }];
         }
 
-        const coverageDetails = entries.map(([key, value]) => {
-            const label = key
-                .replace(/([A-Z])/g, " $1")
-                .replace(/^./, character => character.toUpperCase());
-
-            return label + ": " + integrityValue(value);
-        });
-
-        return [{
-            recordType: "MONITORING COVERAGE",
-            label: "Consolidated monitoring status",
-            value: coverageDetails.join(" | ")
-        }];
+        return entries.map(([key, value]) => ({
+            label: key,
+            value: integrityValue(value)
+        }));
     }
 
         return entries.map(([key, value]) => ({
@@ -3225,33 +3215,35 @@ function renderUserManagementWorkspace(root) {
             const accessRecords =
                 integrityArray(access.accessEvents);
 
-            const coverageRecords =
+            const coverage =
                 renderIntegrityCoverage(data.monitoringCoverage);
 
             integrityStatus(
-                "ACCESS SUMMARY\n" +
-                "Successful logins: " +
+                "ACCESS SUMMARY  |  Successful logins: " +
                 integrityCount(summary.successfulLogins) +
                 "  |  Failed logins: " +
                 integrityCount(summary.failedLogins) +
-                "\nAccess events: " +
+                "  |  Access events: " +
                 integrityCount(summary.accessEvents) +
                 "  |  Logout events: " +
                 integrityCount(summary.logoutEvents)
             );
 
-            // One consolidated coverage record only.
-            records.push(coverageRecords[0]);
+            coverage.forEach(record => {
+                records.push({
+                    recordType: "MONITORING COVERAGE",
+                    ...record
+                });
+            });
 
-            // Only actual access records are displayed here.
             accessRecords.forEach(record => {
                 records.push(record);
             });
 
             renderIntegrityRecords(
                 records,
-                "No individual access records were returned. " +
-                "The access totals above are backend summary figures."
+                "No individual access records are available. " +
+                "The summary above reflects the backend totals."
             );
         }
 
