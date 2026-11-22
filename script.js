@@ -2957,11 +2957,11 @@ function renderUserManagementWorkspace(root) {
 
         if (typeof record !== "object" || record === null) {
             return `
-                <div class="aegis-integrity-detail-item">
+                <article class="aegis-integrity-detail-item">
                     <span>◇</span>
                     <strong>${escapeHTML(label)}</strong>
                     <small>${escapeHTML(integrityValue(record))}</small>
-                </div>
+                </article>
             `;
         }
 
@@ -2972,31 +2972,126 @@ function renderUserManagementWorkspace(root) {
                 value !== ""
             );
 
+        const findField = keys => {
+            const entry = fields.find(([key]) =>
+                keys.includes(key.toLowerCase())
+            );
+
+            return entry ? entry[1] : null;
+        };
+
+        const eventType = findField([
+            "recordtype",
+            "eventtype",
+            "type",
+            "action"
+        ]);
+
+        const actor = findField([
+            "administrator",
+            "username",
+            "actor",
+            "performedby",
+            "initiatedby"
+        ]);
+
+        const affectedAccount = findField([
+            "affectedaccount",
+            "targetusername",
+            "targetuser",
+            "account",
+            "affecteduser"
+        ]);
+
+        const timestamp = findField([
+            "timestamp",
+            "createdat",
+            "datetime",
+            "eventtime",
+            "time"
+        ]);
+
+        const outcome = findField([
+            "result",
+            "status",
+            "outcome"
+        ]);
+
         const heading =
+            eventType ||
             record.username ||
             record.affectedAccount ||
             record.administrator ||
-            record.action ||
             label;
 
+        const excludedKeys = [
+            "recordtype", "eventtype", "type", "action",
+            "administrator", "username", "actor",
+            "performedby", "initiatedby",
+            "affectedaccount", "targetusername",
+            "targetuser", "account", "affecteduser",
+            "timestamp", "createdat", "datetime",
+            "eventtime", "time", "result",
+            "status", "outcome"
+        ];
+
+        const evidenceFields = fields.filter(
+            ([key]) => !excludedKeys.includes(key.toLowerCase())
+        );
+
+        const metadata = [
+            actor !== null
+                ? "Actor: " + integrityValue(actor)
+                : null,
+
+            affectedAccount !== null
+                ? "Affected account: " + integrityValue(affectedAccount)
+                : null,
+
+            timestamp !== null
+                ? "Time: " + integrityTimestamp(timestamp)
+                : null,
+
+            outcome !== null
+                ? "Outcome: " + integrityValue(outcome)
+                : null
+        ].filter(Boolean);
+
         return `
-            <div class="aegis-integrity-detail-item">
+            <article class="aegis-integrity-detail-item">
+
                 <span>◇</span>
 
                 <strong>${escapeHTML(heading)}</strong>
 
                 <small>
-                    ${fields.map(([key, value]) => `
-                        <span>
-                            ${escapeHTML(key)}:
-                            ${escapeHTML(integrityValue(value))}
-                        </span>
-                    `).join(" · ")}
+                    ${metadata.length
+                        ? metadata.map(item =>
+                            `<span>${escapeHTML(item)}</span>`
+                          ).join(" · ")
+                        : "Additional event information is available below."}
                 </small>
-            </div>
+
+                <details>
+                    <summary>View evidence</summary>
+
+                    <div>
+                        ${fields.map(([key, value]) => `
+                            <p>
+                                <strong>${escapeHTML(key)}:</strong>
+                                ${escapeHTML(
+                                    /timestamp|createdat|datetime|eventtime|^time$/i.test(key)
+                                        ? integrityTimestamp(value)
+                                        : integrityValue(value)
+                                )}
+                            </p>
+                        `).join("")}
+                    </div>
+                </details>
+
+            </article>
         `;
     }
-
 
     function integrityStatus(message, heading = "BACKEND EVIDENCE") {
 
