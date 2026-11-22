@@ -3067,7 +3067,13 @@ function renderUserManagementWorkspace(root) {
                 </div>
 
                 <details class="aegis-evidence-details">
-                    <summary>View full evidence</summary>
+                    <summary>
+                        <span class="aegis-evidence-action">
+                            <span class="aegis-evidence-action-icon">⌘</span>
+                            <span>EXPLORE DETAILS</span>
+                        </span>
+                        <span class="aegis-evidence-arrow">↗</span>
+                    </summary>
 
                     <div class="aegis-evidence-fields">
                         ${fields.map(([key, value]) => `
