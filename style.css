@@ -5564,31 +5564,130 @@ body:has(.login-card) footer {
 }
 
 .aegis-integrity-detail-item {
-    display: grid;
-    grid-template-columns: 18px 1fr;
-    gap: 5px 8px;
-    padding: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 14px;
     border: 1px solid #E7EBEF;
-    border-radius: 8px;
+    border-radius: 10px;
     background: #FFFFFF;
 }
 
-.aegis-integrity-detail-item > span {
-    grid-row: span 2;
+.aegis-evidence-heading {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+}
+
+.aegis-evidence-heading > span {
+    flex: 0 0 auto;
+    color: #38BDF8;
+    font-size: 16px;
+}
+
+.aegis-evidence-heading strong {
+    min-width: 0;
+    color: #4A252F;
+    font-size: 12px;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+
+.aegis-evidence-meta {
+    display: grid;
+    gap: 7px;
+    width: 100%;
+    min-width: 0;
+}
+
+.aegis-evidence-meta > div,
+.aegis-evidence-fields > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #F0F2F4;
+}
+
+.aegis-evidence-meta span,
+.aegis-evidence-fields span {
+    flex: 0 0 38%;
+    color: #8A929B;
+    font-size: 10px;
+    line-height: 1.5;
+}
+
+.aegis-evidence-meta strong,
+.aegis-evidence-fields strong {
+    flex: 1 1 auto;
+    min-width: 0;
+    color: #4A252F;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: right;
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+.aegis-evidence-details {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin-top: 2px;
+}
+
+.aegis-evidence-details summary {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border: 1px solid #DCE8EF;
+    border-radius: 7px;
+    background: #F0F8FC;
+    color: #278FB7;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.5;
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+    cursor: pointer;
+    list-style-position: inside;
+}
+
+.aegis-evidence-details summary::marker {
     color: #38BDF8;
 }
 
-.aegis-integrity-detail-item strong {
-    color: #4A252F;
+.aegis-evidence-fields {
+    display: grid;
+    gap: 9px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    padding: 12px 2px 2px;
+}
+
+.aegis-evidence-meta p {
+    margin: 0;
+    color: #8A929B;
     font-size: 10px;
+    line-height: 1.6;
 }
 
-.aegis-integrity-detail-item small {
-    color: #9099A1;
-    font-size: 8px;
-    letter-spacing: .4px;
+.aegis-evidence-fields > div:last-child {
+    border-bottom: 0;
 }
-
 .aegis-integrity-detail-footer {
     display: flex;
     justify-content: space-between;
