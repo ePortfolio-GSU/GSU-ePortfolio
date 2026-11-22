@@ -3213,8 +3213,7 @@ function renderUserManagementWorkspace(root) {
         if (view === "access") {
 
             const accessRecords =
-                integrityArray(access.accessEvents);
-
+                integrityArray(access.accessRecords);
             const coverage =
                 renderIntegrityCoverage(data.monitoringCoverage);
 
