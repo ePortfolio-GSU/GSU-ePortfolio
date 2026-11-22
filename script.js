@@ -3061,7 +3061,7 @@ function renderUserManagementWorkspace(root) {
         `;
     }
 
-    function integrityStatus(message, heading = "BACKEND EVIDENCE") {
+    function integrityStatus(message, heading = "SYSTEM DATA") {
 
         root.querySelector("#aegisIntegrityDataHeading")
             .textContent = heading;
@@ -3103,10 +3103,16 @@ function renderUserManagementWorkspace(root) {
             }];
         }
 
-        return entries.map(([key, value]) => ({
-            label: key,
-            value: integrityValue(value)
-        }));
+        const consolidatedCoverage = {};
+
+        entries.forEach(([key, value]) => {
+            consolidatedCoverage[key] = integrityValue(value);
+        });
+
+        return [{
+            label: "Monitoring coverage",
+            ...consolidatedCoverage
+        }];
     }
 
        
