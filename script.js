@@ -2282,7 +2282,7 @@ function renderUserManagementWorkspace(root) {
                         </div>
 
                         <span class="aegis-monitor-state">
-                            BACKEND LINKED
+                            SYSTEM INTELLIGENCE
                         </span>
                     </div>
 
@@ -2318,7 +2318,7 @@ function renderUserManagementWorkspace(root) {
                                     Role assignments, account anomalies
                                     and recorded role changes.
                                 </small>
-                                <b>INVESTIGATE ↗</b>
+                                <b>INTELLIGENCE ↗</b>
                             </span>
 
                             <span class="aegis-integrity-card-number"
@@ -2431,27 +2431,7 @@ function renderUserManagementWorkspace(root) {
 
                     </div>
 
-                    <div class="aegis-integrity-boundary">
-                        <strong>ADMINISTRATIVE RESPONSIBILITY</strong>
-                        <p>
-                            Account changes remain in User Management;
-                            security controls remain in Security Centre;
-                            historical evidence remains in Audit Logs;
-                            system configuration remains in System Settings.
-                            This centre presents verified intelligence and
-                            investigation evidence, not duplicate controls.
-                        </p>
-                    </div>
-
-                </section>
-                <div class="aegis-footer-panel">
-                    <strong>IDENTITY MANAGEMENT</strong>
-                    <p>
-                        One centralized account directory.
-                        Controlled account lifecycle.
-                        No duplicate administration modules.
-                    </p>
-                </div>
+                    </section>
 
                 <div id="aegisNotice" class="aegis-notice"
                     role="status" aria-live="polite"></div>
@@ -3184,9 +3164,9 @@ function renderUserManagementWorkspace(root) {
             const roleTitles = {
                 ICT_ADMIN: "System Admin Role",
                 SCHOOL_ADMIN: "School Admin Role",
-                TEACHER: "Staff role",
+                TEACHER: "Staff Role",
                 LEARNER: "Learners Role",
-                PARENT: "Parent/Guardian Role"
+                PARENT: "Guardian Role"
             };
 
             Object.entries(roleCounts).forEach(([role, count]) => {
@@ -3480,7 +3460,7 @@ function renderUserManagementWorkspace(root) {
             if (!integrityDetail.hidden) {
                 integrityStatus(
                     error.message,
-                    "UNABLE TO RETRIEVE EVIDENCE"
+                    "UNABLE TO RETRIEVE DATA"
                 );
 
                 integrityDetailList.innerHTML = "";
