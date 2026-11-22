@@ -3346,10 +3346,194 @@ function renderUserManagementWorkspace(root) {
     }
 
 
+    function getIntegrityNotificationRecords(data, view) {
+
+        const roles = data.roleCompliance || {};
+        const access = data.systemAccess || {};
+
+        if (view === "roles") {
+            return [
+                ...integrityArray(roles.invalidAccounts),
+                ...integrityArray(roles.duplicateUsernames),
+                ...integrityArray(roles.invalidStatusAccounts),
+                ...integrityArray(roles.roleChangeRecords)
+            ];
+        }
+
+        if (view === "access") {
+            return integrityArray(access.accessRecords);
+        }
+
+        if (view === "alerts") {
+            return integrityArray(data.securityAlerts);
+        }
+
+        if (view === "incidents") {
+
+            const accessPattern =
+                /LOGIN|ACCESS|SESSION|LOGOUT/i;
+
+            const seenEvents = new Set();
+
+            return integrityArray(data.recentEvents).filter(record => {
+
+                const eventType =
+                    String(record.eventType || "");
+
+                const action =
+                    String(record.action || "");
+
+                const category =
+                    String(record.category || "");
+
+                if (
+                    accessPattern.test(eventType) ||
+                    accessPattern.test(action) ||
+                    accessPattern.test(category)
+                ) {
+                    return false;
+                }
+
+                const fingerprint = JSON.stringify(record);
+
+                if (seenEvents.has(fingerprint)) return false;
+
+                seenEvents.add(fingerprint);
+                return true;
+            });
+        }
+
+        return [];
+    }
+
+
+    function integrityNotificationKey(view) {
+
+        const username =
+            sessionStorage.getItem("username") ||
+            sessionStorage.getItem("loggedUser") ||
+            "ict-admin";
+
+        return "gsu_aegis_read_" + username + "_" + view;
+    }
+
+
+    function updateIntegrityNotifications(data) {
+
+        Object.keys(integritySections).forEach(view => {
+
+            const records =
+                getIntegrityNotificationRecords(data, view);
+
+            const storageKey =
+                integrityNotificationKey(view);
+
+            const currentKeys =
+                records.map(record => JSON.stringify(record));
+
+            let readRecords = [];
+
+            try {
+
+                const stored =
+                    localStorage.getItem(storageKey);
+
+                if (stored === null) {
+
+                    // Existing records become the initial baseline.
+                    localStorage.setItem(
+                        storageKey,
+                        JSON.stringify(currentKeys)
+                    );
+
+                    readRecords = currentKeys;
+
+                } else {
+
+                    readRecords = JSON.parse(stored);
+
+                    if (!Array.isArray(readRecords)) {
+                        readRecords = currentKeys;
+                    }
+                }
+
+            } catch (error) {
+                readRecords = currentKeys;
+            }
+
+            const readSet = new Set(readRecords);
+
+            const unreadCount = currentKeys.filter(
+                key => !readSet.has(key)
+            ).length;
+
+            const card = root.querySelector(
+                `[data-integrity="${view}"]`
+            );
+
+            if (!card) return;
+
+            const icon = card.querySelector(
+                ".aegis-integrity-card-icon"
+            );
+
+            if (!icon) return;
+
+            let badge = icon.querySelector(
+                ".aegis-integrity-unread"
+            );
+
+            if (!badge) {
+
+                badge = document.createElement("span");
+
+                badge.className = "aegis-integrity-unread";
+
+                badge.setAttribute("aria-live", "polite");
+
+                icon.appendChild(badge);
+            }
+
+            badge.textContent =
+                unreadCount > 99 ? "99+" : unreadCount;
+
+            badge.hidden = unreadCount === 0;
+        });
+    }
+
+
+    function markIntegrityCategoryRead(view) {
+
+        if (!integrityData) return;
+
+        const records =
+            getIntegrityNotificationRecords(integrityData, view);
+
+        const currentKeys =
+            records.map(record => JSON.stringify(record));
+
+        try {
+
+            localStorage.setItem(
+                integrityNotificationKey(view),
+                JSON.stringify(currentKeys)
+            );
+
+        } catch (error) {
+
+            console.warn(
+                "Unable to save notification read status.",
+                error
+            );
+        }
+
+        updateIntegrityNotifications(integrityData);
+    }
+
+
     function updateIntegrityCounters(data) {
 
         const summary = data.summary || {};
-        const roles = data.roleCompliance || {};
 
         const roleCount =
             integrityCount(summary.roleChangeEvents) +
@@ -3367,26 +3551,12 @@ function renderUserManagementWorkspace(root) {
             integrityCount(summary.securityAlertEvents);
 
         const investigationEvents =
-            integrityArray(data.recentEvents).filter(record => {
-
-                const eventType =
-                    String(record.eventType || "");
-
-                const action =
-                    String(record.action || "");
-
-                const category =
-                    String(record.category || "");
-
-                return !(
-                    /LOGIN|ACCESS|SESSION|LOGOUT/i.test(eventType) ||
-                    /LOGIN|ACCESS|SESSION|LOGOUT/i.test(action) ||
-                    /LOGIN|ACCESS|SESSION|LOGOUT/i.test(category)
-                );
-            });
+            getIntegrityNotificationRecords(data, "incidents");
 
         root.querySelector("#aegisEventCount").textContent =
             investigationEvents.length;
+
+        updateIntegrityNotifications(data);
     }
 
 
@@ -3484,7 +3654,12 @@ function renderUserManagementWorkspace(root) {
     root.querySelectorAll("[data-integrity]").forEach(button => {
 
         button.addEventListener("click", () => {
-            renderIntegrityView(button.dataset.integrity);
+
+            const view = button.dataset.integrity;
+
+            markIntegrityCategoryRead(view);
+
+            renderIntegrityView(view);
         });
 
     });
