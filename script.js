@@ -3346,8 +3346,27 @@ function renderUserManagementWorkspace(root) {
         root.querySelector("#aegisAlertCount").textContent =
             integrityCount(summary.securityAlertEvents);
 
+        const investigationEvents =
+            integrityArray(data.recentEvents).filter(record => {
+
+                const eventType =
+                    String(record.eventType || "");
+
+                const action =
+                    String(record.action || "");
+
+                const category =
+                    String(record.category || "");
+
+                return !(
+                    /LOGIN|ACCESS|SESSION|LOGOUT/i.test(eventType) ||
+                    /LOGIN|ACCESS|SESSION|LOGOUT/i.test(action) ||
+                    /LOGIN|ACCESS|SESSION|LOGOUT/i.test(category)
+                );
+            });
+
         root.querySelector("#aegisEventCount").textContent =
-            integrityArray(data.recentEvents).length;
+            investigationEvents.length;
     }
 
 
