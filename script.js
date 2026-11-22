@@ -2958,19 +2958,18 @@ function renderUserManagementWorkspace(root) {
         if (typeof record !== "object" || record === null) {
             return `
                 <article class="aegis-integrity-detail-item">
-                    <span>◇</span>
                     <strong>${escapeHTML(label)}</strong>
-                    <small>${escapeHTML(integrityValue(record))}</small>
+                    <p>${escapeHTML(integrityValue(record))}</p>
                 </article>
             `;
         }
 
-        const fields = Object.entries(record)
-            .filter(([key, value]) =>
+        const fields = Object.entries(record).filter(
+            ([key, value]) =>
                 value !== undefined &&
                 value !== null &&
                 value !== ""
-            );
+        );
 
         const findField = keys => {
             const entry = fields.find(([key]) =>
@@ -2981,40 +2980,26 @@ function renderUserManagementWorkspace(root) {
         };
 
         const eventType = findField([
-            "recordtype",
-            "eventtype",
-            "type",
-            "action"
+            "recordtype", "eventtype", "type", "action"
         ]);
 
         const actor = findField([
-            "administrator",
-            "username",
-            "actor",
-            "performedby",
-            "initiatedby"
+            "administrator", "username", "actor",
+            "performedby", "initiatedby"
         ]);
 
         const affectedAccount = findField([
-            "affectedaccount",
-            "targetusername",
-            "targetuser",
-            "account",
-            "affecteduser"
+            "affectedaccount", "targetusername",
+            "targetuser", "account", "affecteduser"
         ]);
 
         const timestamp = findField([
-            "timestamp",
-            "createdat",
-            "datetime",
-            "eventtime",
-            "time"
+            "timestamp", "createdat", "datetime",
+            "eventtime", "time"
         ]);
 
         const outcome = findField([
-            "result",
-            "status",
-            "outcome"
+            "result", "status", "outcome"
         ]);
 
         const heading =
@@ -3024,67 +3009,50 @@ function renderUserManagementWorkspace(root) {
             record.administrator ||
             label;
 
-        const excludedKeys = [
-            "recordtype", "eventtype", "type", "action",
-            "administrator", "username", "actor",
-            "performedby", "initiatedby",
-            "affectedaccount", "targetusername",
-            "targetuser", "account", "affecteduser",
-            "timestamp", "createdat", "datetime",
-            "eventtime", "time", "result",
-            "status", "outcome"
-        ];
-
-        const evidenceFields = fields.filter(
-            ([key]) => !excludedKeys.includes(key.toLowerCase())
-        );
-
         const metadata = [
-            actor !== null
-                ? "Actor: " + integrityValue(actor)
-                : null,
-
-            affectedAccount !== null
-                ? "Affected account: " + integrityValue(affectedAccount)
-                : null,
-
-            timestamp !== null
-                ? "Time: " + integrityTimestamp(timestamp)
-                : null,
-
-            outcome !== null
-                ? "Outcome: " + integrityValue(outcome)
-                : null
-        ].filter(Boolean);
+            ["Actor", actor],
+            ["Affected account", affectedAccount],
+            ["Time", timestamp],
+            ["Outcome", outcome]
+        ].filter(([, value]) => value !== null);
 
         return `
             <article class="aegis-integrity-detail-item">
 
-                <span>◇</span>
+                <div class="aegis-evidence-heading">
+                    <span>◇</span>
+                    <strong>${escapeHTML(heading)}</strong>
+                </div>
 
-                <strong>${escapeHTML(heading)}</strong>
-
-                <small>
+                <div class="aegis-evidence-meta">
                     ${metadata.length
-                        ? metadata.map(item =>
-                            `<span>${escapeHTML(item)}</span>`
-                          ).join(" · ")
-                        : "Additional event information is available below."}
-                </small>
+                        ? metadata.map(([key, value]) => `
+                            <div>
+                                <span>${escapeHTML(key)}</span>
+                                <strong>${escapeHTML(
+                                    key === "Time"
+                                        ? integrityTimestamp(value)
+                                        : integrityValue(value)
+                                )}</strong>
+                            </div>
+                        `).join("")
+                        : `<p>Additional recorded evidence is available below.</p>`
+                    }
+                </div>
 
-                <details>
-                    <summary>View evidence</summary>
+                <details class="aegis-evidence-details">
+                    <summary>View full evidence</summary>
 
-                    <div>
+                    <div class="aegis-evidence-fields">
                         ${fields.map(([key, value]) => `
-                            <p>
-                                <strong>${escapeHTML(key)}:</strong>
-                                ${escapeHTML(
+                            <div>
+                                <span>${escapeHTML(key)}</span>
+                                <strong>${escapeHTML(
                                     /timestamp|createdat|datetime|eventtime|^time$/i.test(key)
                                         ? integrityTimestamp(value)
                                         : integrityValue(value)
-                                )}
-                            </p>
+                                )}</strong>
+                            </div>
                         `).join("")}
                     </div>
                 </details>
@@ -3241,50 +3209,35 @@ function renderUserManagementWorkspace(root) {
             const accessRecords =
                 integrityArray(access.accessEvents);
 
-            records.push({
-                recordType: "Successful logins",
-                count: integrityCount(summary.successfulLogins)
-            });
+            const coverage =
+                renderIntegrityCoverage(data.monitoringCoverage);
 
-            records.push({
-                recordType: "Failed logins",
-                count: integrityCount(summary.failedLogins)
-            });
+            integrityStatus(
+                "ACCESS SUMMARY  |  Successful logins: " +
+                integrityCount(summary.successfulLogins) +
+                "  |  Failed logins: " +
+                integrityCount(summary.failedLogins) +
+                "  |  Access events: " +
+                integrityCount(summary.accessEvents) +
+                "  |  Logout events: " +
+                integrityCount(summary.logoutEvents)
+            );
 
-            records.push({
-                recordType: "Recorded access events",
-                count: integrityCount(summary.accessEvents)
-            });
-
-            records.push({
-                recordType: "Logout events",
-                count: integrityCount(summary.logoutEvents)
+            coverage.forEach(record => {
+                records.push({
+                    recordType: "MONITORING COVERAGE",
+                    ...record
+                });
             });
 
             accessRecords.forEach(record => {
                 records.push(record);
             });
 
-            renderIntegrityCoverage(data.monitoringCoverage)
-                .forEach(record => {
-                    records.push({
-                        recordType: "Monitoring coverage",
-                        ...record
-                    });
-                });
-
-            integrityStatus(
-                "Access monitoring only. Showing authentication, " +
-                "access and session evidence returned by the backend. " +
-                "General administrative audit events are shown under " +
-                "Event Investigation."
-            );
-
             renderIntegrityRecords(
                 records,
-                "No dedicated access records were returned. " +
-                "The summary and monitoring coverage above are the " +
-                "only available access indicators."
+                "No individual access records are available. " +
+                "The summary above reflects the backend totals."
             );
         }
 
