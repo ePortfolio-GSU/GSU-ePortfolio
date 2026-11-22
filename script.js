@@ -3736,6 +3736,38 @@ function renderUserManagementWorkspace(root) {
 
 
     loadUsers();
+
+    if (window.aegisPresenceRefreshTimer) {
+        clearInterval(window.aegisPresenceRefreshTimer);
+    }
+
+    window.aegisPresenceRefreshTimer = setInterval(async () => {
+
+        if (!root.isConnected) {
+            clearInterval(window.aegisPresenceRefreshTimer);
+            window.aegisPresenceRefreshTimer = null;
+            return;
+        }
+
+        try {
+            const result = await apiRequest("getManagedUsers");
+
+            managedUsers = Array.isArray(result.users)
+                ? result.users
+                : [];
+
+            updateCounters();
+            renderDirectory();
+
+        } catch (error) {
+            console.warn(
+                "Online presence refresh failed:",
+                error
+            );
+        }
+
+    }, 30000);
+
     loadAccountIntegrity();
 
 }
