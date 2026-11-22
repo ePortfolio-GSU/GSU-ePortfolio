@@ -2632,9 +2632,8 @@ function renderUserManagementWorkspace(root) {
             </table>
         </div>
     `;
-}
-    async function loadUsers() {
 
+    async function loadUsers() {
         directory.innerHTML = `
             <div class="aegis-loading">
                 Loading account records...
