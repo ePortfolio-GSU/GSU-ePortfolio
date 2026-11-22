@@ -4675,6 +4675,7 @@ body:has(.login-card) footer {
 }
 
 .aegis-user-avatar {
+    position: relative;
     display: grid;
     place-items: center;
     flex: 0 0 39px;
@@ -4693,6 +4694,18 @@ body:has(.login-card) footer {
 .aegis-user-avatar svg {
     width: 22px;
     height: 22px;
+}
+
+.aegis-online-dot {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #16C75A;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 0 0 1px rgba(22, 199, 90, .15);
 }
 
 .aegis-user-details {
