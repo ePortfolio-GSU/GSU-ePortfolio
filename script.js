@@ -2280,12 +2280,6 @@ function renderUserManagementWorkspace(root) {
                                 from the existing security audit service.
                             </p>
                         </div>
-
-                        <span class="aegis-monitor-state">
-                            BACKEND LINKED
-                        </span>
-                    </div>
-
                     <div class="aegis-integrity-notice">
                         <span>●</span>
 
