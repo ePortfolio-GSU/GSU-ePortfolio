@@ -1249,6 +1249,36 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+/************************************************
+ * GSU AEGIS — LIVE SESSION PRESENCE
+ ************************************************/
+
+let presenceHeartbeatTimer = null;
+
+async function sendPresenceHeartbeat() {
+    try {
+        const result = await userManagementRequest("presence");
+        return result.success === true;
+
+    } catch (error) {
+        console.warn("Presence heartbeat failed:", error);
+        return false;
+    }
+}
+
+function startSessionPresenceHeartbeat() {
+    if (presenceHeartbeatTimer) {
+        clearInterval(presenceHeartbeatTimer);
+    }
+
+    sendPresenceHeartbeat();
+
+    presenceHeartbeatTimer = setInterval(function () {
+        sendPresenceHeartbeat();
+    }, 60000);
+}
+
+
 // Check session and load the correct role
 function initializeDashboard() {
     const user = sessionStorage.getItem("loggedUser");
@@ -1266,9 +1296,10 @@ function initializeDashboard() {
         currentUser.textContent = "Hi, " + user;
     }
 
+    startSessionPresenceHeartbeat();
+
     loadDashboard(role);
 }
-
 
 // Generate the shared dashboard for the assigned role
 function loadDashboard(role) {
