@@ -2565,8 +2565,33 @@ function renderUserManagementWorkspace(root) {
                     ${filtered.map(user => `
                         <tr>
                             <td class="aegis-identity-cell">
-                                <strong>${escapeHTML(user.fullName)}</strong>
-                                <small>${escapeHTML(user.username)}</small>
+                                <div class="aegis-user-identity">
+
+                                    <span class="aegis-user-avatar"
+                                        aria-hidden="true">
+                                        <svg viewBox="0 0 24 24"
+                                            fill="none"
+                                            stroke="currentColor"
+                                            stroke-width="1.8"
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round">
+
+                                            <circle cx="12" cy="8"
+                                                r="3.5"/>
+
+                                            <path d="M5 20c.7-3.5
+                                                3-5.2 7-5.2s6.3
+                                                1.7 7 5.2"/>
+
+                                        </svg>
+                                    </span>
+
+                                    <span class="aegis-user-details">
+                                        <strong>${escapeHTML(user.fullName)}</strong>
+                                        <small>${escapeHTML(user.username)}</small>
+                                    </span>
+
+                                </div>
                             </td>
 
                             <td>${escapeHTML(user.role)}</td>
