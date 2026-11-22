@@ -3385,3 +3385,5 @@ function renderUserManagementWorkspace(root) {
 
     loadUsers();
     loadAccountIntegrity();
+
+}
