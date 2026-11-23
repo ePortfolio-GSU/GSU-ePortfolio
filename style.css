@@ -1983,6 +1983,53 @@ body *::after {
 
 .dashboard-page .dashboard-main {
     overflow-wrap: anywhere;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+/* GSU DASHBOARD — INDEPENDENT MAIN CONTENT SCROLL */
+
+body.dashboard-page {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+}
+
+.dashboard-page .dashboard-wrapper {
+    height: 100vh;
+    height: 100dvh;
+    min-height: 0;
+    grid-template-rows: 70px minmax(0, 1fr) auto;
+}
+
+.dashboard-page .dashboard-header {
+    grid-row: 1;
+}
+
+.dashboard-page .mobile-menu-strip {
+    grid-row: 2;
+    min-height: 0;
+}
+
+.dashboard-page .dashboard-main {
+    grid-row: 2;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.dashboard-page .dashboard-footer {
+    grid-row: 3;
+}
+
+@media (max-width: 768px) {
+    .dashboard-page .dashboard-wrapper {
+        grid-template-rows: auto minmax(0, 1fr) auto;
+    }
 }
 
 .dashboard-page .dashboard-content {
