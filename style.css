@@ -1988,7 +1988,7 @@ body *::after {
     overscroll-behavior: contain;
 }
 
-/* GSU DASHBOARD — FIXED HEADER, NAVIGATION AND FOOTER */
+/* GSU DASHBOARD — INDEPENDENT MAIN CONTENT SCROLL */
 
 body.dashboard-page {
     height: 100vh;
@@ -1999,90 +1999,36 @@ body.dashboard-page {
 }
 
 .dashboard-page .dashboard-wrapper {
-    display: grid;
-    width: 100%;
     height: 100vh;
     height: 100dvh;
     min-height: 0;
-    grid-template-rows: auto auto minmax(0, 1fr) auto;
-    overflow: hidden;
+    grid-template-rows: 70px minmax(0, 1fr) auto;
 }
 
 .dashboard-page .dashboard-header {
     grid-row: 1;
-    position: relative;
-    top: auto;
-    z-index: 1000;
 }
 
 .dashboard-page .mobile-menu-strip {
     grid-row: 2;
-    position: relative;
-    z-index: 900;
     min-height: 0;
 }
 
 .dashboard-page .dashboard-main {
-    grid-row: 3;
+    grid-row: 2;
     min-height: 0;
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior: contain;
-    scrollbar-width: thin;
 }
 
 .dashboard-page .dashboard-footer {
-    grid-row: 4;
-    position: relative;
-    z-index: 1000;
-    margin: 0;
-    padding: 11px 16px;
-    text-align: center;
-    color: #FFFFFF;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 1.6;
-    background:
-        linear-gradient(
-            125deg,
-            #071A38 0%,
-            #0B57D0 48%,
-            #800000 100%
-        );
-    border-top: 2px solid #45D6E8;
-    box-shadow:
-        0 -3px 12px rgba(0, 0, 0, 0.25),
-        inset 0 2px 5px rgba(255, 255, 255, 0.18),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.25);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
-}
-
-.dashboard-page .dashboard-footer > div {
-    margin: 0;
-    color: #FFFFFF;
+    grid-row: 3;
 }
 
 @media (max-width: 768px) {
     .dashboard-page .dashboard-wrapper {
-        grid-template-rows: auto auto minmax(0, 1fr) auto;
-    }
-
-    .dashboard-page .dashboard-header {
-        grid-row: 1;
-    }
-
-    .dashboard-page .mobile-menu-strip {
-        grid-row: 2;
-    }
-
-    .dashboard-page .dashboard-main {
-        grid-row: 3;
-    }
-
-    .dashboard-page .dashboard-footer {
-        grid-row: 4;
-        padding: 9px 8px;
-        font-size: 11px;
+        grid-template-rows: auto minmax(0, 1fr) auto;
     }
 }
 
