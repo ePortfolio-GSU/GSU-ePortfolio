@@ -1698,82 +1698,122 @@ height: auto;
 }
 
 }
-/* GSU DASHBOARD — UNIFIED MAROON NAVIGATION PANEL */
+/* GSU AEGIS — PROFESSIONAL THREE-COLOUR DIGITAL NAVIGATION */
 
 .dashboard-page .mobile-menu-strip {
-position: relative;
-grid-column: 1;
-grid-row: 2;
-align-items: stretch;
-width: 64px;
-padding: 8px 4px;
-background: #5B1826;
-z-index: 21;
+    position: relative;
+    grid-column: 1;
+    grid-row: 2;
+    align-items: stretch;
+    width: 64px;
+    padding: 8px 4px;
+    background: linear-gradient(
+        160deg,
+        #4A252F 0%,
+        #5B1826 65%,
+        #303944 100%
+    );
+    border-right: 1px solid rgba(56, 189, 248, .55);
+    box-shadow:
+        inset -2px 0 8px rgba(0, 0, 0, .2),
+        3px 0 12px rgba(48, 57, 68, .18);
+    z-index: 21;
 }
 
 .dashboard-page #menuToggle {
-position: relative;
-z-index: 23;
-background: #5B1826;
+    position: relative;
+    z-index: 23;
+    background: linear-gradient(145deg, #5B1826, #303944);
+    color: #FFFFFF;
+    border: 1px solid #38BDF8;
+    border-radius: 8px;
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, .25),
+        inset 0 1px 2px rgba(255, 255, 255, .12);
 }
 
 .dashboard-page .sidebar-quick-icons {
-position: relative;
-z-index: 22;
+    position: relative;
+    z-index: 22;
 }
 
+/* Sidebar main panel */
 .dashboard-page .dashboard-sidebar {
-position: absolute;
-top: 70px;
-bottom: auto;
-left: 64px;
-width: 250px;
-height: auto;
-max-height: none;
-margin: 0;
-padding: 0;
-overflow: visible;
-background: #5B1826;
-border: 0;
-border-radius: 0;
-box-shadow: none;
-transform: translateX(-110%);
-visibility: hidden;
-pointer-events: none;
-z-index: 20;
+    position: absolute;
+    top: 70px;
+    bottom: auto;
+    left: 64px;
+    width: 250px;
+    height: auto;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    background: linear-gradient(
+        145deg,
+        #4A252F,
+        #5B1826 60%,
+        #303944
+    );
+    border: 1px solid rgba(56, 189, 248, .5);
+    border-left: 3px solid #38BDF8;
+    border-radius: 0 0 12px 0;
+    box-shadow:
+        8px 9px 22px rgba(48, 57, 68, .3),
+        inset 0 1px 0 rgba(255, 255, 255, .1);
+    transform: translateX(-110%);
+    visibility: hidden;
+    pointer-events: none;
+    z-index: 20;
 }
 
 .dashboard-page .dashboard-sidebar.active {
-transform: translateX(0);
-visibility: visible;
-pointer-events: auto;
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .dashboard-page .dashboard-sidebar ul {
-margin: 0;
-padding: 8px 0 0;
-background: #5B1826;
-list-style: none;
+    margin: 0;
+    padding: 8px 0 0;
+    background: transparent;
+    list-style: none;
 }
 
 .dashboard-page .dashboard-sidebar li,
 .dashboard-page .dashboard-sidebar a {
-box-sizing: border-box;
-width: 100%;
-min-height: 42px;
-margin: 0;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 44px;
+    margin: 0;
 }
 
 .dashboard-page .dashboard-sidebar a {
-display: flex;
-align-items: center;
-padding: 10px 14px;
-border-left: 4px solid transparent;
-background: #5B1826;
-color: #fff;
-text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 14px;
+    border-left: 4px solid transparent;
+    border-bottom: 1px solid rgba(138, 146, 155, .16);
+    background: transparent;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        padding-left .2s ease;
 }
 
+/* Navigation icon accents */
+.dashboard-page .dashboard-sidebar a > i,
+.dashboard-page .dashboard-sidebar a > svg,
+.dashboard-page .dashboard-sidebar a > .icon {
+    color: #38BDF8;
+}
+
+/* Close control */
 .dashboard-page .dashboard-sidebar a.sidebar-close-link {
     box-sizing: border-box;
     display: flex;
@@ -1783,47 +1823,84 @@ text-decoration: none;
     min-height: 42px;
     margin: 0;
     padding: 6px 2px;
-    border: 1px solid rgba(255,255,255,.55);
-    border-radius: 6px;
-    background: #5B1826;
-    color: #fff;
+    border: 1px solid rgba(56, 189, 248, .5);
+    border-radius: 7px;
+    background: #303944;
+    color: #FFFFFF;
     font-size: 11px;
     font-weight: 700;
     text-align: center;
 }
 
+/* Hover and active states */
 .dashboard-page .dashboard-sidebar a:hover,
 .dashboard-page .dashboard-sidebar a.active {
-background: #762B3A;
-border-left-color: #FFD54F;
+    background: linear-gradient(
+        100deg,
+        rgba(56, 189, 248, .19),
+        rgba(138, 146, 155, .13)
+    );
+    border-left-color: #38BDF8;
+    color: #FFFFFF;
+    padding-left: 17px;
 }
 
-.dashboard-page .dashboard-support {
-position: static;
-display: flex;
-justify-content: flex-end;
-width: 100%;
-margin: 16px 0;
-padding: 0 18px;
-box-sizing: border-box;
+.dashboard-page .dashboard-sidebar a:hover > i,
+.dashboard-page .dashboard-sidebar a.active > i,
+.dashboard-page .dashboard-sidebar a:hover > svg,
+.dashboard-page .dashboard-sidebar a.active > svg {
+    color: #38BDF8;
 }
 
+/* Strip quick-action controls */
+.dashboard-page .sidebar-quick-icons button {
+    border: 1px solid rgba(56, 189, 248, .65);
+    border-radius: 8px;
+    background: linear-gradient(145deg, #5B1826, #303944);
+    color: #FFFFFF;
+    box-shadow:
+        0 3px 7px rgba(0, 0, 0, .2),
+        inset 0 1px 2px rgba(255, 255, 255, .1);
+    transition: background .2s ease, border-color .2s ease;
+}
+
+.dashboard-page .sidebar-quick-icons button:hover {
+    background: #4A252F;
+    border-color: #38BDF8;
+}
+
+/* Keyboard accessibility */
+.dashboard-page .dashboard-sidebar a:focus-visible,
+.dashboard-page #menuToggle:focus-visible,
+.dashboard-page .sidebar-quick-icons button:focus-visible {
+    outline: 2px solid #38BDF8;
+    outline-offset: 3px;
+}
+
+/* Phone layout — preserve existing dimensions */
 @media (max-width: 768px) {
-.dashboard-page .mobile-menu-strip {
-width: 52px;
-padding: 8px 3px;
+    .dashboard-page .mobile-menu-strip {
+        width: 52px;
+        padding: 8px 3px;
+    }
+
+    .dashboard-page .dashboard-sidebar {
+        top: 66px;
+        left: 52px;
+        width: min(250px, calc(100vw - 60px));
+    }
+
+    .dashboard-page .dashboard-support {
+        padding: 0 10px;
+    }
 }
 
-.dashboard-page .dashboard-sidebar {  
-    top: 66px;  
-    left: 52px;  
-    width: min(250px, calc(100vw - 60px));  
-}  
-
-.dashboard-page .dashboard-support {  
-    padding: 0 10px;  
-}
-
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-page .dashboard-sidebar a,
+    .dashboard-page .sidebar-quick-icons button {
+        transition: none;
+    }
 }
 
 /* GSU FIX — SIDEBAR AND MAROON STRIP SHARE ONE HEIGHT */
@@ -2322,154 +2399,12 @@ body.dashboard-page .dashboard-footer > div {
     justify-content: center !important;
     box-sizing: border-box !important;
 }
-/* GSU AEGIS — PROFESSIONAL DIGITAL NAVIGATION THEME */
-
-/* Vertical navigation strip */
-.dashboard-page .mobile-menu-strip {
-    background:
-        linear-gradient(
-            180deg,
-            #800000 0%,
-            #172F63 52%,
-            #0B57D0 100%
-        ) !important;
-    border-right: 1px solid rgba(135, 206, 235, 0.4);
-    box-shadow:
-        inset -3px 0 8px rgba(0, 0, 0, 0.18),
-        3px 0 14px rgba(7, 26, 56, 0.18);
-}
-
-/* Menu control */
-.dashboard-page #menuToggle {
-    color: #FFFFFF !important;
-    background:
-        linear-gradient(145deg, #0B57D0, #17366F) !important;
-    border: 1px solid rgba(135, 206, 235, 0.8) !important;
-    border-radius: 9px !important;
-    box-shadow:
-        0 4px 10px rgba(0, 0, 0, 0.25),
-        inset 0 1px 2px rgba(255, 255, 255, 0.2);
-    font-weight: 800;
-    transition: transform .2s ease, box-shadow .2s ease;
-}
-
-.dashboard-page #menuToggle:active {
-    transform: translateY(1px);
-}
-
-/* Sidebar navigation card */
-.dashboard-page .dashboard-sidebar {
-    background:
-        linear-gradient(
-            155deg,
-            #172F63 0%,
-            #10264E 48%,
-            #4A1022 100%
-        ) !important;
-    border: 1px solid rgba(135, 206, 235, 0.38);
-    border-left: 3px solid #87CEEB;
-    border-radius: 0 14px 14px 0;
-    box-shadow:
-        8px 0 25px rgba(5, 18, 43, 0.32),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
-    scrollbar-width: thin;
-    scrollbar-color: #87CEEB #172F63;
-}
-
-/* Navigation rows */
-.dashboard-page .dashboard-sidebar a {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-height: 46px;
-    margin: 3px 8px;
-    padding: 9px 12px !important;
-    border: 1px solid transparent !important;
-    border-left: 3px solid transparent !important;
-    border-radius: 8px;
-    color: #F4F8FF !important;
-    background: transparent;
-    font-size: 13px !important;
-    font-weight: 600;
-    line-height: 1.45 !important;
-    transition:
-        background .2s ease,
-        border-color .2s ease,
-        transform .2s ease,
-        box-shadow .2s ease;
-}
-
-/* Navigation icons */
-.dashboard-page #sidebarMenu a > :first-child {
-    display: inline-flex !important;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 30px;
-    width: 30px;
-    height: 30px;
-    padding: 4px !important;
-    border: 1px solid rgba(135, 206, 235, 0.65) !important;
-    border-radius: 8px !important;
-    background: rgba(11, 87, 208, 0.3);
-    color: #87CEEB;
-    font-size: 15px;
-}
-
-/* Hover and selected navigation */
-.dashboard-page .dashboard-sidebar a:hover,
-.dashboard-page .dashboard-sidebar a.active {
-    background:
-        linear-gradient(
-            100deg,
-            rgba(11, 87, 208, 0.55),
-            rgba(128, 0, 0, 0.35)
-        ) !important;
-    border-color: rgba(135, 206, 235, 0.3) !important;
-    border-left: 3px solid #87CEEB !important;
-    color: #FFFFFF !important;
-    box-shadow:
-        inset 0 1px 0 rgba(255, 255, 255, 0.1),
-        0 3px 9px rgba(0, 0, 0, 0.16);
-    transform: translateX(2px);
-}
-
-.dashboard-page .dashboard-sidebar a:hover > :first-child,
-.dashboard-page .dashboard-sidebar a.active > :first-child {
-    background: #0B57D0;
-    border-color: #87CEEB !important;
-    color: #FFFFFF;
-}
-
-/* Side-strip quick icons: preserve existing behaviour */
+/* GSU DASHBOARD — SIDE-STRIP ICON VISIBILITY */
 .dashboard-page .sidebar-quick-icons {
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
     pointer-events: none !important;
-}
-
-.dashboard-page .sidebar-quick-icons button {
-    border: 1px solid rgba(135, 206, 235, 0.65) !important;
-    border-radius: 8px !important;
-    background: rgba(11, 87, 208, 0.35) !important;
-    color: #FFFFFF !important;
-    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.12);
-}
-
-/* Accessible keyboard focus */
-.dashboard-page .dashboard-sidebar a:focus-visible,
-.dashboard-page #menuToggle:focus-visible {
-    outline: 2px solid #87CEEB;
-    outline-offset: 3px;
-}
-
-/* Reduced-motion support */
-@media (prefers-reduced-motion: reduce) {
-    .dashboard-page .dashboard-sidebar a,
-    .dashboard-page #menuToggle {
-        transition: none;
-    }
 }
 /* Sign Up Section */
 
