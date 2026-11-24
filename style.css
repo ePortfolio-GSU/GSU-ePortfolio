@@ -2267,20 +2267,23 @@ body.dashboard-page .dashboard-footer {
     font-size: 12px;
     font-weight: 700;
     line-height: 1.6;
-    background: linear-gradient(
-        120deg,
-        #071A38 0%,
-        #0B57D0 48%,
-        #800000 100%
-    );
-    border-top: 2px solid #45D6E8;
-    box-shadow:
-        0 -3px 12px rgba(0, 0, 0, 0.25),
-        inset 0 2px 5px rgba(255, 255, 255, 0.18),
-        inset 0 -3px 8px rgba(0, 0, 0, 0.25);
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
-}
 
+    /* Three-colour 3D digital finish */
+    background: linear-gradient(
+        125deg,
+        #4A252F 0%,
+        #5B1826 38%,
+        #555D66 72%,
+        #8A929B 100%
+    );
+
+    border-top: 2px solid #87CEEB;
+    box-shadow:
+        0 -4px 14px rgba(48, 57, 68, .28),
+        inset 0 2px 5px rgba(255, 255, 255, .22),
+        inset 0 -3px 8px rgba(48, 57, 68, .4);
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .7);
+}
 body.dashboard-page .dashboard-footer > div {
     color: #FFFFFF;
     margin: 0;
