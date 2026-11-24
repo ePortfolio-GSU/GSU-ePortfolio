@@ -2322,12 +2322,154 @@ body.dashboard-page .dashboard-footer > div {
     justify-content: center !important;
     box-sizing: border-box !important;
 }
-/* GSU DASHBOARD — SIDE-STRIP ICON VISIBILITY */
+/* GSU AEGIS — PROFESSIONAL DIGITAL NAVIGATION THEME */
+
+/* Vertical navigation strip */
+.dashboard-page .mobile-menu-strip {
+    background:
+        linear-gradient(
+            180deg,
+            #800000 0%,
+            #172F63 52%,
+            #0B57D0 100%
+        ) !important;
+    border-right: 1px solid rgba(135, 206, 235, 0.4);
+    box-shadow:
+        inset -3px 0 8px rgba(0, 0, 0, 0.18),
+        3px 0 14px rgba(7, 26, 56, 0.18);
+}
+
+/* Menu control */
+.dashboard-page #menuToggle {
+    color: #FFFFFF !important;
+    background:
+        linear-gradient(145deg, #0B57D0, #17366F) !important;
+    border: 1px solid rgba(135, 206, 235, 0.8) !important;
+    border-radius: 9px !important;
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.25),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+    font-weight: 800;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.dashboard-page #menuToggle:active {
+    transform: translateY(1px);
+}
+
+/* Sidebar navigation card */
+.dashboard-page .dashboard-sidebar {
+    background:
+        linear-gradient(
+            155deg,
+            #172F63 0%,
+            #10264E 48%,
+            #4A1022 100%
+        ) !important;
+    border: 1px solid rgba(135, 206, 235, 0.38);
+    border-left: 3px solid #87CEEB;
+    border-radius: 0 14px 14px 0;
+    box-shadow:
+        8px 0 25px rgba(5, 18, 43, 0.32),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    scrollbar-width: thin;
+    scrollbar-color: #87CEEB #172F63;
+}
+
+/* Navigation rows */
+.dashboard-page .dashboard-sidebar a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 46px;
+    margin: 3px 8px;
+    padding: 9px 12px !important;
+    border: 1px solid transparent !important;
+    border-left: 3px solid transparent !important;
+    border-radius: 8px;
+    color: #F4F8FF !important;
+    background: transparent;
+    font-size: 13px !important;
+    font-weight: 600;
+    line-height: 1.45 !important;
+    transition:
+        background .2s ease,
+        border-color .2s ease,
+        transform .2s ease,
+        box-shadow .2s ease;
+}
+
+/* Navigation icons */
+.dashboard-page #sidebarMenu a > :first-child {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 30px;
+    width: 30px;
+    height: 30px;
+    padding: 4px !important;
+    border: 1px solid rgba(135, 206, 235, 0.65) !important;
+    border-radius: 8px !important;
+    background: rgba(11, 87, 208, 0.3);
+    color: #87CEEB;
+    font-size: 15px;
+}
+
+/* Hover and selected navigation */
+.dashboard-page .dashboard-sidebar a:hover,
+.dashboard-page .dashboard-sidebar a.active {
+    background:
+        linear-gradient(
+            100deg,
+            rgba(11, 87, 208, 0.55),
+            rgba(128, 0, 0, 0.35)
+        ) !important;
+    border-color: rgba(135, 206, 235, 0.3) !important;
+    border-left: 3px solid #87CEEB !important;
+    color: #FFFFFF !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 3px 9px rgba(0, 0, 0, 0.16);
+    transform: translateX(2px);
+}
+
+.dashboard-page .dashboard-sidebar a:hover > :first-child,
+.dashboard-page .dashboard-sidebar a.active > :first-child {
+    background: #0B57D0;
+    border-color: #87CEEB !important;
+    color: #FFFFFF;
+}
+
+/* Side-strip quick icons: preserve existing behaviour */
 .dashboard-page .sidebar-quick-icons {
     display: flex !important;
     visibility: visible !important;
     opacity: 1 !important;
     pointer-events: none !important;
+}
+
+.dashboard-page .sidebar-quick-icons button {
+    border: 1px solid rgba(135, 206, 235, 0.65) !important;
+    border-radius: 8px !important;
+    background: rgba(11, 87, 208, 0.35) !important;
+    color: #FFFFFF !important;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.12);
+}
+
+/* Accessible keyboard focus */
+.dashboard-page .dashboard-sidebar a:focus-visible,
+.dashboard-page #menuToggle:focus-visible {
+    outline: 2px solid #87CEEB;
+    outline-offset: 3px;
+}
+
+/* Reduced-motion support */
+@media (prefers-reduced-motion: reduce) {
+    .dashboard-page .dashboard-sidebar a,
+    .dashboard-page #menuToggle {
+        transition: none;
+    }
 }
 /* Sign Up Section */
 
