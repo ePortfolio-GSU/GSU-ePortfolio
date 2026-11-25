@@ -13,13 +13,16 @@
     let pullAllowed = false;
     let refreshStarted = false;
 
-    // Use the custom gesture instead of unreliable
-    // browser-native refresh on nested scroll areas.
-    document.documentElement.style.overscrollBehaviorY = "contain";
+    // Preserve each page's native scrolling behaviour.
+    // Pull-to-refresh detection does not require changing
+    // the page's overscroll settings.
+    document.documentElement.style.removeProperty(
+        "overscroll-behavior-y"
+    );
 
-    if (document.body) {
-        document.body.style.overscrollBehaviorY = "contain";
-    }
+    document.body.style.removeProperty(
+        "overscroll-behavior-y"
+    );
 
     function isInteractiveTarget(target) {
         return Boolean(target.closest(
