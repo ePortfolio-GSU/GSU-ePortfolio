@@ -1051,26 +1051,8 @@ function renderSessionProgressCard(role) {
     const config = ACADEMIC_SESSION_CONFIG;
     const progress = calculateSessionProgress();
 
-    const permanentTermLabels = [
-    "TERM I",
-    "TERM II",
-    "TERM III"
-];
-
-const termMarkup = permanentTermLabels.map((label, index) => {
-    const term = config.terms[index];
-
-    const status = term
-        ? getAcademicTermStatus(term)
-        : "DATES PENDING";
-
-    return `
-        <div class="session-term">
-            <span>${label}</span>
-            <strong>${status}</strong>
-        </div>
-    `;
-}).join("");
+    // Term-calendar data remains available for academic calculations.
+    // Individual term modules are no longer displayed on this card.
 
     host.innerHTML = `
         <section class="session-progress-card">
@@ -1128,10 +1110,6 @@ const termMarkup = permanentTermLabels.map((label, index) => {
     </div>
 
 </div>
-
-                <div class="session-term-timeline">
-                    ${termMarkup}
-                </div>
 
                 <div class="session-activities-row">
 
