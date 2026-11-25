@@ -1157,25 +1157,7 @@ const termMarkup = permanentTermLabels.map((label, index) => {
        class="session-ongoing-button">
         NAVIGATE
     </a>
-
-    <div class="session-upcoming-section">
-
-        <div class="session-activities-label">
-            UPCOMING
-        </div>
-
-        <strong id="sessionUpcomingTitle">
-            Loading...
-        </strong>
-
-        <span id="sessionUpcomingTime">
-            Loading...
-        </span>
-
-    </div>
-
-</div>
-
+    
                     <div class="session-upcoming-section">
 
                         <div class="session-activities-label">
