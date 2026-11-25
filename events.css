@@ -8,10 +8,309 @@
     color: #263238;
 }
 
-.calendar-page .dashboard-wrapper {
+/* GSU CALENDAR — INDEPENDENT RESPONSIVE LAYOUT */
+
+html {
+    height: auto;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+body.dashboard-page.calendar-page {
+    width: 100%;
+    height: auto;
     min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #F1F3F5;
+    color: #303944;
+}
+
+body.dashboard-page.calendar-page .dashboard-wrapper {
     display: flex;
     flex-direction: column;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    margin: 0;
+    overflow: visible;
+    grid-template-columns: none;
+    grid-template-rows: none;
+    grid-auto-flow: row;
+}
+
+/* Full-width calendar header */
+body.dashboard-page.calendar-page .dashboard-header {
+    grid-column: auto;
+    grid-row: auto;
+    flex: 0 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    background: linear-gradient(
+        110deg,
+        #4A252F 0%,
+        #5B1826 48%,
+        #555D66 100%
+    );
+    border-bottom: 3px solid #38BDF8;
+    box-shadow: 0 4px 14px rgba(48, 57, 68, .2);
+}
+
+.calendar-page .dashboard-brand strong,
+.calendar-page .dashboard-brand span {
+    color: #FFFFFF;
+}
+
+.calendar-page .calendar-user {
+    color: #FFFFFF;
+}
+
+.calendar-page #calendarBackButton {
+    border: 1px solid #38BDF8;
+    background: #FFFFFF;
+    color: #4A252F;
+    font-weight: 700;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, .12);
+}
+
+/* Calendar content — full available width */
+body.dashboard-page.calendar-page .calendar-main {
+    display: block;
+    flex: 1 0 auto;
+    grid-column: auto;
+    grid-row: auto;
+    width: min(1100px, 92%);
+    max-width: 1100px;
+    min-width: 0;
+    height: auto;
+    min-height: 0;
+    box-sizing: border-box;
+    margin: 28px auto;
+    padding: 0;
+    overflow: visible;
+}
+
+/* Page heading */
+.calendar-page .calendar-heading {
+    padding: 20px 22px;
+    border-left: 5px solid #38BDF8;
+    border-radius: 10px;
+    background: linear-gradient(
+        115deg,
+        #FFFFFF 0%,
+        #E8EBEE 100%
+    );
+    box-shadow: 0 4px 14px rgba(48, 57, 68, .09);
+}
+
+.calendar-page .calendar-heading h1 {
+    color: #4A252F;
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.calendar-page .calendar-heading p,
+.calendar-page .calendar-section-heading p {
+    color: #626B75;
+}
+
+/* Academic context */
+.calendar-page #calendarAcademicContext {
+    color: #5B1826;
+    font-weight: 800;
+}
+
+/* Main calendar cards */
+.calendar-page .calendar-section {
+    margin-bottom: 24px;
+    padding: 22px;
+    border: 1px solid #D4D9DE;
+    border-top: 4px solid #38BDF8;
+    border-radius: 13px;
+    background: linear-gradient(
+        145deg,
+        #FFFFFF 0%,
+        #F0F2F4 100%
+    );
+    box-shadow:
+        0 5px 16px rgba(48, 57, 68, .09),
+        inset 0 1px 0 #FFFFFF;
+}
+
+.calendar-page .calendar-section-heading h2 {
+    color: #4A252F;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+/* Administrative buttons */
+.calendar-page .calendar-admin-button {
+    border: 1px solid #38BDF8;
+    border-radius: 8px;
+    background: linear-gradient(
+        135deg,
+        #4A252F,
+        #5B1826
+    );
+    color: #FFFFFF;
+    box-shadow:
+        0 3px 8px rgba(48, 57, 68, .18),
+        inset 0 1px 0 rgba(255, 255, 255, .16);
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.calendar-page .calendar-admin-button:hover {
+    background: #5B1826;
+    box-shadow: 0 5px 12px rgba(48, 57, 68, .25);
+    transform: translateY(-1px);
+}
+
+/* Event navigation tabs */
+.calendar-page .event-tabs {
+    border-bottom: 2px solid #D4D9DE;
+}
+
+.calendar-page .event-tab {
+    border: 1px solid #B9C0C7;
+    background: #E8EBEE;
+    color: #4A252F;
+}
+
+.calendar-page .event-tab.active {
+    border-color: #38BDF8;
+    background: linear-gradient(
+        120deg,
+        #4A252F,
+        #5B1826
+    );
+    color: #FFFFFF;
+    box-shadow: 0 3px 8px rgba(48, 57, 68, .18);
+}
+
+/* Calendar and event records */
+.calendar-page .calendar-record {
+    border: 1px solid #D4D9DE;
+    border-left: 5px solid #38BDF8;
+    border-radius: 9px;
+    background: linear-gradient(
+        120deg,
+        #FFFFFF,
+        #F0F2F4
+    );
+    box-shadow: 0 3px 10px rgba(48, 57, 68, .07);
+}
+
+.calendar-page .calendar-record h3 {
+    color: #4A252F;
+    font-weight: 800;
+}
+
+.calendar-page .calendar-record p,
+.calendar-page .calendar-record-meta {
+    color: #555D66;
+}
+
+.calendar-page .calendar-record-actions button {
+    border: 1px solid #B9C0C7;
+    background: #FFFFFF;
+    color: #4A252F;
+}
+
+.calendar-page .calendar-record-actions button:hover {
+    border-color: #38BDF8;
+    background: #E8EBEE;
+}
+
+/* Status labels */
+.calendar-page .calendar-status {
+    background: #E2E5E8;
+    color: #4A252F;
+}
+
+.calendar-page .calendar-status.published {
+    background: #DDF3FC;
+    color: #24566D;
+}
+
+.calendar-page .calendar-status.draft {
+    background: #E8EBEE;
+    color: #555D66;
+}
+
+/* Full-width three-colour footer */
+body.dashboard-page.calendar-page .calendar-footer {
+    grid-column: auto;
+    grid-row: auto;
+    flex: 0 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: auto;
+    padding: 16px 12px;
+    border-top: 2px solid #38BDF8;
+    background: linear-gradient(
+        115deg,
+        #4A252F 0%,
+        #5B1826 45%,
+        #555D66 100%
+    );
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, .5);
+    box-shadow: 0 -4px 12px rgba(48, 57, 68, .16);
+}
+
+/* Responsive calendar layout */
+@media (max-width: 650px) {
+    body.dashboard-page.calendar-page .calendar-main {
+        width: 94%;
+        margin: 18px auto;
+        padding: 0;
+    }
+
+    .calendar-page .calendar-heading {
+        padding: 16px;
+    }
+
+    .calendar-page .calendar-section {
+        padding: 15px;
+        margin-bottom: 17px;
+    }
+
+    .calendar-page .calendar-section-heading {
+        gap: 12px;
+    }
+
+    .calendar-page .calendar-admin-button {
+        width: 100%;
+        min-height: 42px;
+    }
+
+    .calendar-page .calendar-record {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .calendar-page .calendar-record-meta {
+        gap: 7px 12px;
+    }
+
+    .calendar-page .calendar-footer {
+        padding: 13px 8px;
+        font-size: 11px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .calendar-page .calendar-admin-button {
+        transition: none;
+    }
 }
 
 
