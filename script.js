@@ -903,7 +903,7 @@ async function loadSessionEvents() {
                 source: "EVENT_ACTIVITY"
             }));
 
-        // Both calendar sources now feed the same dashboard timeline.
+        // Both calendar sources feed the same dashboard timeline.
         const allActivities = [
             ...calendarActivities,
             ...activityRecords
@@ -941,34 +941,96 @@ async function loadSessionEvents() {
         const ongoingActivity = ongoingActivities[0] || null;
         const upcomingActivity = upcomingActivities[0] || null;
 
+        // Format remaining time as days, hours, minutes and seconds.
+        function formatCountdown(targetTime) {
+            const remaining = Math.max(0, targetTime - Date.now());
+
+            const days = Math.floor(remaining / 86400000);
+            const hours = Math.floor((remaining % 86400000) / 3600000);
+            const minutes = Math.floor((remaining % 3600000) / 60000);
+            const seconds = Math.floor((remaining % 60000) / 1000);
+
+            return (
+                `${days}d ` +
+                `${String(hours).padStart(2, "0")}h ` +
+                `${String(minutes).padStart(2, "0")}m ` +
+                `${String(seconds).padStart(2, "0")}s`
+            );
+        }
+
+        // Stop any previous countdown before starting a new one.
+        if (window.sessionEventCountdownTimer) {
+            clearInterval(window.sessionEventCountdownTimer);
+            window.sessionEventCountdownTimer = null;
+        }
+
+        // Set the activity titles and countdown targets.
         if (ongoingActivity) {
             ongoingTitle.textContent = ongoingActivity.title;
-
-            ongoingTime.textContent = formatSessionEventDateRange(
-                ongoingActivity.startDateTime,
-                ongoingActivity.endDateTime
-            );
+            window.sessionOngoingCountdownTarget =
+                ongoingActivity.end.getTime();
         } else {
             ongoingTitle.textContent = "No ongoing activity";
             ongoingTime.textContent =
                 "No published calendar activity is currently in progress";
+            window.sessionOngoingCountdownTarget = null;
         }
 
         if (upcomingActivity) {
             upcomingTitle.textContent = upcomingActivity.title;
-
-            upcomingTime.textContent = formatSessionEventDateRange(
-                upcomingActivity.startDateTime,
-                upcomingActivity.endDateTime
-            );
+            window.sessionUpcomingCountdownTarget =
+                upcomingActivity.start.getTime();
         } else {
             upcomingTitle.textContent = "No upcoming activity";
             upcomingTime.textContent =
                 "No future published calendar activity scheduled";
+            window.sessionUpcomingCountdownTarget = null;
+        }
+
+        // Refresh both countdown displays every second.
+        function updateSessionEventCountdowns() {
+            const ongoingTarget =
+                window.sessionOngoingCountdownTarget;
+
+            const upcomingTarget =
+                window.sessionUpcomingCountdownTarget;
+
+            if (ongoingTarget) {
+                const remaining = ongoingTarget - Date.now();
+
+                ongoingTime.textContent = remaining > 0
+                    ? `Ends in ${formatCountdown(ongoingTarget)}`
+                    : "Ending now";
+            }
+
+            if (upcomingTarget) {
+                const remaining = upcomingTarget - Date.now();
+
+                upcomingTime.textContent = remaining > 0
+                    ? `Starts in ${formatCountdown(upcomingTarget)}`
+                    : "Starting now";
+            }
+        }
+
+        updateSessionEventCountdowns();
+
+        if (ongoingActivity || upcomingActivity) {
+            window.sessionEventCountdownTimer = setInterval(
+                updateSessionEventCountdowns,
+                1000
+            );
         }
 
     } catch (error) {
         console.error("Session events error:", error);
+
+        if (window.sessionEventCountdownTimer) {
+            clearInterval(window.sessionEventCountdownTimer);
+            window.sessionEventCountdownTimer = null;
+        }
+
+        window.sessionOngoingCountdownTarget = null;
+        window.sessionUpcomingCountdownTarget = null;
 
         ongoingTitle.textContent = "Events temporarily unavailable";
         ongoingTime.textContent = "";
@@ -980,7 +1042,6 @@ async function loadSessionEvents() {
         window.sessionEventsRequestPending = false;
     }
 }
-
 
 function renderSessionProgressCard(role) {
     const host = document.getElementById("dashboardCards");
