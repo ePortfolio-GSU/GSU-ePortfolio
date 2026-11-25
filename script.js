@@ -780,7 +780,12 @@ async function loadSessionEvents() {
     const upcomingTitle = document.getElementById("sessionUpcomingTitle");
     const upcomingTime = document.getElementById("sessionUpcomingTime");
 
-    if (!ongoingTitle || !upcomingTitle) return;
+    if (
+        !ongoingTitle ||
+        !ongoingTime ||
+        !upcomingTitle ||
+        !upcomingTime
+    ) return;
 
     const sessionToken = sessionStorage.getItem("sessionToken");
 
@@ -791,6 +796,11 @@ async function loadSessionEvents() {
         upcomingTime.textContent = "Please log in again";
         return;
     }
+
+    // Prevent simultaneous requests from overlapping dashboard refreshes.
+    if (window.sessionEventsRequestPending) return;
+
+    window.sessionEventsRequestPending = true;
 
     try {
         const response = await fetch(SESSION_EVENTS_API_URL, {
@@ -812,15 +822,22 @@ async function loadSessionEvents() {
 
         if (!result.success) {
             throw new Error(
-                result.message || "Unable to load school events"
+                result.message || "Unable to load school calendar"
             );
         }
 
-        updateAcademicTermsFromCalendar(
-            result.schoolCalendar || []
-        );
+        const schoolCalendar = Array.isArray(result.schoolCalendar)
+            ? result.schoolCalendar
+            : [];
 
-        // Display the current academic term or holiday.
+        const schoolEvents = Array.isArray(result.eventsActivities)
+            ? result.eventsActivities
+            : [];
+
+        // Load academic term dates into the existing timeline.
+        updateAcademicTermsFromCalendar(schoolCalendar);
+
+        // Update the current academic term or holiday.
         const currentPeriodDisplay = document.getElementById(
             "sessionCurrentAcademicPeriod"
         );
@@ -828,90 +845,126 @@ async function loadSessionEvents() {
         if (currentPeriodDisplay) {
             const currentPeriod = result.currentAcademicPeriod;
 
-            if (currentPeriod) {
-                currentPeriodDisplay.textContent =
-                    currentPeriod.title || (
-                        currentPeriod.periodType === "HOLIDAY"
-                            ? "HOLIDAY"
-                            : "TERM"
-                    );
-            } else {
-                currentPeriodDisplay.textContent =
-                    "DATES PENDING";
-            }
+            currentPeriodDisplay.textContent = currentPeriod
+                ? currentPeriod.title || currentPeriod.periodType
+                : "DATES PENDING";
         }
 
         const now = new Date();
 
-        // Only published events are eligible for display.
-        const events = (result.eventsActivities || [])
-            .filter(event => {
-                const status = String(event.status || "").toUpperCase();
-
-                const start = getSessionEventDate(event.startDateTime);
-                const end = getSessionEventDate(event.endDateTime);
-
-                return (
-                    status === "PUBLISHED" &&
-                    start &&
-                    end &&
-                    end >= start
+        // Parse date-only School Calendar values using Nairobi time.
+        function parseDashboardCalendarDate(value, endOfDay = false) {
+            if (
+                typeof value === "string" &&
+                /^\d{4}-\d{2}-\d{2}$/.test(value)
+            ) {
+                return new Date(
+                    `${value}T${endOfDay ? "23:59:59" : "00:00:00"}+03:00`
                 );
-            });
+            }
 
-        // Events currently in progress.
-        const ongoingEvents = events
-            .filter(event => {
-                const start = getSessionEventDate(event.startDateTime);
-                const end = getSessionEventDate(event.endDateTime);
-
-                return start <= now && now <= end;
-            })
-            .sort((a, b) =>
-                getSessionEventDate(a.endDateTime) -
-                getSessionEventDate(b.endDateTime)
-            );
-
-        // The nearest future event.
-        const upcomingEvents = events
-            .filter(event => {
-                const start = getSessionEventDate(event.startDateTime);
-
-                return start > now;
-            })
-            .sort((a, b) =>
-                getSessionEventDate(a.startDateTime) -
-                getSessionEventDate(b.startDateTime)
-            );
-
-        // Display the active event ending soonest if events overlap.
-        const ongoingEvent = ongoingEvents[0] || null;
-
-        // Display the event starting soonest.
-        const upcomingEvent = upcomingEvents[0] || null;
-
-        if (ongoingEvent) {
-            ongoingTitle.textContent = ongoingEvent.title;
-
-            ongoingTime.textContent = formatSessionEventDateRange(
-                ongoingEvent.startDateTime,
-                ongoingEvent.endDateTime
-            );
-        } else {
-            ongoingTitle.textContent = "No ongoing events";
-            ongoingTime.textContent = "No event is currently in progress";
+            return getSessionEventDate(value);
         }
 
-        if (upcomingEvent) {
-            upcomingTitle.textContent = upcomingEvent.title;
+        // Convert School Calendar records into dashboard activities.
+        const calendarActivities = schoolCalendar
+            .filter(record => {
+                const type = String(record.recordType || "")
+                    .trim()
+                    .toUpperCase();
 
-            upcomingTime.textContent = formatSessionEventDateRange(
-                upcomingEvent.startDateTime,
-                upcomingEvent.endDateTime
+                const status = String(record.status || "")
+                    .trim()
+                    .toUpperCase();
+
+                return (
+                    ["TERM", "EVENT"].includes(type) &&
+                    status === "PUBLISHED"
+                );
+            })
+            .map(record => ({
+                title: record.title || record.recordType,
+                status: record.status,
+                startDateTime: record.startDate,
+                endDateTime: record.endDate,
+                source: "SCHOOL_CALENDAR"
+            }));
+
+        // Convert separately managed school events and activities.
+        const activityRecords = schoolEvents
+            .filter(event =>
+                String(event.status || "").toUpperCase() === "PUBLISHED"
+            )
+            .map(event => ({
+                title: event.title,
+                status: event.status,
+                startDateTime: event.startDateTime,
+                endDateTime: event.endDateTime,
+                source: "EVENT_ACTIVITY"
+            }));
+
+        // Both calendar sources now feed the same dashboard timeline.
+        const allActivities = [
+            ...calendarActivities,
+            ...activityRecords
+        ].map(activity => ({
+            ...activity,
+            start: parseDashboardCalendarDate(
+                activity.startDateTime
+            ),
+            end: parseDashboardCalendarDate(
+                activity.endDateTime,
+                true
+            )
+        })).filter(activity =>
+            activity.title &&
+            activity.start &&
+            activity.end &&
+            !Number.isNaN(activity.start.getTime()) &&
+            !Number.isNaN(activity.end.getTime()) &&
+            activity.end >= activity.start
+        );
+
+        // Currently active calendar records.
+        const ongoingActivities = allActivities
+            .filter(activity =>
+                activity.start <= now &&
+                now <= activity.end
+            )
+            .sort((a, b) => a.end - b.end);
+
+        // Nearest future calendar record.
+        const upcomingActivities = allActivities
+            .filter(activity => activity.start > now)
+            .sort((a, b) => a.start - b.start);
+
+        const ongoingActivity = ongoingActivities[0] || null;
+        const upcomingActivity = upcomingActivities[0] || null;
+
+        if (ongoingActivity) {
+            ongoingTitle.textContent = ongoingActivity.title;
+
+            ongoingTime.textContent = formatSessionEventDateRange(
+                ongoingActivity.startDateTime,
+                ongoingActivity.endDateTime
             );
         } else {
-            upcomingTitle.textContent = "No upcoming events";
-            upcomingTime.textContent = "No future events scheduled";
+            ongoingTitle.textContent = "No ongoing activity";
+            ongoingTime.textContent =
+                "No published calendar activity is currently in progress";
+        }
+
+        if (upcomingActivity) {
+            upcomingTitle.textContent = upcomingActivity.title;
+
+            upcomingTime.textContent = formatSessionEventDateRange(
+                upcomingActivity.startDateTime,
+                upcomingActivity.endDateTime
+            );
+        } else {
+            upcomingTitle.textContent = "No upcoming activity";
+            upcomingTime.textContent =
+                "No future published calendar activity scheduled";
         }
 
     } catch (error) {
@@ -922,6 +975,9 @@ async function loadSessionEvents() {
 
         upcomingTitle.textContent = "Events temporarily unavailable";
         upcomingTime.textContent = "";
+
+    } finally {
+        window.sessionEventsRequestPending = false;
     }
 }
 
