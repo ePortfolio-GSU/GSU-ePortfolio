@@ -1342,8 +1342,16 @@ function initializeDashboard() {
     const role = sessionStorage.getItem("userRole");
 
     if (!user || !role || !DASHBOARD_ROLES[role]) {
-        alert("Your session is invalid or has expired. Please log in again.");
         sessionStorage.clear();
+
+        sessionStorage.setItem(
+            "gsuPendingNotification",
+            JSON.stringify({
+                type: "error",
+                message: "Your session is invalid or has expired. Please log in again."
+            })
+        );
+
         window.location.replace("index.html");
         return;
     }
