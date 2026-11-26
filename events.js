@@ -23,8 +23,15 @@ document.addEventListener("DOMContentLoaded", initialiseCalendar);
 
 async function initialiseCalendar() {
     if (!calendarToken || !calendarRole || !calendarUsername) {
-        alert("Your session has expired. Please log in again.");
-        window.location.href = "index.html";
+        GSUNotify.error(
+            "Your session has expired. Please log in again.",
+            { duration: 1800 }
+        );
+
+        setTimeout(function () {
+            window.location.replace("index.html");
+        }, 2000);
+
         return;
     }
 
