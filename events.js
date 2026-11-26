@@ -546,20 +546,26 @@ async function saveSchoolCalendar(event) {
         );
 
         if (!result.success) {
-            alert(result.message);
+            GSUNotify.error(
+                result.message || "The School Calendar record could not be saved."
+            );
             return;
         }
 
         document.getElementById("schoolCalendarDialog").close();
 
-        alert(result.message);
+        GSUNotify.success(
+            result.message || "School Calendar record saved successfully."
+        );
+
         await loadCalendarData();
 
     } catch (error) {
-        alert(error.message);
+        GSUNotify.error(
+            error.message || "An unexpected error occurred while saving the School Calendar record."
+        );
     }
 }
-
 
 /************************************************
  * EVENTS AND ACTIVITIES FORM
@@ -634,17 +640,24 @@ async function saveSchoolEvent(event) {
         );
 
         if (!result.success) {
-            alert(result.message);
+            GSUNotify.error(
+                result.message || "The school event could not be saved."
+            );
             return;
         }
 
         document.getElementById("schoolEventDialog").close();
 
-        alert(result.message);
+        GSUNotify.success(
+            result.message || "School event saved successfully."
+        );
+
         await loadCalendarData();
 
     } catch (error) {
-        alert(error.message);
+        GSUNotify.error(
+            error.message || "An unexpected error occurred while saving the school event."
+        );
     }
 }
 
@@ -662,12 +675,23 @@ async function deleteSchoolCalendar(recordId) {
             { recordId }
         );
 
-        alert(result.message);
+        if (!result.success) {
+            GSUNotify.error(
+                result.message || "The School Calendar record could not be deleted."
+            );
+            return;
+        }
 
-        if (result.success) await loadCalendarData();
+        GSUNotify.success(
+            result.message || "School Calendar record deleted successfully."
+        );
+
+        await loadCalendarData();
 
     } catch (error) {
-        alert(error.message);
+        GSUNotify.error(
+            error.message || "An unexpected error occurred while deleting the School Calendar record."
+        );
     }
 }
 
@@ -681,11 +705,22 @@ async function deleteSchoolEvent(eventId) {
             { eventId }
         );
 
-        alert(result.message);
+        if (!result.success) {
+            GSUNotify.error(
+                result.message || "The school event could not be deleted."
+            );
+            return;
+        }
 
-        if (result.success) await loadCalendarData();
+        GSUNotify.success(
+            result.message || "School event deleted successfully."
+        );
+
+        await loadCalendarData();
 
     } catch (error) {
-        alert(error.message);
+        GSUNotify.error(
+            error.message || "An unexpected error occurred while deleting the school event."
+        );
     }
 }
