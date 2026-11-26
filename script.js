@@ -134,8 +134,9 @@ if (loginForm) {
         // Validate empty fields
         if (username === "" || password === "") {
 
-            message.textContent = "Please enter username and password.";
-            message.style.color = "red";
+            GSUNotify.warning(
+                "Please enter both your username and password."
+            );
 
             return;
 
@@ -198,8 +199,8 @@ if (loginForm) {
                 sessionStorage.setItem("sessionToken", result.sessionToken);
 
                 setTimeout(function() {
-    openDashboard(result.role);
-}, 1000);
+                    openDashboard(result.role);
+                }, 1000);
 
 
             } else {
@@ -224,8 +225,9 @@ if (loginForm) {
 
                 }, 800);
 
-                message.style.color = "red";
-                message.textContent = result.message;
+                GSUNotify.error(
+                    result.message || "Login failed. Please check your credentials."
+                );
 
             }
 
@@ -239,14 +241,13 @@ if (loginForm) {
 
             console.error(error);
 
-            message.style.color = "red";
-            message.textContent = error.toString();
+            GSUNotify.error(
+                error.message || "Unable to connect to the login service. Please try again."
+            );
 
         });
 
     });
-
-}
 // =====================================================
 // Secure Dashboard Navigation
 // =====================================================
@@ -276,64 +277,19 @@ function openDashboard(role){
             break;
 
         default:
-            alert("Unknown user role.");
+            GSUNotify.error(
+                "Unknown user role. Please contact the ICT Administrator."
+            );
     }
 
 }
 function logoutUser() {
+    GSUNotify.success(
+        "You have successfully logged out of your account.",
+        { duration: 1800 }
+    );
+
     sessionStorage.clear();
-
-    const logoutMessage = document.createElement("div");
-    logoutMessage.textContent = "Logout successful!";
-    logoutMessage.style.cssText = `
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: fit-content;
-        max-width: calc(100% - 32px);
-        box-sizing: border-box;
-        padding: 12px 20px;
-        border-radius: 10px;
-        color: #ffffff;
-        background: linear-gradient(
-            110deg,
-            #087f3e,
-            #20b85a,
-            #087f3e,
-            #35c96b
-        );
-        background-size: 300% 100%;
-        font-weight: 700;
-        text-align: center;
-        overflow-wrap: anywhere;
-        box-shadow: 0 4px 14px rgba(0, 110, 50, 0.25);
-        z-index: 99999;
-        animation:
-            logoutGradient 1.5s ease-in-out infinite,
-            logoutFade 2s ease forwards;
-    `;
-
-    if (!document.getElementById("logoutAnimationStyles")) {
-        const style = document.createElement("style");
-        style.id = "logoutAnimationStyles";
-        style.textContent = `
-            @keyframes logoutGradient {
-                0% { background-position: 0% 50%; }
-                100% { background-position: 100% 50%; }
-            }
-
-            @keyframes logoutFade {
-                0% { opacity: 0; }
-                15% { opacity: 1; }
-                75% { opacity: 1; }
-                100% { opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-
-    document.body.appendChild(logoutMessage);
 
     setTimeout(function () {
         window.location.replace("index.html");
@@ -1323,19 +1279,25 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (myProfileBtn) {
         myProfileBtn.addEventListener("click", function () {
-            alert("My Profile page has not yet been connected.");
+            GSUNotify.info(
+                "The My Profile page has not yet been connected."
+            );
         });
     }
 
     if (chatBtn) {
         chatBtn.addEventListener("click", function () {
-            alert("Chat support has not yet been connected.");
+            GSUNotify.info(
+                "Chat support has not yet been connected."
+            );
         });
     }
 
     if (helpBtn) {
         helpBtn.addEventListener("click", function () {
-            alert("Help content has not yet been connected.");
+            GSUNotify.info(
+                "Help content has not yet been connected."
+            );
         });
     }
 
@@ -1839,8 +1801,15 @@ function renderUserManagementModule(container) {
     let users = [];
 
     function showMessage(text, isError = false) {
-        message.textContent = text;
-        message.style.color = isError ? "#b42318" : "#167c45";
+        if (isError) {
+            GSUNotify.error(
+                text || "The operation could not be completed."
+            );
+        } else {
+            GSUNotify.success(
+                text || "Operation completed successfully."
+            );
+        }
     }
 
     function updateSummary() {
@@ -1908,14 +1877,13 @@ function renderUserManagementModule(container) {
                     const temporaryPassword =
                         result.temporaryPassword || result.tempPassword || "";
 
-                    alert(
-                        "Password reset successfully." +
+                    GSUNotify.success(
+                        "Password reset successfully for " + user.username +
                         (temporaryPassword
                             ? "\nTemporary password: " + temporaryPassword
                             : "")
                     );
 
-                    showMessage("Password reset for " + user.username);
                 } catch (error) {
                     showMessage(error.message, true);
                 }
@@ -2028,6 +1996,21 @@ function renderUserManagementModule(container) {
                 className: String(formData.get("className") || "").trim()
             };
 
+            container.querySelector("#umCreateForm").addEventListener(
+        "submit",
+        async event => {
+            event.preventDefault();
+
+            const form = event.currentTarget;
+            const formData = new FormData(form);
+
+            const userData = {
+                fullName: String(formData.get("fullName") || "").trim(),
+                username: String(formData.get("username") || "").trim(),
+                role: String(formData.get("role") || ""),
+                className: String(formData.get("className") || "").trim()
+            };
+
             const button = container.querySelector("#umCreateButton");
             button.disabled = true;
             button.textContent = "Creating...";
@@ -2043,15 +2026,13 @@ function renderUserManagementModule(container) {
                 const temporaryPassword =
                     result.temporaryPassword || result.tempPassword || "";
 
-                showMessage("Account created successfully.");
-
-                if (temporaryPassword) {
-                    alert(
-                        "Account created successfully.\n" +
-                        "Username: " + userData.username +
-                        "\nTemporary password: " + temporaryPassword
-                    );
-                }
+                GSUNotify.success(
+                    "Account created successfully.\n" +
+                    "Username: " + userData.username +
+                    (temporaryPassword
+                        ? "\nTemporary password: " + temporaryPassword
+                        : "")
+                );
 
                 form.reset();
                 await loadUsers();
@@ -2574,8 +2555,17 @@ function renderUserManagementWorkspace(root) {
     let selectedUser = null;
 
     function showNotice(message, type = "info") {
-        notice.textContent = message;
-        notice.className = "aegis-notice visible " + type;
+        const notificationType = [
+            "success",
+            "error",
+            "warning",
+            "info"
+        ].includes(type) ? type : "info";
+
+        GSUNotify.show(
+            message || "The operation has been completed.",
+            notificationType
+        );
     }
 
     async function apiRequest(action, extra = {}) {
