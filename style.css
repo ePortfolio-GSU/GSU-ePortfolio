@@ -1287,7 +1287,7 @@ transition: none;
 }
 /* GSU DASHBOARD — HEADER AND LOGO REFINEMENT */
 
-/* GSU HEADER — FLOWING THREE-THEME ACCENTS */
+/* GSU HEADER — RESPONSIVE FLOWING THREE-THEME RIBBONS */
 
 .dashboard-page .dashboard-header {
     position: relative;
@@ -1303,29 +1303,29 @@ transition: none;
     color: #173042;
 }
 
-/* Decorative ribbons — separate layer behind header content */
+/* DESKTOP — FULL, BOLD, FLOWING ACCENTS */
 
 .dashboard-page .dashboard-header::before {
     content: "";
     position: absolute;
 
     top: 0;
-    right: 285px;
+    right: clamp(210px, 22vw, 285px);
 
-    width: 48%;
+    width: clamp(360px, 48vw, 660px);
     height: 100%;
 
-    z-index: 0;
+    z-index: 1;
     pointer-events: none;
 
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 120' preserveAspectRatio='none'%3E%3Cpath d='M1000 -12 C850 10 850 55 680 75 S360 112 100 125' fill='none' stroke='%235B1826' stroke-width='9'/%3E%3Cpath d='M1000 -3 C850 19 840 64 670 84 S350 120 90 132' fill='none' stroke='%23FFFFFF' stroke-width='7'/%3E%3Cpath d='M1000 7 C850 29 830 73 660 94 S340 128 80 139' fill='none' stroke='%2338BDF8' stroke-width='11'/%3E%3Cpath d='M1000 15 C850 37 820 82 650 103 S330 137 70 148' fill='none' stroke='%23FFFFFF' stroke-opacity='.35' stroke-width='3'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 120' preserveAspectRatio='none'%3E%3Cpath d='M1000 -18 C850 0 875 42 700 65 S390 105 80 140' fill='none' stroke='%235B1826' stroke-width='25'/%3E%3Cpath d='M1000 -3 C850 15 860 57 685 80 S375 120 65 155' fill='none' stroke='%23FFFFFF' stroke-width='19'/%3E%3Cpath d='M1000 12 C850 30 845 72 670 95 S360 135 50 170' fill='none' stroke='%2338BDF8' stroke-width='28'/%3E%3C/svg%3E");
 
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
 }
 
-/* Keep school identity and every control above the decoration */
+/* PROTECT SCHOOL NAME, LOGO AND HEADER CONTROLS */
 
 .dashboard-page .dashboard-header > .dashboard-logo,
 .dashboard-page .dashboard-header > .dashboard-user-area {
@@ -1333,11 +1333,41 @@ transition: none;
     z-index: 2;
 }
 
-/* Hide decorative ribbons on narrow screens */
+/* MEDIUM SCREENS — MEDIUM-WEIGHT ACCENTS */
+
+@media (min-width: 769px) and (max-width: 1100px) {
+    .dashboard-page .dashboard-header::before {
+        right: 185px;
+        width: 47%;
+        height: 100%;
+
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 120' preserveAspectRatio='none'%3E%3Cpath d='M1000 -15 C850 5 865 48 690 72 S380 110 75 145' fill='none' stroke='%235B1826' stroke-width='18'/%3E%3Cpath d='M1000 0 C850 20 850 63 675 87 S365 125 60 160' fill='none' stroke='%23FFFFFF' stroke-width='14'/%3E%3Cpath d='M1000 15 C850 35 835 78 660 102 S350 140 45 175' fill='none' stroke='%2338BDF8' stroke-width='21'/%3E%3C/svg%3E");
+    }
+}
+
+/* SMALL SCREENS — SLIMMER ACCENTS, STILL VISIBLE */
 
 @media (max-width: 768px) {
     .dashboard-page .dashboard-header::before {
-        display: none;
+        display: block;
+
+        top: 0;
+        right: 105px;
+        width: 38%;
+        height: 70%;
+
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 120' preserveAspectRatio='none'%3E%3Cpath d='M1000 -10 C850 8 850 45 680 68 S360 105 100 135' fill='none' stroke='%235B1826' stroke-width='10'/%3E%3Cpath d='M1000 0 C850 18 840 55 670 78 S350 115 90 145' fill='none' stroke='%23FFFFFF' stroke-width='7'/%3E%3Cpath d='M1000 10 C850 28 830 65 660 88 S340 125 80 155' fill='none' stroke='%2338BDF8' stroke-width='12'/%3E%3C/svg%3E");
+    }
+}
+
+/* EXTRA-SMALL PHONES — COMPACT ACCENT */
+
+@media (max-width: 380px) {
+    .dashboard-page .dashboard-header::before {
+        right: 92px;
+        width: 34%;
+        height: 55%;
+        opacity: 0.85;
     }
 }
 
