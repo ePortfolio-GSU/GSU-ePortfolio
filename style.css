@@ -2410,16 +2410,7 @@ body.dashboard-page .dashboard-footer > div {
 .dashboard-page .sidebar-quick-icons {
     display: none !important;
 }
-/* GSU DASHBOARD — SIDEBAR ICON BORDERS */
-.dashboard-page #sidebarMenu a > :first-child {
-    border: 1px solid rgba(255, 255, 255, 0.7) !important;
-    border-radius: 5px !important;
-    padding: 4px !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    box-sizing: border-box !important;
-}
+
 /* GSU DASHBOARD — SIDE-STRIP ICON VISIBILITY */
 .dashboard-page .sidebar-quick-icons {
     display: flex !important;
@@ -6370,7 +6361,7 @@ body:has(.login-card) footer {
         animation-duration: .01ms !important;
     }
 }
-/* QUICK STRIP — MATCH SIDEBAR SVG ICON SIZE */
+/* QUICK STRIP — SVG ICON SIZE */
 
 .dashboard-page .sidebar-quick-icons button svg {
     display: block;
@@ -6380,7 +6371,8 @@ body:has(.login-card) footer {
     min-height: 20px;
     flex: 0 0 20px;
 }
-/* GSU SIDEBAR — ACCESSIBLE FONT, STRICT SINGLE-LINE LABELS */
+
+/* SIDEBAR — ACCESSIBLE SINGLE-LINE LABELS */
 
 .dashboard-page #sidebarMenu > li > a:not(.sidebar-close-link) {
     display: flex !important;
@@ -6401,27 +6393,10 @@ body:has(.login-card) footer {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
 }
-/* GSU SIDEBAR — MATCH QUICK STRIP ICON DECORATION */
 
-.dashboard-page #sidebarMenu .sidebar-item-icon {
-    border: 1px solid rgba(56, 189, 248, .65) !important;
-    border-radius: 8px !important;
-    background: linear-gradient(145deg, #5B1826, #303944) !important;
-    color: #FFFFFF !important;
-    box-shadow:
-        0 3px 7px rgba(0, 0, 0, .2),
-        inset 0 1px 2px rgba(255, 255, 255, .1) !important;
-    transition: background .2s ease, border-color .2s ease;
-    box-sizing: border-box !important;
-}
+/* SIDEBAR — UNIFIED ICON DECORATION AND DIMENSIONS */
 
-.dashboard-page #sidebarMenu a:hover .sidebar-item-icon,
-.dashboard-page #sidebarMenu a.active .sidebar-item-icon {
-    border-color: #38BDF8 !important;
-}
-/* GSU SIDEBAR — MATCH QUICK STRIP ICON DIMENSIONS */
-
-.dashboard-page #sidebarMenu .sidebar-item-icon {
+.dashboard-page #sidebarMenu > li > a:not(.sidebar-close-link) .sidebar-item-icon {
     display: inline-flex !important;
     align-items: center !important;
     justify-content: center !important;
@@ -6431,10 +6406,23 @@ body:has(.login-card) footer {
     height: 31px !important;
     min-height: 31px !important;
     padding: 0 !important;
+    border: 1px solid rgba(56, 189, 248, .65) !important;
+    border-radius: 8px !important;
+    background: linear-gradient(145deg, #5B1826, #303944) !important;
+    color: #FFFFFF !important;
+    box-shadow:
+        0 3px 7px rgba(0, 0, 0, .2),
+        inset 0 1px 2px rgba(255, 255, 255, .1) !important;
     box-sizing: border-box !important;
+    transition: background .2s ease, border-color .2s ease;
 }
 
-.dashboard-page #sidebarMenu .sidebar-item-icon svg {
+.dashboard-page #sidebarMenu > li > a:not(.sidebar-close-link):hover .sidebar-item-icon,
+.dashboard-page #sidebarMenu > li > a:not(.sidebar-close-link).active .sidebar-item-icon {
+    border-color: #38BDF8 !important;
+}
+
+.dashboard-page #sidebarMenu > li > a:not(.sidebar-close-link) .sidebar-item-icon svg {
     display: block !important;
     width: 20px !important;
     height: 20px !important;
