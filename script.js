@@ -1557,12 +1557,10 @@ function buildSidebar(menuItems) {
         const heading =
             document.getElementById("dashboardHeading");
 
-        if (heading) heading.textContent = config.title;
-
-        const breadcrumb =
-            content.querySelector(".dashboard-breadcrumb");
-
-        if (breadcrumb) breadcrumb.textContent = "Home";
+        if (heading) {
+            heading.textContent = config.title;
+            heading.hidden = false;
+        }
     }
 
     function showModulePage(item) {
@@ -1580,22 +1578,14 @@ function buildSidebar(menuItems) {
             );
         });
 
+        /* Hide the redundant dashboard heading on module pages */
+
         const heading =
             document.getElementById("dashboardHeading");
 
         if (heading) {
-            heading.textContent =
-                item[2] === "identity_access_management" &&
-                sessionStorage.getItem("userRole") === "ICT_ADMIN"
-                    ? ""
-                    : item[1];
-        }
-
-        const breadcrumb =
-            content.querySelector(".dashboard-breadcrumb");
-
-        if (breadcrumb) {
-            breadcrumb.textContent = "Home / " + item[1];
+            heading.textContent = "";
+            heading.hidden = true;
         }
 
         const moduleView = document.createElement("section");
@@ -1611,6 +1601,8 @@ function buildSidebar(menuItems) {
             renderUserManagementWorkspace(moduleView);
             return;
         }
+
+        /* Retain one title for the selected workspace */
 
         const moduleHeading = document.createElement("h2");
         moduleHeading.textContent = item[1];
