@@ -6370,3 +6370,13 @@ body:has(.login-card) footer {
         animation-duration: .01ms !important;
     }
 }
+/* QUICK STRIP — MATCH SIDEBAR SVG ICON SIZE */
+
+.dashboard-page .sidebar-quick-icons button svg {
+    display: block;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px;
+    min-height: 20px;
+    flex: 0 0 20px;
+}
