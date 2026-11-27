@@ -1287,9 +1287,24 @@ transition: none;
 }
 /* GSU DASHBOARD — HEADER AND LOGO REFINEMENT */
 
+/* GSU HEADER — SKY BLUE WITH THREE-THEME ACCENTS */
+
 .dashboard-page .dashboard-header {
-background: #87CEEB;
-color: #17324D;
+    background:
+        linear-gradient(
+            165deg,
+            transparent 0 70%,
+            #38BDF8 70.5% 79%,
+            #FFFFFF 79.5% 85%,
+            #5B1826 85.5% 100%
+        ) right bottom / 44% 48% no-repeat,
+        linear-gradient(
+            110deg,
+            #BDEFFF 0%,
+            #87CEEB 48%,
+            #A6E9F8 100%
+        );
+    color: #173042;
 }
 
 .dashboard-page .dashboard-logo img {
