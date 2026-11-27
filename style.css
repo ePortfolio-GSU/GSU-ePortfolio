@@ -6453,22 +6453,17 @@ body:has(.login-card) footer {
     display: block !important;
     margin: 0 !important;
     color: #5B1826 !important;
-    font-size: 19px !important;
+    font-size: 28.5px !important;
     font-weight: 800 !important;
     line-height: 1.3 !important;
     white-space: nowrap !important;
-}
-
-@media (max-width: 768px) {
-    .dashboard-page .dashboard-logo .dashboard-title h2 {
-        font-size: 14px !important;
-    }
 }
 
 .dashboard-page .dashboard-logo .dashboard-title p {
     display: block !important;
     margin: 3px 0 0 !important;
     color: #303944 !important;
+    font-family: "Comic Sans MS", cursive !important;
     font-size: 12px !important;
     font-weight: 600 !important;
     font-style: italic !important;
@@ -6485,7 +6480,7 @@ body:has(.login-card) footer {
     }
 
     .dashboard-page .dashboard-logo .dashboard-title h2 {
-        font-size: 12px !important;
+        font-size: 18px !important;
     }
 
     .dashboard-page .dashboard-logo .dashboard-title p {
