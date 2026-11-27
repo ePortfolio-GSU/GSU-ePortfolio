@@ -304,48 +304,59 @@ const DASHBOARD_ROLES = {
         title: "ICT ADMIN DASHBOARD",
         welcome: "Welcome to the ICT System Administrator Portal.",
         menu: [
-            ["🏠", "Dashboard Overview"],
-            ["👥", "User Management"],
-            ["🏫", "School Administration"],
-            ["🎓", "Academic Management"],
-            ["📁", "Portfolio Management"],
-            ["🔒", "Security Centre"],
-            ["📋", "Audit Logs"],
-            ["📊", "Reports & Analytics"],
-            ["⚙️", "System Settings"],
-            ["💾", "Backup & Recovery"],
-            ["🚪", "Logout", "logout"]
+            ["layout-dashboard", "Dashboard Overview", "dashboard_overview"],
+            ["users", "Identity & Access Management", "identity_access_management"],
+            ["building-2", "Institutional Management", "institutional_management"],
+            ["graduation-cap", "Academic Operations", "academic_operations"],
+            ["book-open", "Digital Learning Centre", "digital_learning_centre"],
+            ["chart-no-axes-combined", "Academic Intelligence (AAARS)", "academic_intelligence"],
+            ["folder-kanban", "Portfolio & Project Studio", "portfolio_project_studio"],
+            ["vote", "Electoral Management (GSEC)", "electoral_management"],
+            ["users-round", "Student Affairs", "student_affairs"],
+            ["trophy", "Co-Curricular Activities", "co_curricular_activities"],
+            ["wallet", "Financial Management", "financial_management"],
+            ["messages-square", "Communications Centre", "communications_centre"],
+            ["shield-check", "Security & Compliance Centre", "security_compliance"],
+            ["compass", "Platform Intelligence & Navigation", "platform_intelligence_navigation"],
+            ["settings", "System Settings", "system_settings"],
+            ["database-backup", "Data Protection & Recovery", "data_protection_recovery"],
+            ["life-buoy", "Digital Support Centre", "digital_support"]
         ]
     },
 
-   SCHOOL_ADMIN: {
-    title: "SCHOOL ADMIN DASHBOARD",
-    welcome: "Welcome to the School Administration Portal.",
-    menu: [
-        ["🏠", "Dashboard Overview"],
-        ["🎓", "Learners"],
-        ["👩‍🏫", "Teachers"],
-        ["🏫", "Classes & Subjects"],
-        ["📝", "Academic Records"],
-        ["📁", "Portfolios"],
-        ["📊", "Reports & Analytics"],
-        ["📅", "School Operations"],
-        ["🚪", "Logout", "logout"]
-    ]
-},
+    SCHOOL_ADMIN: {
+        title: "SCHOOL ADMIN DASHBOARD",
+        welcome: "Welcome to the School Administration Portal.",
+        menu: [
+            ["layout-dashboard", "School Management Dashboard", "dashboard_overview"],
+            ["users", "User & Access Administration", "identity_access_management"],
+            ["building-2", "School Structure & Administration", "institutional_management"],
+            ["graduation-cap", "Academic Administration", "academic_operations"],
+            ["book-open", "Digital Learning Administration", "digital_learning_centre"],
+            ["chart-no-axes-combined", "Academic Performance Intelligence", "academic_intelligence"],
+            ["folder-kanban", "Institutional Portfolio & Projects", "portfolio_project_studio"],
+            ["users-round", "Student Affairs Management", "student_affairs"],
+            ["trophy", "Co-Curricular Administration", "co_curricular_activities"],
+            ["wallet", "Financial Administration", "financial_management"],
+            ["messages-square", "School Communications", "communications_centre"],
+            ["shield-check", "Security & Compliance Administration", "security_compliance"]
+        ]
+    },
 
     TEACHER: {
         title: "TEACHER DASHBOARD",
         welcome: "Welcome to your teaching and learner progress workspace.",
         menu: [
-            ["🏠", "Dashboard Overview"],
-            ["🏫", "My Classes"],
-            ["👥", "Learners"],
-            ["📝", "Assessments"],
-            ["📁", "Portfolios"],
-            ["📊", "Reports"],
-            ["👤", "My Profile"],
-            ["🚪", "Logout", "logout"]
+            ["layout-dashboard", "Teaching Dashboard", "dashboard_overview"],
+            ["graduation-cap", "Teaching & Class Operations", "academic_operations"],
+            ["book-open", "Digital Learning Resources", "digital_learning_centre"],
+            ["chart-no-axes-combined", "Academic Performance & Assessment", "academic_intelligence"],
+            ["folder-kanban", "Teaching Portfolio & Projects", "portfolio_project_studio"],
+            ["vote", "School Electoral Participation", "electoral_management"],
+            ["users-round", "Student & Class Affairs", "student_affairs"],
+            ["trophy", "Co-Curricular Coordination", "co_curricular_activities"],
+            ["messages-square", "School Communications", "communications_centre"],
+            ["life-buoy", "Learner Support Centre", "digital_support"]
         ]
     },
 
@@ -353,30 +364,27 @@ const DASHBOARD_ROLES = {
         title: "LEARNER DASHBOARD",
         welcome: "Welcome to your personal learning portfolio.",
         menu: [
-            ["🏠", "Dashboard Overview"],
-            ["📁", "My Portfolio"],
-            ["📝", "My Assessments"],
-            ["📚", "Learning Resources"],
-            ["🏆", "Achievements"],
-            ["👤", "My Profile"],
-            ["🚪", "Logout", "logout"]
+            ["layout-dashboard", "Learner Dashboard", "dashboard_overview"],
+            ["clipboard-list", "Academic Activities", "academic_operations"],
+            ["book-open", "Digital Learning Resources", "digital_learning_centre"],
+            ["chart-no-axes-combined", "Academic Performance", "academic_intelligence"],
+            ["folder-kanban", "Learning Portfolio", "portfolio_project_studio"],
+            ["vote", "Student Electoral Participation", "electoral_management"],
+            ["trophy", "Co-Curricular Participation", "co_curricular_activities"]
         ]
     },
 
-   PARENT: {
-    title: "PARENT DASHBOARD",
-    welcome: "Welcome to the parent and guardian portal.",
-    menu: [
-        ["🏠", "Dashboard Overview"],
-        ["👨‍👩‍👧", "My Children"],
-        ["📈", "Academic Progress"],
-        ["📁", "Portfolios"],
-        ["📅", "Attendance"],
-        ["💬", "Send Feedback"],
-        ["👤", "My Profile"],
-        ["🚪", "Logout", "logout"]
-    ]
-}
+    PARENT: {
+        title: "PARENT DASHBOARD",
+        welcome: "Welcome to the parent and guardian portal.",
+        menu: [
+            ["layout-dashboard", "Parent Dashboard", "dashboard_overview"],
+            ["clipboard-list", "Child's Academic Activities", "academic_operations"],
+            ["chart-no-axes-combined", "Child's Academic Performance", "academic_intelligence"],
+            ["folder-kanban", "Child's Portfolio", "portfolio_project_studio"],
+            ["building-2", "School Profile", "institutional_management"]
+        ]
+    }
 };
 // =====================================================
 // GSU ACADEMIC COMMAND CENTRE
@@ -1422,6 +1430,85 @@ function buildSidebar(menuItems) {
 
     if (quickIcons) quickIcons.replaceChildren();
 
+    // Professional SVG icon library
+    function createSidebarIcon(name) {
+        const paths = {
+            "layout-dashboard":
+                '<rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="5" rx="1"/><rect x="13" y="10" width="8" height="11" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/>',
+
+            "users":
+                '<path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+
+            "building-2":
+                '<path d="M6 22V3h12v19M3 22h18M9 7h2m2 0h2M9 11h2m2 0h2M9 15h2m2 0h2M10 22v-3h4v3"/>',
+
+            "graduation-cap":
+                '<path d="m2 10 10-5 10 5-10 5-10-5Z"/><path d="M6 12v5c3 3 9 3 12 0v-5M22 10v6"/>',
+
+            "book-open":
+                '<path d="M12 7v14M3 18V5a2 2 0 0 1 2-2h3a4 4 0 0 1 4 4 4 4 0 0 1 4-4h3a2 2 0 0 1 2 2v13h-5a4 4 0 0 0-4 3 4 4 0 0 0-4-3H3Z"/>',
+
+            "chart-no-axes-combined":
+                '<path d="M3 3v18h18M7 14l4-4 4 3 6-7"/>',
+
+            "folder-kanban":
+                '<path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/><path d="M8 11v6m4-6v3m4-3v5"/>',
+
+            "vote":
+                '<path d="M4 21h16M6 17h12M8 3h8l2 10H6L8 3Z"/><path d="m9 8 2 2 4-4"/>',
+
+            "users-round":
+                '<path d="M18 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="11" cy="7" r="4"/><path d="M20 8v6m3-3h-6"/>',
+
+            "trophy":
+                '<path d="M8 21h8m-4-4v4M7 4h10v5a5 5 0 0 1-10 0V4ZM7 6H4v2a4 4 0 0 0 4 4m9-6h3v2a4 4 0 0 1-4 4"/>',
+
+            "wallet":
+                '<rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 8h18m-5 5h5"/><circle cx="16" cy="13" r=".5"/>',
+
+            "messages-square":
+                '<path d="M21 15a3 3 0 0 1-3 3H8l-5 3V6a3 3 0 0 1 3-3h12a3 3 0 0 1 3 3Z"/><path d="M8 8h8M8 12h6"/>',
+
+            "shield-check":
+                '<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"/><path d="m9 11 2 2 4-4"/>',
+
+            "compass":
+                '<circle cx="12" cy="12" r="10"/><path d="m16.2 7.8-2.6 6.4-5.8 2 2.4-6.2 6-2.2Z"/>',
+
+            "settings":
+                '<circle cx="12" cy="12" r="3"/><path d="m19.4 15 .1.1 1.4 1.1-1.4 2.4-1.7-.7a8 8 0 0 1-1.7 1l-.3 1.8h-2.8l-.3-1.8a8 8 0 0 1-1.7-1l-1.7.7-1.4-2.4 1.4-1.1a7 7 0 0 1 0-2l-1.4-1.1 1.4-2.4 1.7.7a8 8 0 0 1 1.7-1l.3-1.8h2.8l.3 1.8a8 8 0 0 1 1.7 1l1.7-.7 1.4 2.4-1.4 1.1a7 7 0 0 1 0 2Z"/>',
+
+            "database-backup":
+                '<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3m8-9v5M4 11v6c0 1.7 3.6 3 8 3m4-1 2-2 2 2m-2-2v5"/>',
+
+            "life-buoy":
+                '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path d="m5.6 5.6 4.3 4.3m4.2 4.2 4.3 4.3m0-12.8-4.3 4.3m-4.2 4.2-4.3 4.3"/>',
+
+            "clipboard-list":
+                '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2h6v2M9 10h6m-6 4h6m-6 4h3"/>'
+        };
+
+        const svg = document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "svg"
+        );
+
+        svg.setAttribute("viewBox", "0 0 24 24");
+        svg.setAttribute("width", "20");
+        svg.setAttribute("height", "20");
+        svg.setAttribute("fill", "none");
+        svg.setAttribute("stroke", "currentColor");
+        svg.setAttribute("stroke-width", "1.8");
+        svg.setAttribute("stroke-linecap", "round");
+        svg.setAttribute("stroke-linejoin", "round");
+        svg.setAttribute("aria-hidden", "true");
+
+        svg.innerHTML =
+            paths[name] || paths["layout-dashboard"];
+
+        return svg;
+    }
+
     const dashboardSections = [
         content.querySelector(".dashboard-welcome"),
         document.getElementById("dashboardCards"),
@@ -1455,7 +1542,9 @@ function buildSidebar(menuItems) {
 
         if (!config) return;
 
-        const moduleView = document.getElementById("dashboardModuleView");
+        const moduleView =
+            document.getElementById("dashboardModuleView");
+
         if (moduleView) moduleView.remove();
 
         dashboardSections.forEach(section => {
@@ -1463,58 +1552,74 @@ function buildSidebar(menuItems) {
             section.style.removeProperty("display");
         });
 
-        const heading = document.getElementById("dashboardHeading");
+        const heading =
+            document.getElementById("dashboardHeading");
+
         if (heading) heading.textContent = config.title;
 
-        const breadcrumb = content.querySelector(".dashboard-breadcrumb");
+        const breadcrumb =
+            content.querySelector(".dashboard-breadcrumb");
+
         if (breadcrumb) breadcrumb.textContent = "Home";
     }
 
-    function showModulePage(title) {
-    const oldView = document.getElementById("dashboardModuleView");
-    if (oldView) oldView.remove();
+    function showModulePage(item) {
+        const oldView =
+            document.getElementById("dashboardModuleView");
 
-    dashboardSections.forEach(section => {
-        section.hidden = true;
-        section.style.setProperty("display", "none", "important");
-    });
+        if (oldView) oldView.remove();
 
-    const heading = document.getElementById("dashboardHeading");
+        dashboardSections.forEach(section => {
+            section.hidden = true;
+            section.style.setProperty(
+                "display",
+                "none",
+                "important"
+            );
+        });
 
-    if (heading) {
-        heading.textContent =
-            title === "User Management" ? "" : title;
+        const heading =
+            document.getElementById("dashboardHeading");
+
+        if (heading) {
+            heading.textContent =
+                item[2] === "identity_access_management" &&
+                sessionStorage.getItem("userRole") === "ICT_ADMIN"
+                    ? ""
+                    : item[1];
+        }
+
+        const breadcrumb =
+            content.querySelector(".dashboard-breadcrumb");
+
+        if (breadcrumb) {
+            breadcrumb.textContent = "Home / " + item[1];
+        }
+
+        const moduleView = document.createElement("section");
+        moduleView.id = "dashboardModuleView";
+        moduleView.className = "dashboard-module-view";
+
+        content.appendChild(moduleView);
+
+        if (
+            item[2] === "identity_access_management" &&
+            sessionStorage.getItem("userRole") === "ICT_ADMIN"
+        ) {
+            renderUserManagementWorkspace(moduleView);
+            return;
+        }
+
+        const moduleHeading = document.createElement("h2");
+        moduleHeading.textContent = item[1];
+
+        const moduleMessage = document.createElement("p");
+        moduleMessage.textContent =
+            "The " + item[1] + " workspace is being prepared.";
+
+        moduleView.append(moduleHeading, moduleMessage);
     }
 
-    const breadcrumb = content.querySelector(".dashboard-breadcrumb");
-
-    if (breadcrumb) {
-        breadcrumb.textContent = "Home / " + title;
-    }
-
-    const moduleView = document.createElement("section");
-    moduleView.id = "dashboardModuleView";
-    moduleView.className = "dashboard-module-view";
-
-    content.appendChild(moduleView);
-
-    if (
-        title === "User Management" &&
-        sessionStorage.getItem("userRole") === "ICT_ADMIN"
-    ) {
-        renderUserManagementWorkspace(moduleView);
-        return;
-    }
-
-    const moduleHeading = document.createElement("h2");
-    moduleHeading.textContent = title;
-
-    const moduleMessage = document.createElement("p");
-    moduleMessage.textContent =
-        "The " + title + " workspace is being prepared.";
-
-    moduleView.append(moduleHeading, moduleMessage);
-}
     // Close Menu
     const closeItem = document.createElement("li");
     const closeLink = document.createElement("a");
@@ -1524,7 +1629,7 @@ function buildSidebar(menuItems) {
 
     const closeIcon = document.createElement("span");
     closeIcon.className = "sidebar-item-icon";
-    closeIcon.textContent = "✕";
+    closeIcon.textContent = "×";
 
     const closeLabel = document.createElement("span");
     closeLabel.className = "sidebar-item-label";
@@ -1545,13 +1650,14 @@ function buildSidebar(menuItems) {
         const li = document.createElement("li");
         const link = document.createElement("a");
 
-        link.href = item[1] === "Dashboard Overview"
-            ? "#dashboard-overview"
-            : "#module-" + item[1].toLowerCase().replace(/[^a-z0-9]+/g, "-");
+        link.href =
+            item[2] === "dashboard_overview"
+                ? "#dashboard-overview"
+                : "#module-" + item[2];
 
         const icon = document.createElement("span");
         icon.className = "sidebar-item-icon";
-        icon.textContent = item[0];
+        icon.appendChild(createSidebarIcon(item[0]));
 
         const label = document.createElement("span");
         label.className = "sidebar-item-label";
@@ -1562,21 +1668,16 @@ function buildSidebar(menuItems) {
         link.addEventListener("click", function(event) {
             event.preventDefault();
 
-            if (item[2] === "logout") {
-                logoutUser();
-                return;
-            }
-
             sidebar.querySelectorAll("a").forEach(menuLink => {
                 menuLink.classList.remove("active");
             });
 
             link.classList.add("active");
 
-            if (item[1] === "Dashboard Overview") {
+            if (item[2] === "dashboard_overview") {
                 showDashboardOverview();
             } else {
-                showModulePage(item[1]);
+                showModulePage(item);
             }
 
             closeSidebar();
@@ -1589,7 +1690,7 @@ function buildSidebar(menuItems) {
             const iconButton = document.createElement("button");
 
             iconButton.type = "button";
-            iconButton.textContent = item[0];
+            iconButton.appendChild(createSidebarIcon(item[0]));
             iconButton.title = item[1];
             iconButton.setAttribute("aria-label", item[1]);
             iconButton.disabled = true;
