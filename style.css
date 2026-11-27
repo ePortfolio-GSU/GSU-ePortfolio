@@ -6546,8 +6546,15 @@ body:has(.login-card) footer {
         font-size: 18px !important;
     }
 
+    /* Refined mobile tagline typography */
+
     .dashboard-page .dashboard-logo .dashboard-title p {
-        font-size: 10px !important;
+        font-family: Georgia, "Times New Roman", serif !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        font-style: italic !important;
+        letter-spacing: 0.15px !important;
+        line-height: 1.4 !important;
         margin-top: 2px !important;
     }
 }
