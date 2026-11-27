@@ -6419,3 +6419,26 @@ body:has(.login-card) footer {
 .dashboard-page #sidebarMenu a.active .sidebar-item-icon {
     border-color: #38BDF8 !important;
 }
+/* GSU SIDEBAR — MATCH QUICK STRIP ICON DIMENSIONS */
+
+.dashboard-page #sidebarMenu .sidebar-item-icon {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex: 0 0 31px !important;
+    width: 31px !important;
+    min-width: 31px !important;
+    height: 31px !important;
+    min-height: 31px !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+
+.dashboard-page #sidebarMenu .sidebar-item-icon svg {
+    display: block !important;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px !important;
+    min-height: 20px !important;
+    flex: 0 0 20px !important;
+}
