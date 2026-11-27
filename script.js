@@ -134,19 +134,16 @@ if (loginForm) {
         // Validate empty fields
         if (username === "" || password === "") {
 
-            GSUNotify.warning(
-                "Please enter both your username and password."
-            );
+            message.textContent = "Please enter username and password.";
+            message.style.color = "red";
 
             return;
 
         }
 
-
         // Capture credentials, then clear both fields
         usernameInput.value = "";
         passwordInput.value = "";
-
 
         // Login loading state
         const loginButton = loginForm.querySelector('button[type="submit"]');
@@ -159,10 +156,8 @@ if (loginForm) {
         message.textContent = "";
         message.style.color = "";
 
-
         const WEB_APP_URL =
         "https://script.google.com/macros/s/AKfycbwcYc2v0rRVF_AFDtluOVFCTja89vOH0HBtcI9rLGs0PCd7D3YpI5K4EVrb7XKaH_AL/exec";
-
 
         fetch(WEB_APP_URL, {
 
@@ -202,7 +197,6 @@ if (loginForm) {
                     openDashboard(result.role);
                 }, 1000);
 
-
             } else {
 
                 loginButton.classList.remove("is-authenticating");
@@ -219,15 +213,12 @@ if (loginForm) {
                 passwordInput.classList.add("login-error");
 
                 setTimeout(function() {
-
                     usernameInput.classList.remove("login-error");
                     passwordInput.classList.remove("login-error");
-
                 }, 800);
 
-                GSUNotify.error(
-                    result.message || "Login failed. Please check your credentials."
-                );
+                message.style.color = "red";
+                message.textContent = result.message;
 
             }
 
@@ -241,13 +232,14 @@ if (loginForm) {
 
             console.error(error);
 
-            GSUNotify.error(
-                error.message || "Unable to connect to the login service. Please try again."
-            );
+            message.style.color = "red";
+            message.textContent = error.toString();
 
         });
 
     });
+
+}
 // =====================================================
 // Secure Dashboard Navigation
 // =====================================================
