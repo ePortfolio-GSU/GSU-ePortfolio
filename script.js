@@ -370,7 +370,8 @@ const DASHBOARD_ROLES = {
             ["chart-no-axes-combined", "Academic Performance", "academic_intelligence"],
             ["folder-kanban", "Learning Portfolio", "portfolio_project_studio"],
             ["vote", "Student Electoral Participation", "electoral_management"],
-            ["trophy", "Co-Curricular Participation", "co_curricular_activities"]
+            ["trophy", "Co-Curricular Participation", "co_curricular_activities"],
+            ["messages-square", "School Communications", "communications_centre"]
         ]
     },
 
@@ -382,7 +383,8 @@ const DASHBOARD_ROLES = {
             ["clipboard-list", "Child's Academic Activities", "academic_operations"],
             ["chart-no-axes-combined", "Child's Academic Performance", "academic_intelligence"],
             ["folder-kanban", "Child's Portfolio", "portfolio_project_studio"],
-            ["building-2", "School Profile", "institutional_management"]
+            ["building-2", "School Profile", "institutional_management"],
+            ["messages-square", "School Communications", "communications_centre"]
         ]
     }
 };
