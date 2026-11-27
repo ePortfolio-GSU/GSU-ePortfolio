@@ -305,19 +305,19 @@ const DASHBOARD_ROLES = {
         welcome: "Welcome to the ICT System Administrator Portal.",
         menu: [
             ["layout-dashboard", "Dashboard Overview", "dashboard_overview"],
-            ["users", "Identity & Access Management", "identity_access_management"],
+            ["users", "Identity & Access", "identity_access_management"],
             ["building-2", "Institutional Management", "institutional_management"],
             ["graduation-cap", "Academic Operations", "academic_operations"],
             ["book-open", "Digital Learning Centre", "digital_learning_centre"],
-            ["chart-no-axes-combined", "Academic Intelligence (AAARS)", "academic_intelligence"],
+            ["chart-no-axes-combined", "Academic Insights (AAARS)", "academic_intelligence"],
             ["folder-kanban", "Portfolio & Project Studio", "portfolio_project_studio"],
-            ["vote", "Electoral Management (GSEC)", "electoral_management"],
+            ["vote", "Elections (GSEC)", "electoral_management"],
             ["users-round", "Student Affairs", "student_affairs"],
             ["trophy", "Co-Curricular Activities", "co_curricular_activities"],
             ["wallet", "Financial Management", "financial_management"],
             ["messages-square", "Communications Centre", "communications_centre"],
-            ["shield-check", "Security & Compliance Centre", "security_compliance"],
-            ["compass", "Platform Intelligence & Navigation", "platform_intelligence_navigation"],
+            ["shield-check", "Security & Compliance", "security_compliance"],
+            ["compass", "System Intelligence", "platform_intelligence_navigation"],
             ["settings", "System Settings", "system_settings"],
             ["database-backup", "Data Protection & Recovery", "data_protection_recovery"],
             ["life-buoy", "Digital Support Centre", "digital_support"]
@@ -328,18 +328,18 @@ const DASHBOARD_ROLES = {
         title: "SCHOOL ADMIN DASHBOARD",
         welcome: "Welcome to the School Administration Portal.",
         menu: [
-            ["layout-dashboard", "School Management Dashboard", "dashboard_overview"],
-            ["users", "User & Access Administration", "identity_access_management"],
-            ["building-2", "School Structure & Administration", "institutional_management"],
+            ["layout-dashboard", "School Dashboard", "dashboard_overview"],
+            ["users", "User Management", "identity_access_management"],
+            ["building-2", "School Structure", "institutional_management"],
             ["graduation-cap", "Academic Administration", "academic_operations"],
-            ["book-open", "Digital Learning Administration", "digital_learning_centre"],
-            ["chart-no-axes-combined", "Academic Performance Intelligence", "academic_intelligence"],
-            ["folder-kanban", "Institutional Portfolio & Projects", "portfolio_project_studio"],
-            ["users-round", "Student Affairs Management", "student_affairs"],
-            ["trophy", "Co-Curricular Administration", "co_curricular_activities"],
+            ["book-open", "Learning Management", "digital_learning_centre"],
+            ["chart-no-axes-combined", "Academic Insights", "academic_intelligence"],
+            ["folder-kanban", "Projects & Portfolios", "portfolio_project_studio"],
+            ["users-round", "Student Affairs", "student_affairs"],
+            ["trophy", "Co-Curricular Affairs", "co_curricular_activities"],
             ["wallet", "Financial Administration", "financial_management"],
             ["messages-square", "School Communications", "communications_centre"],
-            ["shield-check", "Security & Compliance Administration", "security_compliance"]
+            ["shield-check", "Security & Compliance", "security_compliance"]
         ]
     },
 
@@ -348,11 +348,11 @@ const DASHBOARD_ROLES = {
         welcome: "Welcome to your teaching and learner progress workspace.",
         menu: [
             ["layout-dashboard", "Teaching Dashboard", "dashboard_overview"],
-            ["graduation-cap", "Teaching & Class Operations", "academic_operations"],
+            ["graduation-cap", "Class Management", "academic_operations"],
             ["book-open", "Digital Learning Resources", "digital_learning_centre"],
-            ["chart-no-axes-combined", "Academic Performance & Assessment", "academic_intelligence"],
-            ["folder-kanban", "Teaching Portfolio & Projects", "portfolio_project_studio"],
-            ["vote", "School Electoral Participation", "electoral_management"],
+            ["chart-no-axes-combined", "Assessment & Results", "academic_intelligence"],
+            ["folder-kanban", "Teaching Portfolio", "portfolio_project_studio"],
+            ["vote", "School Elections", "electoral_management"],
             ["users-round", "Student & Class Affairs", "student_affairs"],
             ["trophy", "Co-Curricular Coordination", "co_curricular_activities"],
             ["messages-square", "School Communications", "communications_centre"],
@@ -369,7 +369,7 @@ const DASHBOARD_ROLES = {
             ["book-open", "Digital Learning Resources", "digital_learning_centre"],
             ["chart-no-axes-combined", "Academic Performance", "academic_intelligence"],
             ["folder-kanban", "Learning Portfolio", "portfolio_project_studio"],
-            ["vote", "Student Electoral Participation", "electoral_management"],
+            ["vote", "Student Elections", "electoral_management"],
             ["trophy", "Co-Curricular Participation", "co_curricular_activities"],
             ["messages-square", "School Communications", "communications_centre"]
         ]
@@ -381,7 +381,7 @@ const DASHBOARD_ROLES = {
         menu: [
             ["layout-dashboard", "Parent Dashboard", "dashboard_overview"],
             ["clipboard-list", "Child's Academic Activities", "academic_operations"],
-            ["chart-no-axes-combined", "Child's Academic Performance", "academic_intelligence"],
+            ["chart-no-axes-combined", "Academic Progress", "academic_intelligence"],
             ["folder-kanban", "Child's Portfolio", "portfolio_project_studio"],
             ["building-2", "School Profile", "institutional_management"],
             ["messages-square", "School Communications", "communications_centre"]
