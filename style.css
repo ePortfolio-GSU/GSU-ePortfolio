@@ -1287,24 +1287,58 @@ transition: none;
 }
 /* GSU DASHBOARD — HEADER AND LOGO REFINEMENT */
 
-/* GSU HEADER — SKY BLUE WITH THREE-THEME ACCENTS */
+/* GSU HEADER — FLOWING THREE-THEME ACCENTS */
 
 .dashboard-page .dashboard-header {
-    background:
-        linear-gradient(
-            165deg,
-            transparent 0 70%,
-            #38BDF8 70.5% 79%,
-            #FFFFFF 79.5% 85%,
-            #5B1826 85.5% 100%
-        ) right bottom / 44% 48% no-repeat,
-        linear-gradient(
-            110deg,
-            #BDEFFF 0%,
-            #87CEEB 48%,
-            #A6E9F8 100%
-        );
+    position: relative;
+    isolation: isolate;
+
+    background: linear-gradient(
+        110deg,
+        #BDEFFF 0%,
+        #87CEEB 48%,
+        #A6E9F8 100%
+    );
+
     color: #173042;
+}
+
+/* Decorative ribbons — separate layer behind header content */
+
+.dashboard-page .dashboard-header::before {
+    content: "";
+    position: absolute;
+
+    top: 0;
+    right: 285px;
+
+    width: 48%;
+    height: 100%;
+
+    z-index: 0;
+    pointer-events: none;
+
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 120' preserveAspectRatio='none'%3E%3Cpath d='M1000 -12 C850 10 850 55 680 75 S360 112 100 125' fill='none' stroke='%235B1826' stroke-width='9'/%3E%3Cpath d='M1000 -3 C850 19 840 64 670 84 S350 120 90 132' fill='none' stroke='%23FFFFFF' stroke-width='7'/%3E%3Cpath d='M1000 7 C850 29 830 73 660 94 S340 128 80 139' fill='none' stroke='%2338BDF8' stroke-width='11'/%3E%3Cpath d='M1000 15 C850 37 820 82 650 103 S330 137 70 148' fill='none' stroke='%23FFFFFF' stroke-opacity='.35' stroke-width='3'/%3E%3C/svg%3E");
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+/* Keep school identity and every control above the decoration */
+
+.dashboard-page .dashboard-header > .dashboard-logo,
+.dashboard-page .dashboard-header > .dashboard-user-area {
+    position: relative;
+    z-index: 2;
+}
+
+/* Hide decorative ribbons on narrow screens */
+
+@media (max-width: 768px) {
+    .dashboard-page .dashboard-header::before {
+        display: none;
+    }
 }
 
 .dashboard-page .dashboard-logo img {
