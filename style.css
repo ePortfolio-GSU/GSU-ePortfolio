@@ -2055,14 +2055,24 @@ min-width: 0;
 text-align: left;
    }
 
-/* GSU DASHBOARD — SIDEBAR POSITIONING FIX */
+/* GSU DASHBOARD — UNIVERSAL FOOTER AND SIDEBAR ALIGNMENT */
+
+/* Make the maroon side strip span the content AND footer rows */
 
 .dashboard-page .mobile-menu-strip {
     position: relative;
+    grid-column: 1;
+    grid-row: 2 / 4;
     align-self: stretch;
-    min-height: 100%;
+    width: 64px;
+    height: auto;
+    min-height: 0;
     overflow: visible;
+    background: #5B1826;
+    z-index: 21;
 }
+
+/* Sidebar card — consistent viewport-fitted height */
 
 .dashboard-page .dashboard-sidebar {
     position: absolute;
@@ -2070,21 +2080,35 @@ text-align: left;
     left: 100%;
     right: auto;
     bottom: auto;
+
     width: 250px;
-    height: auto;
-    min-height: 100%;
-    max-height: calc(100vh - 150px);
-    max-height: calc(100dvh - 150px);
+
+    height: calc(100vh - 70px);
+    height: calc(100dvh - 70px);
+
+    min-height: 0;
+    max-height: calc(100vh - 70px);
+    max-height: calc(100dvh - 70px);
+
     box-sizing: border-box;
     margin: 0;
+    padding: 0;
+
     overflow-x: hidden;
     overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+
     background: #5B1826;
+
     transform: translateX(-110%);
     visibility: hidden;
     pointer-events: none;
+
     z-index: 30;
 }
+
+/* Sidebar opening state */
 
 .dashboard-page .dashboard-sidebar.active {
     transform: translateX(0);
@@ -2092,9 +2116,53 @@ text-align: left;
     pointer-events: auto;
 }
 
-@media (max-width: 768px) {
+/* Tablets and medium screens */
+
+@media (min-width: 769px) and (max-width: 1100px) {
+    .dashboard-page .mobile-menu-strip {
+        grid-row: 2 / 4;
+    }
+
     .dashboard-page .dashboard-sidebar {
+        height: calc(100dvh - 70px);
+        max-height: calc(100dvh - 70px);
+    }
+}
+
+/* Phones */
+
+@media (max-width: 768px) {
+    .dashboard-page .mobile-menu-strip {
+        grid-row: 2 / 4;
+        width: 52px;
+        min-height: 0;
+    }
+
+    .dashboard-page .dashboard-sidebar {
+        top: 0;
         width: min(250px, calc(100vw - 52px));
+
+        height: calc(100vh - 66px);
+        height: calc(100dvh - 66px);
+
+        max-height: calc(100vh - 66px);
+        max-height: calc(100dvh - 66px);
+    }
+}
+
+/* Small phones */
+
+@media (max-width: 380px) {
+    .dashboard-page .dashboard-sidebar {
+        width: min(240px, calc(100vw - 52px));
+    }
+}
+
+/* Respect device bottom safe areas */
+
+@supports (padding: env(safe-area-inset-bottom)) {
+    .dashboard-page .dashboard-sidebar {
+        padding-bottom: env(safe-area-inset-bottom);
     }
 }
 
