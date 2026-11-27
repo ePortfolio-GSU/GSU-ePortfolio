@@ -121,6 +121,8 @@ const usernameInput = document.getElementById("username");
 
 if (loginForm) {
 
+    if (loginForm) {
+
     loginForm.addEventListener("submit", function(event) {
 
         event.preventDefault();
@@ -134,8 +136,9 @@ if (loginForm) {
         // Validate empty fields
         if (username === "" || password === "") {
 
-            message.textContent = "Please enter username and password.";
-            message.style.color = "red";
+            GSUNotify.warning(
+                "Please enter both your username and password."
+            );
 
             return;
 
@@ -217,8 +220,9 @@ if (loginForm) {
                     passwordInput.classList.remove("login-error");
                 }, 800);
 
-                message.style.color = "red";
-                message.textContent = result.message;
+                GSUNotify.error(
+                    result.message || "Login failed. Please check your credentials."
+                );
 
             }
 
@@ -232,12 +236,15 @@ if (loginForm) {
 
             console.error(error);
 
-            message.style.color = "red";
-            message.textContent = error.toString();
+            GSUNotify.error(
+                error.message || "Unable to connect to the login service. Please try again."
+            );
 
         });
 
     });
+
+}
 
 }
 // =====================================================
