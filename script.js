@@ -1996,21 +1996,6 @@ function renderUserManagementModule(container) {
                 className: String(formData.get("className") || "").trim()
             };
 
-            container.querySelector("#umCreateForm").addEventListener(
-        "submit",
-        async event => {
-            event.preventDefault();
-
-            const form = event.currentTarget;
-            const formData = new FormData(form);
-
-            const userData = {
-                fullName: String(formData.get("fullName") || "").trim(),
-                username: String(formData.get("username") || "").trim(),
-                role: String(formData.get("role") || ""),
-                className: String(formData.get("className") || "").trim()
-            };
-
             const button = container.querySelector("#umCreateButton");
             button.disabled = true;
             button.textContent = "Creating...";
@@ -2039,6 +2024,7 @@ function renderUserManagementModule(container) {
 
             } catch (error) {
                 showMessage(error.message, true);
+
             } finally {
                 button.disabled = false;
                 button.textContent = "Create Account";
