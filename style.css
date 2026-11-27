@@ -6401,3 +6401,21 @@ body:has(.login-card) footer {
     overflow: hidden !important;
     text-overflow: ellipsis !important;
 }
+/* GSU SIDEBAR — MATCH QUICK STRIP ICON DECORATION */
+
+.dashboard-page #sidebarMenu .sidebar-item-icon {
+    border: 1px solid rgba(56, 189, 248, .65) !important;
+    border-radius: 8px !important;
+    background: linear-gradient(145deg, #5B1826, #303944) !important;
+    color: #FFFFFF !important;
+    box-shadow:
+        0 3px 7px rgba(0, 0, 0, .2),
+        inset 0 1px 2px rgba(255, 255, 255, .1) !important;
+    transition: background .2s ease, border-color .2s ease;
+    box-sizing: border-box !important;
+}
+
+.dashboard-page #sidebarMenu a:hover .sidebar-item-icon,
+.dashboard-page #sidebarMenu a.active .sidebar-item-icon {
+    border-color: #38BDF8 !important;
+}
