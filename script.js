@@ -1554,12 +1554,19 @@ function buildSidebar(menuItems) {
             section.style.removeProperty("display");
         });
 
+        const breadcrumb =
+            document.getElementById("dashboardBreadcrumb");
+
+        if (breadcrumb) {
+            breadcrumb.textContent = "Home";
+        }
+
         const heading =
             document.getElementById("dashboardHeading");
 
         if (heading) {
             heading.textContent = config.title;
-            heading.hidden = false;
+            heading.hidden = true;
         }
     }
 
@@ -1578,7 +1585,16 @@ function buildSidebar(menuItems) {
             );
         });
 
-        /* Hide the redundant dashboard heading on module pages */
+        /* Display the current location in the breadcrumb */
+
+        const breadcrumb =
+            document.getElementById("dashboardBreadcrumb");
+
+        if (breadcrumb) {
+            breadcrumb.textContent = "Home / " + item[1];
+        }
+
+        /* Keep the redundant dashboard heading hidden */
 
         const heading =
             document.getElementById("dashboardHeading");
@@ -1602,18 +1618,14 @@ function buildSidebar(menuItems) {
             return;
         }
 
-        /* Retain one title for the selected workspace */
-
-        const moduleHeading = document.createElement("h2");
-        moduleHeading.textContent = item[1];
+        /* Keep workspace content without another generic title */
 
         const moduleMessage = document.createElement("p");
         moduleMessage.textContent =
             "The " + item[1] + " workspace is being prepared.";
 
-        moduleView.append(moduleHeading, moduleMessage);
+        moduleView.appendChild(moduleMessage);
     }
-
     // Close Menu
     const closeItem = document.createElement("li");
     const closeLink = document.createElement("a");
