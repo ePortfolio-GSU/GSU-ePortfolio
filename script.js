@@ -1366,15 +1366,17 @@ function initializeDashboard() {
     }
 
     const currentUser = document.getElementById("currentUser");
+
     if (currentUser) {
-        currentUser.textContent = "Hi, " + user;
+        const firstName = user.trim().split(/\s+/)[0];
+
+        currentUser.textContent = "Hi, " + firstName;
     }
 
     startSessionPresenceHeartbeat();
 
     loadDashboard(role);
 }
-
 // Generate the shared dashboard for the assigned role
 function loadDashboard(role) {
     const config = DASHBOARD_ROLES[role];
