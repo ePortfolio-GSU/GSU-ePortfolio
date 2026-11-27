@@ -6380,3 +6380,24 @@ body:has(.login-card) footer {
     min-height: 20px;
     flex: 0 0 20px;
 }
+/* GSU SIDEBAR — ACCESSIBLE FONT, STRICT SINGLE-LINE LABELS */
+
+.dashboard-page #sidebarMenu > li > a:not(.sidebar-close-link) {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+}
+
+.dashboard-page #sidebarMenu > li > a:not(.sidebar-close-link) .sidebar-item-label {
+    display: block !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    font-size: 15px !important;
+    font-weight: 600;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
