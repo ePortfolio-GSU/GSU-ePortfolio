@@ -1287,7 +1287,7 @@ transition: none;
 }
 /* GSU DASHBOARD — HEADER AND LOGO REFINEMENT */
 
-/* GSU HEADER — CONTINUOUS FLOWING THREE-COLOUR RIBBONS */
+/* GSU HEADER — APPROVED THREE-COLOUR FLOWING RIBBON DESIGN */
 
 .dashboard-page .dashboard-header {
     position: relative;
@@ -1303,29 +1303,28 @@ transition: none;
     color: #173042;
 }
 
-/* CONTINUOUS RIBBON DECORATION */
+/* THREE BROAD RIBBONS — STRICTLY CONFINED TO HEADER */
 
 .dashboard-page .dashboard-header::before {
     content: "";
     position: absolute;
 
-    top: 0;
-    right: clamp(210px, 22vw, 285px);
+    inset: 0;
 
-    width: clamp(240px, 43vw, 620px);
+    width: 100%;
     height: 100%;
 
     z-index: 1;
     pointer-events: none;
 
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 120' preserveAspectRatio='none'%3E%3Cpath d='M-100 155 C180 145 230 25 480 58 S800 95 1100 -35' fill='none' stroke='%235B1826' stroke-width='24'/%3E%3Cpath d='M-100 169 C180 159 230 39 480 72 S800 109 1100 -21' fill='none' stroke='%23FFFFFF' stroke-width='19'/%3E%3Cpath d='M-100 183 C180 173 230 53 480 86 S800 123 1100 -7' fill='none' stroke='%2338BDF8' stroke-width='24'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 120' preserveAspectRatio='none'%3E%3Cpath d='M350 120 C465 98 565 43 700 0 L755 0 C610 55 500 105 410 120 Z' fill='%235B1826'/%3E%3Cpath d='M405 120 C520 98 625 43 755 0 L805 0 C665 55 555 105 465 120 Z' fill='%23FFFFFF'/%3E%3Cpath d='M460 120 C575 98 680 43 810 0 L855 0 C720 55 610 105 520 120 Z' fill='%2338BDF8'/%3E%3C/svg%3E");
 
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100%;
 }
 
-/* KEEP ALL HEADER CONTENT AND CONTROLS ABOVE THE RIBBONS */
+/* KEEP SCHOOL BRANDING AND HEADER CONTROLS ABOVE DECORATION */
 
 .dashboard-page .dashboard-header > .dashboard-logo,
 .dashboard-page .dashboard-header > .dashboard-user-area {
@@ -1337,23 +1336,15 @@ transition: none;
 
 @media (min-width: 769px) and (max-width: 1100px) {
     .dashboard-page .dashboard-header::before {
-        right: 185px;
-        width: 43%;
-        height: 100%;
+        background-size: 100% 100%;
     }
 }
 
-/* SMALL SCREENS — RESPONSIVE RIBBON WIDTH */
+/* MOBILE SCREENS */
 
 @media (max-width: 768px) {
     .dashboard-page .dashboard-header::before {
-        display: block;
-
-        top: 0;
-        right: clamp(90px, 16vw, 110px);
-
-        width: clamp(115px, 35vw, 245px);
-        height: 100%;
+        background-size: 100% 100%;
     }
 }
 
@@ -1361,9 +1352,7 @@ transition: none;
 
 @media (max-width: 380px) {
     .dashboard-page .dashboard-header::before {
-        right: 86px;
-        width: 34%;
-        height: 100%;
+        background-size: 100% 100%;
     }
 }
 .dashboard-page .dashboard-logo img {
