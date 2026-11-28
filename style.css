@@ -1457,7 +1457,7 @@ flex-basis: 48px;
 .dashboard-page #menuToggle {
     display: block;
     position: relative;
-    z-index: 40;
+    z-index: 10;
     width: 100%;
     min-height: 42px;
     margin: 0;
