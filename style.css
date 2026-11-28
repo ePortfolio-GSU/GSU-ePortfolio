@@ -1086,15 +1086,15 @@ overflow-wrap: anywhere;
     background:
         linear-gradient(
             115deg,
-            rgba(13, 23, 38, 0.98),
-            rgba(25, 43, 65, 0.97) 65%,
-            rgba(39, 61, 84, 0.98)
+            #4A252F,
+            #303944 55%,
+            #4A252F
         );
     box-shadow:
         0 0 8px rgba(56, 189, 248, 0.35),
         0 0 22px rgba(56, 189, 248, 0.13),
         0 8px 20px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        inset 0 1px 0 rgba(241, 243, 246, 0.12);
 }
 
 .dashboard-page .dashboard-welcome::before {
@@ -1115,7 +1115,7 @@ overflow-wrap: anywhere;
             0deg,
             transparent,
             transparent 24px,
-            rgba(56, 189, 248, 0.07) 25px
+            rgba(241, 243, 246, 0.07) 25px
         );
 }
 
@@ -1129,7 +1129,7 @@ overflow-wrap: anywhere;
     background: linear-gradient(
         90deg,
         #4A252F,
-        #8B344A,
+        #303944,
         #38BDF8
     );
     box-shadow: 0 0 12px #38BDF8;
@@ -1154,8 +1154,8 @@ overflow-wrap: anywhere;
     justify-content: center;
     border: 3px solid #38BDF8;
     border-radius: 50%;
-    color: #FFFFFF;
-    background: rgba(7, 19, 34, 0.75);
+    color: #F1F3F6;
+    background: rgba(48, 57, 68, 0.85);
     box-shadow:
         0 0 10px rgba(56, 189, 248, 0.7),
         inset 0 0 12px rgba(56, 189, 248, 0.15);
@@ -1198,10 +1198,10 @@ overflow-wrap: anywhere;
     background: linear-gradient(
         110deg,
         #4A252F,
-        #702C40
+        #303944
     );
     border-bottom: 2px solid #38BDF8;
-    border-left: 1px solid rgba(255,255,255,0.15);
+    border-left: 1px solid rgba(241, 243, 246, 0.15);
     transform: skewX(-28deg);
     opacity: 0.95;
 }
@@ -1271,7 +1271,7 @@ overflow-wrap: anywhere;
     flex: 1;
     min-width: 0;
     margin: 0;
-    color: #FFFFFF;
+    color: #F1F3F6;
     font-size: 14px;
     font-weight: 600;
     text-align: left;
@@ -1288,12 +1288,12 @@ overflow-wrap: anywhere;
     min-height: 38px;
     margin-top: 8px;
     padding-top: 10px;
-    border-top: 1px solid rgba(148, 190, 220, 0.35);
+    border-top: 1px solid rgba(241, 243, 246, 0.25);
 }
 
 .dashboard-page .welcome-trophy-icon {
     flex: 0 0 34px;
-    color: #FFFFFF;
+    color: #F1F3F6;
 }
 
 .dashboard-page .welcome-trophy-icon svg {
