@@ -3406,18 +3406,18 @@ body:has(.login-card) footer {
 .dashboard-page #dashboardCards {
     display: block !important;
     width: 100%;
-    max-width: 700px;
+    max-width: 620px;
     margin: 0 auto;
     min-width: 0;
 }
 
 .session-progress-card {
     width: 100%;
-    max-width: 700px;
+    max-width: 620px;
     box-sizing: border-box;
-    padding: 10px 12px;
+    padding: 8px 10px;
     margin: 0 auto;
-    border-radius: 10px;
+    border-radius: 9px;
 }
 
 /* Header */
@@ -3471,9 +3471,9 @@ body:has(.login-card) footer {
     flex-direction: row;
     align-items: center;
     justify-content: flex-start;
-    gap: 6px;
-    margin-top: 5px;
-    margin-bottom: 9px;
+    gap: 5px;
+    margin-top: 3px;
+    margin-bottom: 4px;
 }
 
 .session-year-block span {
@@ -3495,8 +3495,8 @@ body:has(.login-card) footer {
     align-items: stretch;
     width: 100%;
     min-width: 0;
-    gap: 3px;
-    margin: 7px 0 3px;
+    gap: 2px;
+    margin: 3px 0 2px;
 }
 
 .session-progress-description {
@@ -3581,12 +3581,12 @@ body:has(.login-card) footer {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    margin-top: 3px;
-    padding-top: 6px;
+    margin-top: 1px;
+    padding-top: 3px;
     border-top: 1px solid rgba(135, 206, 235, 0.22);
 }
 
@@ -3655,7 +3655,7 @@ body:has(.login-card) footer {
 
     .session-progress-card {
         max-width: 100%;
-        padding: 14px;
+        padding: 9px;
     }
 
     .session-progress-layout {
