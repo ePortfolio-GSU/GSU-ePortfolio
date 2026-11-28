@@ -3406,18 +3406,18 @@ body:has(.login-card) footer {
 .dashboard-page #dashboardCards {
     display: block !important;
     width: 100%;
-    max-width: 920px;
+    max-width: 760px;
     margin: 0 auto;
     min-width: 0;
 }
 
 .session-progress-card {
     width: 100%;
-    max-width: 920px;
+    max-width: 760px;
     box-sizing: border-box;
-    padding: 17px 19px;
+    padding: 12px 14px;
     margin: 0 auto;
-    border-radius: 14px;
+    border-radius: 11px;
 }
 
 /* Header */
