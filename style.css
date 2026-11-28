@@ -1072,8 +1072,8 @@ overflow-wrap: anywhere;
 }
 
 .dashboard-page .dashboard-welcome {
-    margin: 0 0 24px;
-    padding: 20px;
+    margin: 0 0 18px;
+    padding: 16px 18px;
     border: 1px solid rgba(56, 189, 248, 0.45);
     border-left: 5px solid #38BDF8;
     border-radius: 12px;
@@ -1082,9 +1082,9 @@ overflow-wrap: anywhere;
 }
 
 .dashboard-page .dashboard-welcome h2 {
-    margin: 0 0 10px;
+    margin: 0 0 7px;
     color: #38BDF8;
-    font-size: 20px;
+    font-size: 17px;
     font-weight: 800;
     text-align: center;
     overflow-wrap: anywhere;
@@ -1093,12 +1093,13 @@ overflow-wrap: anywhere;
 .dashboard-page .dashboard-welcome p {
     margin: 0;
     color: #FFFFFF;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     text-align: center;
-    line-height: 1.7;
+    line-height: 1.55;
     overflow-wrap: anywhere;
 }
+
 .dashboard-page #dashboardCards,
 .dashboard-page #dashboardWorkspace,
 .dashboard-page #dashboardActivity {
@@ -1216,17 +1217,19 @@ min-height: 100vh;
     font-size: 20px;  
 }  
 
-.dashboard-page .dashboard-welcome {  
-    padding: 14px 12px;  
-}  
+.dashboard-page .dashboard-welcome {
+    padding: 12px 10px;
+}
 
-.dashboard-page .dashboard-welcome h2 {  
-    font-size: 18px;  
-}  
+.dashboard-page .dashboard-welcome h2 {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
 
-.dashboard-page .dashboard-welcome p {  
-    font-size: 14px;  
-}  
+.dashboard-page .dashboard-welcome p {
+    font-size: 13px;
+    line-height: 1.5;
+}
 
 .dashboard-page .dashboard-footer {  
     grid-column: 2;  
