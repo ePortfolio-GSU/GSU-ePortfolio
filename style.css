@@ -2352,14 +2352,17 @@ body:has(.login-card) footer {
     letter-spacing: 1.3px;
 }
 
+/* LIVE INDICATOR — SOLID RED WITH BLINKING DOT */
+
 .session-live-indicator {
     display: flex;
     align-items: center;
     gap: 7px;
     padding: 6px 10px;
-    border: 1px solid rgba(48, 220, 171, 0.35);
+    border: 1px solid #E00000;
     border-radius: 20px;
-    color: #54E6B6;
+    background: #E00000;
+    color: #FFFFFF;
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 1px;
@@ -2369,8 +2372,19 @@ body:has(.login-card) footer {
     width: 7px;
     height: 7px;
     border-radius: 50%;
-    background: #36E6A8;
-    box-shadow: 0 0 9px #36E6A8;
+    background: #FFFFFF;
+    box-shadow: 0 0 7px #FFFFFF;
+    animation: liveDotBlink 1s steps(1, end) infinite;
+}
+
+@keyframes liveDotBlink {
+    0%, 49% {
+        opacity: 1;
+    }
+
+    50%, 100% {
+        opacity: 0;
+    }
 }
 .session-card-actions {
     display: flex;
