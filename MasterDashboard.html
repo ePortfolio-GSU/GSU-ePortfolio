@@ -22,19 +22,55 @@
 </div>
 
         <div class="dashboard-user-area">
-            <span id="currentUser">Welcome</span>
+    <span id="currentUser">Welcome</span>
 
-            <button id="notificationBtn" class="header-icon"
-                    type="button" aria-label="Notifications"
-                    title="Notifications">🔔</button>
+    <button id="notificationBtn" class="header-icon"
+            type="button" aria-label="Notifications"
+            title="Notifications">
 
-            <div class="profile-dropdown">
-                <button id="profileBtn" class="header-icon"
-                        type="button" aria-label="Profile menu"
-                        aria-expanded="false" aria-controls="profileMenu">
-                    👤
-                </button>
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="20" height="20"
+             viewBox="0 0 24 24"
+             fill="none"
+             stroke="currentColor"
+             stroke-width="1.8"
+             stroke-linecap="round"
+             stroke-linejoin="round"
+             aria-hidden="true"
+             focusable="false">
+            <path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/>
+            <path d="M10 21h4"/>
+        </svg>
 
+    </button>
+
+    <div class="profile-dropdown">
+        <button id="profileBtn" class="header-icon"
+                type="button" aria-label="Profile menu"
+                aria-expanded="false" aria-controls="profileMenu">
+
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 width="20" height="20"
+                 viewBox="0 0 24 24"
+                 fill="none"
+                 stroke="currentColor"
+                 stroke-width="1.8"
+                 stroke-linecap="round"
+                 stroke-linejoin="round"
+                 aria-hidden="true"
+                 focusable="false">
+                <circle cx="12" cy="8" r="4"/>
+                <path d="M5 21a7 7 0 0 1 14 0"/>
+            </svg>
+
+        </button>
+
+        <div id="profileMenu" class="profile-menu" hidden>
+            <button id="myProfileBtn" type="button">My Profile</button>
+            <button id="logoutBtn" type="button">Logout</button>
+        </div>
+    </div>
+</div>
                 <div id="profileMenu" class="profile-menu" hidden>
     <button id="myProfileBtn" type="button">
         <svg xmlns="http://www.w3.org/2000/svg"
