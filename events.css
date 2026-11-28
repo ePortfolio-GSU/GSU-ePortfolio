@@ -325,27 +325,34 @@ body.dashboard-page.calendar-page .calendar-footer {
 
 
 /************************************************
- * HEADER
+ * HEADER — LEFT-ALIGNED SCHOOL BRANDING
  ************************************************/
 
 .calendar-page .dashboard-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
     gap: 16px;
     padding: 12px 4%;
-    background: #ffffff;
-    border-bottom: 1px solid #dce1e7;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    text-align: left !important;
 }
 
 .calendar-page .dashboard-brand {
-    display: flex;
-    align-items: center;
+    display: flex !important;
+    flex: 0 0 auto !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    align-self: flex-start !important;
     gap: 12px;
+    width: auto !important;
+    margin: 0 auto 0 0 !important;
+    text-align: left !important;
 }
 
 .calendar-page .dashboard-brand img {
+    display: block;
+    flex: 0 0 48px;
     width: 48px;
     height: 48px;
     object-fit: contain;
@@ -354,36 +361,60 @@ body.dashboard-page.calendar-page .calendar-footer {
 .calendar-page .dashboard-brand div {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: flex-start !important;
     gap: 3px;
+    text-align: left !important;
 }
 
 .calendar-page .dashboard-brand strong {
     font-size: 14px;
-    color: #173b65;
+    color: #FFFFFF;
+    text-align: left !important;
 }
 
 .calendar-page .dashboard-brand span {
     font-size: 11px;
-    color: #687786;
+    color: #FFFFFF;
     letter-spacing: 0.5px;
+    text-align: left !important;
 }
 
-.calendar-user {
+.calendar-page .calendar-user {
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: 14px;
+    color: #FFFFFF;
     font-size: 13px;
 }
 
-#calendarBackButton {
+.calendar-page #calendarBackButton {
     padding: 8px 13px;
-    border: 1px solid #87ceeb;
+    border: 1px solid #38BDF8;
     border-radius: 18px;
-    background: #ffffff;
-    color: #173042;
+    background: #FFFFFF;
+    color: #4A252F;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 700;
     cursor: pointer;
+}
+
+@media (max-width: 650px) {
+    .calendar-page .dashboard-header {
+        align-items: flex-start !important;
+        flex-direction: column !important;
+    }
+
+    .calendar-page .dashboard-brand {
+        align-self: flex-start !important;
+        margin-right: 0 !important;
+    }
+
+    .calendar-page .calendar-user {
+        width: 100%;
+        justify-content: space-between;
+    }
 }
 
 
