@@ -761,6 +761,7 @@ function getAcademicTermWeek() {
     if (!activeTerm) return "HOLIDAY";
 
     const startParts = activeTerm.startDate.split("-").map(Number);
+    const endParts = activeTerm.endDate.split("-").map(Number);
 
     const startUTC = Date.UTC(
         startParts[0],
@@ -768,26 +769,40 @@ function getAcademicTermWeek() {
         startParts[2]
     );
 
+    const endUTC = Date.UTC(
+        endParts[0],
+        endParts[1] - 1,
+        endParts[2]
+    );
+
     const daysFromStart = Math.floor(
         (todayUTC - startUTC) / 86400000
     );
+
+    const totalTermDays = Math.floor(
+        (endUTC - startUTC) / 86400000
+    ) + 1;
 
     const startDay = new Date(startUTC).getUTCDay();
 
     const daysUntilFirstSaturday =
         (6 - startDay + 7) % 7;
 
-    if (daysFromStart <= daysUntilFirstSaturday) {
-        return "WEEK 01";
-    }
+    const firstWeekDays = daysUntilFirstSaturday + 1;
 
-    const daysAfterFirstSaturday =
-        daysFromStart - daysUntilFirstSaturday - 1;
+    const weekNumber = daysFromStart <= daysUntilFirstSaturday
+        ? 1
+        : 2 + Math.floor(
+            (daysFromStart - daysUntilFirstSaturday - 1) / 7
+        );
 
-    const weekNumber =
-        2 + Math.floor(daysAfterFirstSaturday / 7);
+    const totalWeeks = totalTermDays <= firstWeekDays
+        ? 1
+        : 1 + Math.ceil(
+            (totalTermDays - firstWeekDays) / 7
+        );
 
-    return `WEEK ${String(weekNumber).padStart(2, "0")}`;
+    return `WEEK ${weekNumber} OF ${totalWeeks}`;
 }
 
 
