@@ -1488,9 +1488,10 @@ function loadDashboard(role) {
 
     if (heading) heading.textContent = config.title;
 
+    const loggedUser = sessionStorage.getItem("loggedUser") || "";
+    const firstName = loggedUser.trim().split(/\s+/)[0];
+
     if (welcomeHeading) {
-        const loggedUser = sessionStorage.getItem("loggedUser") || "";
-        const firstName = loggedUser.trim().split(/\s+/)[0];
         const currentHour = new Date().getHours();
 
         let greeting;
@@ -1508,9 +1509,9 @@ function loadDashboard(role) {
     }
 
     if (welcomeMessage) {
-    welcomeMessage.textContent =
-        "We're glad to have you here. Your workspace is ready! Need a hand navigating the system? Tap the Help button below for quick guidance and support.";
-}
+        welcomeMessage.textContent =
+            getRoleWelcomeMessage(role, firstName);
+    }
 
     buildSidebar(config.menu);
     renderSessionProgressCard(role);
