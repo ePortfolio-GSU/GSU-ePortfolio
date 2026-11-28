@@ -389,6 +389,97 @@ const DASHBOARD_ROLES = {
     }
 };
 // =====================================================
+// GSU PERSONALIZED ROLE-BASED WELCOME MESSAGES
+// Rotates messages across successive logins
+// =====================================================
+
+function getRoleWelcomeMessage(role, firstName) {
+    const name = firstName || "there";
+
+    const messages = {
+        ICT_ADMIN: [
+            `Welcome back, ${name}. Your expertise helps keep the GSU digital ecosystem secure, reliable and ready for everyone.`,
+            `${name}, every improvement you make strengthens the foundation of our digital learning environment. Keep innovating.`,
+            `A new session, ${name}, and another opportunity to advance technology, security and institutional excellence.`,
+            `Your commitment to digital excellence makes a difference, ${name}. Thank you for keeping the system moving forward.`,
+            `Welcome again, ${name}. Stay alert, think ahead and continue building a smarter digital institution.`,
+            `${name}, consistent system improvement is the foundation of lasting digital transformation. Keep leading the way.`
+        ],
+
+        SCHOOL_ADMIN: [
+            `Welcome back, ${name}. Your leadership and coordination help create an organised and productive school environment.`,
+            `${name}, every well-managed process contributes to better teaching, learning and institutional success.`,
+            `A new day to make a difference, ${name}. Keep strengthening the systems that support our school community.`,
+            `Your dedication to effective school administration matters, ${name}. Keep moving the institution forward.`,
+            `Welcome again, ${name}. Thoughtful decisions and consistent leadership build a stronger school.`,
+            `${name}, excellence in administration begins with commitment, accountability and attention to detail. Keep it up.`
+        ],
+
+        TEACHER: [
+            `Welcome back, ${name}. Every lesson you prepare is another opportunity to inspire, guide and transform a learner's future.`,
+            `${name}, your patience and dedication make a lasting difference. Keep nurturing curiosity and potential.`,
+            `A new teaching session awaits, ${name}. Continue inspiring learners to discover, question and achieve.`,
+            `Welcome again, ${name}. Every learner progresses differently. Your guidance helps each one move forward.`,
+            `${name}, great teaching goes beyond delivering content. Keep encouraging confidence, creativity and independent thinking.`,
+            `Your commitment to shaping young minds matters, ${name}. Keep teaching with purpose and passion.`
+        ],
+
+        LEARNER: [
+            `Welcome to another learning session, ${name}. Every new day brings an opportunity to reach another milestone.`,
+            `${name}, keep working smart and hard. Small, consistent efforts lead to meaningful achievements.`,
+            `It is great to see you back, ${name}. Your persistence is part of your progress. Keep seeking knowledge.`,
+            `Every challenge is an opportunity to grow, ${name}. Stay curious, remain focused and believe in your ability.`,
+            `Welcome back, ${name}. Celebrate how far you have come, then keep pushing towards your next achievement.`,
+            `${name}, your future is shaped by the effort you invest today. Keep learning, practising and improving.`,
+            `Another opportunity to learn and excel, ${name}. Stay disciplined, ask questions and never stop exploring.`,
+            `Your determination deserves recognition, ${name}. Keep showing up, keep learning and let your progress speak.`
+        ],
+
+        PARENT: [
+            `Welcome back, ${name}. Your continued involvement plays an important role in supporting your child's educational journey.`,
+            `${name}, every word of encouragement and every moment of support can help a learner reach greater heights.`,
+            `Thank you for staying connected, ${name}. Your partnership with the school strengthens your child's learning experience.`,
+            `Welcome again, ${name}. Keep encouraging progress, celebrating effort and supporting your child's potential.`,
+            `${name}, education is a partnership. Your interest and involvement help build a stronger foundation for success.`,
+            `Your support matters, ${name}. Stay engaged, stay informed and continue inspiring your child's growth.`
+        ]
+    };
+
+    const roleMessages = messages[role] || [
+        `Welcome back, ${name}. We are glad to have you with us. Make this session productive.`
+    ];
+
+    const storageKey = "gsuWelcomeMessageIndex_" + role;
+
+    let previousIndex = -1;
+
+    try {
+        const savedIndex = localStorage.getItem(storageKey);
+
+        if (savedIndex !== null) {
+            previousIndex = Number(savedIndex);
+        }
+    } catch (error) {
+        previousIndex = -1;
+    }
+
+    const nextIndex =
+        (Number.isInteger(previousIndex) &&
+         previousIndex >= 0 &&
+         previousIndex < roleMessages.length - 1)
+            ? previousIndex + 1
+            : 0;
+
+    try {
+        localStorage.setItem(storageKey, String(nextIndex));
+    } catch (error) {
+        // Continue even if browser storage is unavailable.
+    }
+
+    return roleMessages[nextIndex];
+}
+
+// =====================================================
 // GSU ACADEMIC COMMAND CENTRE
 // Shared role-based session progress card
 // =====================================================
