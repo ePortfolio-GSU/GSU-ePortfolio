@@ -3049,7 +3049,7 @@ body:has(.login-card) footer {
 
     .session-activities-names,
     .session-upcoming-section strong {
-        font-size: 10px;
+        font-size: 12px;
     }
 
     .session-ongoing-section > span,
@@ -3471,11 +3471,11 @@ body:has(.login-card) footer {
 }
 
 .session-year-block span {
-    font-size: 7px;
+    font-size: 9px;
 }
 
 .session-year-block strong {
-    font-size: 14px;
+    font-size: 11px;
 }
 
 /* Horizontal progress bar */
