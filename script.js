@@ -1003,6 +1003,7 @@ async function loadSessionEvents() {
             .map(record => ({
                 title: record.title || record.recordType,
                 status: record.status,
+                recordType: record.recordType,
                 startDateTime: record.startDate,
                 endDateTime: record.endDate,
                 source: "SCHOOL_CALENDAR"
@@ -1059,6 +1060,26 @@ async function loadSessionEvents() {
         const ongoingActivity = ongoingActivities[0] || null;
         const upcomingActivity = upcomingActivities[0] || null;
 
+        // Identify the actual ongoing academic term independently
+        // of other events and public holidays.
+        const activeCalendarTerm = allActivities.find(activity =>
+            String(activity.source || "").toUpperCase() ===
+                "SCHOOL_CALENDAR" &&
+            String(activity.recordType || "").toUpperCase() ===
+                "TERM" &&
+            activity.start <= now &&
+            now <= activity.end
+        );
+
+        window.sessionActiveAcademicTerm = activeCalendarTerm
+            ? {
+                startDate: getNairobiDateString(activeCalendarTerm.start),
+                endDate: getNairobiDateString(activeCalendarTerm.end)
+            }
+            : null;
+
+        // Refresh the week display using the live calendar term.
+        updateSessionClock();
         // Format remaining time as days, hours, minutes and seconds.
         function formatCountdown(targetTime) {
             const remaining = Math.max(0, targetTime - Date.now());
