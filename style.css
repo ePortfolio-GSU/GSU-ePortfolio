@@ -6318,13 +6318,13 @@ body.dashboard-page .dashboard-content {
     body.dashboard-page .dashboard-wrapper {
         display: grid !important;
         grid-template-columns: 52px minmax(0, 1fr) !important;
-        grid-template-rows:
-            auto
-            minmax(calc(100vh - 120px), auto)
-            auto !important;
+        grid-template-rows: auto minmax(0, 1fr) auto !important;
         width: 100% !important;
+        height: 100vh !important;
+        height: 100dvh !important;
         max-width: 100% !important;
-        min-height: 100vh !important;
+        min-height: 0 !important;
+        overflow: hidden !important;
     }
 
     body.dashboard-page .dashboard-header {
