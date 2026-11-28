@@ -3467,15 +3467,15 @@ body:has(.login-card) footer {
 /* Academic year */
 
 .session-year-block {
-    margin-top: 12px;
+    margin-top: 7px;
 }
 
 .session-year-block span {
-    font-size: 9px;
+    font-size: 8px;
 }
 
 .session-year-block strong {
-    font-size: 20px;
+    font-size: 16px;
 }
 
 /* Horizontal progress bar */
@@ -3486,8 +3486,8 @@ body:has(.login-card) footer {
     align-items: stretch;
     width: 100%;
     min-width: 0;
-    gap: 5px;
-    margin: 12px 0;
+    gap: 3px;
+    margin: 7px 0 3px;
 }
 
 .session-progress-description {
@@ -3571,12 +3571,12 @@ body:has(.login-card) footer {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     width: 100%;
     min-width: 0;
     box-sizing: border-box;
-    margin-top: 12px;
-    padding-top: 11px;
+    margin-top: 3px;
+    padding-top: 6px;
     border-top: 1px solid rgba(135, 206, 235, 0.22);
 }
 
