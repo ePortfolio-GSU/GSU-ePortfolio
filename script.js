@@ -1115,14 +1115,13 @@ function renderSessionProgressCard(role) {
 
             <header class="session-card-header">
 
-                <div class="session-card-brand">
-                    <span class="session-card-symbol">◎</span>
+               <div class="session-card-brand">
 
-                    <div>
-                        <h2>ACADEMIC COMMAND CENTRE</h2>
-                        <p>GSU EMBAKASI ACADEMY</p>
-                    </div>
-                </div>
+    <div>
+        <h2>ACADEMIC COMMAND CENTRE</h2>
+    </div>
+
+</div>
 
                 <span class="session-week-date" id="sessionLiveDate">
                     Loading date...
