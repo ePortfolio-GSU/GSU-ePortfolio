@@ -6626,3 +6626,98 @@ body:has(.login-card) footer {
         margin-top: 2px !important;
     }
 }
+/* GSU DASHBOARD — SIDEBAR AND ICON RAIL CONTINUE BEHIND FOOTER */
+
+/* Extend the maroon icon rail through the footer row */
+body.dashboard-page .mobile-menu-strip {
+    grid-column: 1;
+    grid-row: 2 / 4;
+
+    position: relative;
+    align-self: stretch;
+
+    height: auto;
+    min-height: 0;
+
+    overflow-x: visible;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: none;
+    background: #5B1826;
+
+    z-index: 5;
+}
+
+body.dashboard-page .mobile-menu-strip::-webkit-scrollbar {
+    display: none;
+}
+
+/* Let the opened sidebar extend behind the footer */
+body.dashboard-page .dashboard-sidebar {
+    position: absolute;
+
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+
+    height: auto;
+    min-height: 0;
+    max-height: none;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+
+    scrollbar-width: thin;
+
+    z-index: 20;
+}
+
+/* Keep the main workspace in its own layer */
+body.dashboard-page .dashboard-main {
+    position: relative;
+    z-index: 1;
+}
+
+/* Footer overlays the sidebar and icon rail */
+body.dashboard-page .dashboard-footer {
+    position: relative !important;
+    grid-column: 1 / -1;
+    grid-row: 3;
+
+    z-index: 100;
+    isolation: isolate;
+}
+
+/* Tablets */
+@media (min-width: 769px) and (max-width: 1100px) {
+    body.dashboard-page .mobile-menu-strip {
+        grid-row: 2 / 4;
+    }
+}
+
+/* Phones */
+@media (max-width: 768px) {
+    body.dashboard-page .mobile-menu-strip {
+        grid-column: 1;
+        grid-row: 2 / 4;
+        width: 52px;
+    }
+
+    body.dashboard-page .dashboard-sidebar {
+        top: 0;
+        bottom: 0;
+        width: min(250px, calc(100vw - 52px));
+    }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+    body.dashboard-page .dashboard-sidebar {
+        width: min(240px, calc(100vw - 52px));
+    }
+}
