@@ -1840,7 +1840,7 @@ body.dashboard-page {
 }
 
 .dashboard-page .mobile-menu-strip {
-    grid-row: 2;
+    grid-row: 2 / 4;
     min-height: 0;
 }
 
@@ -1967,10 +1967,11 @@ body.dashboard-page .dashboard-header {
 
 body.dashboard-page .mobile-menu-strip {
     grid-column: 1;
-    grid-row: 2;
+    grid-row: 2 / 4;
     min-height: 0;
     height: 100%;
     overflow: visible;
+    z-index: 50;
 }
 
 body.dashboard-page .dashboard-main {
@@ -2056,11 +2057,11 @@ body.dashboard-page .dashboard-footer > div {
     }
 
     body.dashboard-page .mobile-menu-strip {
-        grid-column: 1;
-        grid-row: 2;
-        width: 52px;
-        height: 100%;
-    }
+    grid-column: 1;
+    grid-row: 2 / 4;
+    width: 52px;
+    height: 100%;
+}
 
     body.dashboard-page .dashboard-main {
         grid-column: 2;
@@ -2123,36 +2124,7 @@ body.dashboard-page .dashboard-footer > div {
     line-height: 1.75 !important;
     box-sizing: border-box !important;
 }
-/* GSU DASHBOARD — HIDE QUICK STRIP ICONS */
-.dashboard-page .sidebar-quick-icons {
-    display: none !important;
-}
-/* GSU DASHBOARD — SIDEBAR OPENS FROM DEVICE EDGE */
-.dashboard-page .dashboard-sidebar {
-    left: 0 !important;
-    margin-left: 0 !important;
-    z-index: 1000 !important;
-    box-sizing: border-box !important;
-}
 
-/* Keep sidebar links and icons inside the maroon card */
-.dashboard-page .dashboard-sidebar ul {
-    box-sizing: border-box !important;
-    width: 100% !important;
-}
-
-/* Hide the separate quick-icon strip */
-.dashboard-page .sidebar-quick-icons {
-    display: none !important;
-}
-
-/* GSU DASHBOARD — SIDE-STRIP ICON VISIBILITY */
-.dashboard-page .sidebar-quick-icons {
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    pointer-events: none !important;
-}
 /* Sign Up Section */
 
 .signup-container {
@@ -6461,12 +6433,6 @@ body.dashboard-page .dashboard-content {
     body.dashboard-page .dashboard-welcome h2,
     body.dashboard-page .dashboard-welcome p {
         overflow-wrap: break-word;
-    }
-
-    /* Keep the opened sidebar beside the icon rail */
-    body.dashboard-page .dashboard-sidebar {
-        left: 100% !important;
-        width: min(250px, calc(100vw - 52px)) !important;
     }
 }
 
