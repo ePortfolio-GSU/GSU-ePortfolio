@@ -6824,3 +6824,158 @@ body.dashboard-page .dashboard-content {
         overflow-wrap: break-word;
     }
 }
+/* GSU PORTAL — TOUCH-DEVICE LAYOUT INDEPENDENT OF BROWSER ZOOM */
+
+/* Keep the phone/tablet layout active on touch devices,
+   even when Chrome zoom changes the reported CSS viewport. */
+@media (pointer: coarse) and (hover: none) {
+
+    body.dashboard-page {
+        width: 100%;
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    body.dashboard-page .dashboard-wrapper {
+        display: grid !important;
+        grid-template-columns: 52px minmax(0, 1fr) !important;
+        grid-template-rows:
+            auto
+            minmax(calc(100vh - 120px), auto)
+            auto !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        min-height: 100vh !important;
+    }
+
+    body.dashboard-page .dashboard-header {
+        grid-column: 1 / -1 !important;
+        grid-row: 1 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        height: auto !important;
+        min-height: 66px !important;
+        padding: 8px 8px !important;
+        gap: 6px !important;
+        overflow: hidden;
+    }
+
+    body.dashboard-page .dashboard-logo {
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+        gap: 6px !important;
+    }
+
+    body.dashboard-page .dashboard-logo img {
+        width: 40px !important;
+        height: 40px !important;
+        flex: 0 0 40px !important;
+    }
+
+    body.dashboard-page .dashboard-logo .dashboard-title {
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 1 0 !important;
+        min-width: 0 !important;
+    }
+
+    body.dashboard-page .dashboard-logo .dashboard-title h2 {
+        font-size: clamp(13px, 3.6vw, 18px) !important;
+        line-height: 1.15 !important;
+        white-space: normal !important;
+    }
+
+    body.dashboard-page .dashboard-logo .dashboard-title p {
+        font-size: clamp(9px, 2.5vw, 11px) !important;
+        line-height: 1.2 !important;
+        white-space: normal !important;
+    }
+
+    body.dashboard-page .dashboard-user-area {
+        flex: 0 0 auto !important;
+        min-width: 0 !important;
+        gap: 4px !important;
+    }
+
+    body.dashboard-page #currentUser {
+        max-width: 100px !important;
+        font-size: 10px !important;
+        line-height: 1.2 !important;
+        overflow-wrap: anywhere !important;
+    }
+
+    body.dashboard-page .dashboard-user-area button.header-icon {
+        width: 32px !important;
+        height: 32px !important;
+        font-size: 15px !important;
+        flex-shrink: 0 !important;
+    }
+
+    /* Keep the navigation rail visible at every zoom level */
+    body.dashboard-page .mobile-menu-strip {
+        display: flex !important;
+        grid-column: 1 !important;
+        grid-row: 2 / 4 !important;
+        width: 52px !important;
+        min-width: 52px !important;
+        min-height: 100% !important;
+        align-items: center !important;
+        overflow: visible !important;
+    }
+
+    /* Workspace occupies the remaining screen width */
+    body.dashboard-page .dashboard-main {
+        display: block !important;
+        grid-column: 2 !important;
+        grid-row: 2 !important;
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        padding: 10px 8px !important;
+        overflow-x: hidden !important;
+    }
+
+    body.dashboard-page .dashboard-content {
+        width: 100% !important;
+        min-width: 0 !important;
+        max-width: 100% !important;
+        padding: 12px 8px !important;
+    }
+
+    /* Footer remains across the bottom of the phone layout */
+    body.dashboard-page .dashboard-footer {
+        grid-column: 1 / -1 !important;
+        grid-row: 3 !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        overflow-wrap: anywhere !important;
+    }
+
+    /* Prevent cards and welcome panels from exceeding workspace */
+    body.dashboard-page .dashboard-welcome,
+    body.dashboard-page #dashboardCards,
+    body.dashboard-page #dashboardWorkspace {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+    }
+
+    body.dashboard-page .dashboard-welcome,
+    body.dashboard-page .dashboard-welcome h2,
+    body.dashboard-page .dashboard-welcome p {
+        overflow-wrap: break-word;
+    }
+
+    /* Keep the opened sidebar beside the icon rail */
+    body.dashboard-page .dashboard-sidebar {
+        left: 100% !important;
+        width: min(250px, calc(100vw - 52px)) !important;
+    }
+}
+
+/* Very narrow touch-screen devices */
+@media (pointer: coarse) and (hover: none) and (max-width: 380px) {
+    body.dashboard-page .dashboard-sidebar {
+        width: min(230px, calc(100vw - 52px)) !important;
+    }
+}
