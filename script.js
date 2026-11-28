@@ -1143,55 +1143,55 @@ function renderSessionProgressCard(role) {
 
                 <div class="session-progress-layout">
 
-    <div class="session-progress-description">
-        <span>SESSION PROGRESS</span>
+                    <div class="session-progress-description">
+                        <span>SESSION PROGRESS</span>
 
-        <strong>
-            ${progress === null ? "—" : progress + "%"}
-        </strong>
-    </div>
+                        <strong>
+                            ${progress === null ? "—" : progress + "%"}
+                        </strong>
+                    </div>
 
-    <div
-        class="session-progress-bar"
-        role="progressbar"
-        aria-label="Session progress"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        aria-valuenow="${progress === null ? 0 : progress}"
-    >
-        <div
-            class="session-progress-fill"
-            style="width: ${progress ?? 0}%"
-        ></div>
-    </div>
+                    <div
+                        class="session-progress-bar"
+                        role="progressbar"
+                        aria-label="Session progress"
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                        aria-valuenow="${progress === null ? 0 : progress}"
+                    >
+                        <div
+                            class="session-progress-fill"
+                            style="width: ${progress ?? 0}%"
+                        ></div>
+                    </div>
 
-</div>
+                </div>
 
                 <div class="session-activities-row">
 
-    <div class="session-ongoing-section">
+                    <div class="session-ongoing-section">
 
-        <div class="session-activities-label">
-            ONGOING
-        </div>
+                        <div class="session-activities-label">
+                            ONGOING
+                        </div>
 
-        <strong
-            class="session-activities-names"
-            id="sessionOngoingTitle">
-            Loading...
-        </strong>
+                        <strong
+                            class="session-activities-names"
+                            id="sessionOngoingTitle">
+                            Loading...
+                        </strong>
 
-        <span id="sessionOngoingTime">
-            Loading...
-        </span>
+                        <span id="sessionOngoingTime">
+                            Loading...
+                        </span>
 
-    </div>
+                    </div>
 
-    <a href="events.html"
-       class="session-ongoing-button">
-        NAVIGATE
-    </a>
-    
+                    <a href="events.html"
+                       class="session-ongoing-button">
+                        NAVIGATE
+                    </a>
+
                     <div class="session-upcoming-section">
 
                         <div class="session-activities-label">
@@ -1212,10 +1212,6 @@ function renderSessionProgressCard(role) {
 
             </div>
 
-            <div class="session-card-clock">
-                <strong id="sessionLiveTime">Loading time...</strong>
-            </div>
-
         </section>
     `;
 
@@ -1223,12 +1219,8 @@ function renderSessionProgressCard(role) {
 
     if (window.sessionProgressClock) {
         clearInterval(window.sessionProgressClock);
+        window.sessionProgressClock = null;
     }
-
-    window.sessionProgressClock = setInterval(
-        updateSessionClock,
-        1000
-    );
 
     loadSessionEvents();
 
@@ -1243,14 +1235,13 @@ function renderSessionProgressCard(role) {
 }
 
 // =====================================================
-// LIVE SESSION CLOCK
+// ACADEMIC SESSION DATE AND WEEK DISPLAY
 // =====================================================
 
 function updateSessionClock() {
     const dateElement = document.getElementById("sessionLiveDate");
-    const timeElement = document.getElementById("sessionLiveTime");
 
-    if (!dateElement || !timeElement) return;
+    if (!dateElement) return;
 
     const now = new Date();
 
@@ -1269,14 +1260,6 @@ function updateSessionClock() {
 
     dateElement.textContent =
         `${weekLabel} · ${dayLabel} · ${dateLabel}`;
-
-    timeElement.textContent = new Intl.DateTimeFormat("en-KE", {
-        timeZone: "Africa/Nairobi",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true
-    }).format(now);
 }
 // Initialize dashboard after the page loads
 document.addEventListener("DOMContentLoaded", function () {
