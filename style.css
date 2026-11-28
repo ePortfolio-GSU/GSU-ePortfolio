@@ -1071,265 +1071,33 @@ line-height: 1.35;
 overflow-wrap: anywhere;
 }
 
-/* =====================================================
-   GSU FUTURISTIC DIGITAL WELCOME PANEL
-===================================================== */
-
 .dashboard-page .dashboard-welcome {
-    position: relative;
-    isolation: isolate;
-    overflow: hidden;
     margin: 0 0 18px;
     padding: 16px 18px;
-    border: 1px solid rgba(56, 189, 248, 0.85);
-    border-radius: 15px;
-    background:
-        linear-gradient(
-            115deg,
-            #4A252F,
-            #303944 55%,
-            #4A252F
-        );
-    box-shadow:
-        0 0 8px rgba(56, 189, 248, 0.35),
-        0 0 22px rgba(56, 189, 248, 0.13),
-        0 8px 20px rgba(0, 0, 0, 0.25),
-        inset 0 1px 0 rgba(241, 243, 246, 0.12);
-}
-
-.dashboard-page .dashboard-welcome::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    opacity: 0.25;
-    background:
-        linear-gradient(
-            135deg,
-            transparent 45%,
-            rgba(56, 189, 248, 0.15) 45.2%,
-            transparent 45.8%
-        ),
-        repeating-linear-gradient(
-            0deg,
-            transparent,
-            transparent 24px,
-            rgba(241, 243, 246, 0.07) 25px
-        );
-}
-
-.dashboard-page .dashboard-welcome::after {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 28%;
-    height: 4px;
-    background: linear-gradient(
-        90deg,
-        #4A252F,
-        #303944,
-        #38BDF8
-    );
-    box-shadow: 0 0 12px #38BDF8;
-}
-
-/* TOP GREETING */
-
-.dashboard-page .welcome-top {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    min-height: 90px;
-}
-
-.dashboard-page .welcome-cap-icon {
-    flex: 0 0 76px;
-    width: 76px;
-    height: 76px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid #38BDF8;
-    border-radius: 50%;
-    color: #F1F3F6;
-    background: rgba(48, 57, 68, 0.85);
-    box-shadow:
-        0 0 10px rgba(56, 189, 248, 0.7),
-        inset 0 0 12px rgba(56, 189, 248, 0.15);
-}
-
-.dashboard-page .welcome-cap-icon svg {
-    width: 55px;
-    height: 55px;
-}
-
-.dashboard-page .welcome-heading-divider {
-    align-self: stretch;
-    width: 2px;
-    background: linear-gradient(
-        transparent,
-        #38BDF8,
-        transparent
-    );
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    border-left: 5px solid #38BDF8;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #4A252F, #303944);
+    box-shadow: 0 5px 16px rgba(0, 0, 0, 0.16);
 }
 
 .dashboard-page .dashboard-welcome h2 {
-    flex: 1;
-    min-width: 0;
-    margin: 0;
+    margin: 0 0 7px;
     color: #38BDF8;
     font-size: 17px;
     font-weight: 800;
-    text-align: left;
-    line-height: 1.35;
+    text-align: center;
     overflow-wrap: anywhere;
-    text-shadow: 0 0 12px rgba(56, 189, 248, 0.45);
-}
-
-.dashboard-page .welcome-maroon-tab {
-    position: absolute;
-    top: -16px;
-    right: -18px;
-    width: 125px;
-    height: 34px;
-    background: linear-gradient(
-        110deg,
-        #4A252F,
-        #303944
-    );
-    border-bottom: 2px solid #38BDF8;
-    border-left: 1px solid rgba(241, 243, 246, 0.15);
-    transform: skewX(-28deg);
-    opacity: 0.95;
-}
-
-/* NEON DIVIDER */
-
-.dashboard-page .welcome-energy-line {
-    position: relative;
-    height: 3px;
-    margin: 12px 5% 20px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(56, 189, 248, 0.25),
-        #38BDF8,
-        rgba(56, 189, 248, 0.2),
-        transparent
-    );
-    box-shadow: 0 0 8px rgba(56, 189, 248, 0.45);
-}
-
-.dashboard-page .welcome-energy-line span {
-    position: absolute;
-    left: 20%;
-    top: -1px;
-    width: 25%;
-    height: 5px;
-    border-radius: 5px;
-    background: #38BDF8;
-    box-shadow: 0 0 12px #38BDF8;
-}
-
-/* PERSONALIZED MESSAGE */
-
-.dashboard-page .welcome-message-row {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    min-width: 0;
-    padding: 2px 4px 10px;
-}
-
-.dashboard-page .welcome-rocket-icon {
-    flex: 0 0 54px;
-    width: 54px;
-    color: #38BDF8;
-    filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.5));
-}
-
-.dashboard-page .welcome-rocket-icon svg {
-    width: 48px;
-    height: 48px;
-}
-
-.dashboard-page .welcome-message-divider {
-    align-self: stretch;
-    width: 2px;
-    min-height: 48px;
-    background: linear-gradient(
-        transparent,
-        #38BDF8,
-        transparent
-    );
 }
 
 .dashboard-page .dashboard-welcome p {
-    flex: 1;
-    min-width: 0;
     margin: 0;
-    color: #F1F3F6;
+    color: #FFFFFF;
     font-size: 14px;
     font-weight: 600;
-    text-align: left;
+    text-align: center;
     line-height: 1.55;
     overflow-wrap: anywhere;
-}
-
-/* BOTTOM DIGITAL DETAIL */
-
-.dashboard-page .welcome-bottom {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    min-height: 38px;
-    margin-top: 8px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(241, 243, 246, 0.25);
-}
-
-.dashboard-page .welcome-trophy-icon {
-    flex: 0 0 34px;
-    color: #F1F3F6;
-}
-
-.dashboard-page .welcome-trophy-icon svg {
-    display: block;
-    width: 32px;
-    height: 32px;
-}
-
-.dashboard-page .welcome-bottom-line {
-    flex: 1;
-    height: 2px;
-    background: linear-gradient(
-        90deg,
-        #38BDF8,
-        rgba(56, 189, 248, 0.08)
-    );
-}
-
-.dashboard-page .welcome-status-dots {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 0 5px;
-}
-
-.dashboard-page .welcome-status-dots span {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #4A252F;
-    box-shadow: 0 0 7px rgba(74, 37, 47, 0.7);
-}
-
-.dashboard-page .welcome-status-dots span:last-child {
-    background: #38BDF8;
-    box-shadow: 0 0 9px rgba(56, 189, 248, 0.9);
 }
 
 .dashboard-page #dashboardCards,
@@ -1453,60 +1221,14 @@ min-height: 100vh;
     padding: 12px 10px;
 }
 
-.dashboard-page .welcome-top {
-    gap: 10px;
-    min-height: 65px;
-}
-
-.dashboard-page .welcome-cap-icon {
-    flex-basis: 55px;
-    width: 55px;
-    height: 55px;
-}
-
-.dashboard-page .welcome-cap-icon svg {
-    width: 42px;
-    height: 42px;
-}
-
 .dashboard-page .dashboard-welcome h2 {
     font-size: 15px;
-    margin-bottom: 0;
-}
-
-.dashboard-page .welcome-message-row {
-    gap: 9px;
-}
-
-.dashboard-page .welcome-rocket-icon {
-    flex-basis: 36px;
-}
-
-.dashboard-page .welcome-rocket-icon svg {
-    width: 34px;
-    height: 34px;
+    margin-bottom: 7px;
 }
 
 .dashboard-page .dashboard-welcome p {
     font-size: 13px;
     line-height: 1.5;
-}
-
-.dashboard-page .welcome-bottom {
-    gap: 9px;
-}
-
-.dashboard-page .welcome-trophy-icon {
-    flex-basis: 27px;
-}
-
-.dashboard-page .welcome-trophy-icon svg {
-    width: 26px;
-    height: 26px;
-}
-
-.dashboard-page .welcome-status-dots {
-    gap: 5px;
 }
 
 .dashboard-page .dashboard-footer {  
