@@ -6979,3 +6979,33 @@ body.dashboard-page .dashboard-content {
         width: min(230px, calc(100vw - 52px)) !important;
     }
 }
+/* GSU PERMANENT FIX — HIDE QUICK ICONS WHEN FULL SIDEBAR IS OPEN */
+
+/* Sidebar closed: show the quick-access icons in the maroon rail */
+.dashboard-page .mobile-menu-strip:not(:has(.dashboard-sidebar.active))
+.sidebar-quick-icons {
+    display: flex !important;
+    visibility: visible !important;
+}
+
+/* Sidebar open: hide the duplicate quick-access icons completely */
+.dashboard-page .mobile-menu-strip:has(.dashboard-sidebar.active)
+.sidebar-quick-icons {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* Keep the full sidebar navigation visible and interactive */
+.dashboard-page .dashboard-sidebar.active {
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}
+
+/* Preserve the Menu / Close control */
+.dashboard-page #menuToggle {
+    position: relative;
+    z-index: 2;
+}
