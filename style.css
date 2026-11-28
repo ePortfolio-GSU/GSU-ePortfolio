@@ -6626,64 +6626,74 @@ body:has(.login-card) footer {
         margin-top: 2px !important;
     }
 }
-/* GSU DASHBOARD — SIDEBAR AND ICON RAIL CONTINUE BEHIND FOOTER */
+/* GSU DASHBOARD — CORRECT SIDEBAR, MAIN CONTENT AND FOOTER LAYERS */
 
-/* Extend the maroon icon rail through the footer row */
+/* Icon rail extends through the footer row */
 body.dashboard-page .mobile-menu-strip {
+    position: relative;
     grid-column: 1;
     grid-row: 2 / 4;
 
-    position: relative;
     align-self: stretch;
-
+    width: 64px;
     height: auto;
     min-height: 0;
 
-    overflow-x: visible;
-    overflow-y: auto;
-    overscroll-behavior-y: contain;
-    -webkit-overflow-scrolling: touch;
-
-    scrollbar-width: none;
+    overflow: visible;
     background: #5B1826;
 
-    z-index: 5;
+    /* Above workspace cards */
+    z-index: 50;
 }
 
-body.dashboard-page .mobile-menu-strip::-webkit-scrollbar {
-    display: none;
-}
-
-/* Let the opened sidebar extend behind the footer */
+/* Opened sidebar extends behind footer but above workspace */
 body.dashboard-page .dashboard-sidebar {
     position: absolute;
 
     top: 0;
     bottom: 0;
-    left: 0;
+
+    /* Open beside the icon rail, not over it */
+    left: 100%;
     right: auto;
 
+    width: 250px;
     height: auto;
     min-height: 0;
     max-height: none;
+
+    box-sizing: border-box;
+    margin: 0;
 
     overflow-x: hidden;
     overflow-y: auto;
     overscroll-behavior-y: contain;
     -webkit-overflow-scrolling: touch;
 
-    scrollbar-width: thin;
+    background: #5B1826;
 
-    z-index: 20;
+    transform: translateX(-110%);
+    visibility: hidden;
+    pointer-events: none;
+
+    /* Above main cards */
+    z-index: 60;
 }
 
-/* Keep the main workspace in its own layer */
+/* Sidebar open state */
+body.dashboard-page .dashboard-sidebar.active {
+    transform: translateX(0);
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Main workspace stays behind sidebar */
 body.dashboard-page .dashboard-main {
     position: relative;
     z-index: 1;
 }
 
-/* Footer overlays the sidebar and icon rail */
+/* Footer overlays sidebar and icon rail */
 body.dashboard-page .dashboard-footer {
     position: relative !important;
     grid-column: 1 / -1;
@@ -6693,10 +6703,14 @@ body.dashboard-page .dashboard-footer {
     isolation: isolate;
 }
 
-/* Tablets */
+/* Medium screens */
 @media (min-width: 769px) and (max-width: 1100px) {
     body.dashboard-page .mobile-menu-strip {
         grid-row: 2 / 4;
+    }
+
+    body.dashboard-page .dashboard-sidebar {
+        width: 250px;
     }
 }
 
@@ -6709,8 +6723,7 @@ body.dashboard-page .dashboard-footer {
     }
 
     body.dashboard-page .dashboard-sidebar {
-        top: 0;
-        bottom: 0;
+        left: 100%;
         width: min(250px, calc(100vw - 52px));
     }
 }
