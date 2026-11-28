@@ -753,56 +753,103 @@ function getAcademicTermWeek() {
         todayParts[2]
     );
 
-    const activeTerm = ACADEMIC_SESSION_CONFIG.terms.find(term =>
-        todayString >= term.startDate &&
-        todayString <= term.endDate
+    const configuredTerms = (
+        ACADEMIC_SESSION_CONFIG.terms || []
+    ).filter(term =>
+        term.startDate &&
+        term.endDate &&
+        parseSessionDate(term.startDate) &&
+        parseSessionDate(term.endDate) &&
+        term.endDate >= term.startDate
     );
 
-    if (!activeTerm) return "HOLIDAY";
+    // The live School Calendar term takes priority.
+    const liveTerm = window.sessionActiveAcademicTerm;
 
-    const startParts = activeTerm.startDate.split("-").map(Number);
-    const endParts = activeTerm.endDate.split("-").map(Number);
+    const activeTerm = liveTerm &&
+        todayString >= liveTerm.startDate &&
+        todayString <= liveTerm.endDate
+            ? liveTerm
+            : configuredTerms.find(term =>
+                todayString >= term.startDate &&
+                todayString <= term.endDate
+            );
 
-    const startUTC = Date.UTC(
-        startParts[0],
-        startParts[1] - 1,
-        startParts[2]
-    );
+    // Never display HOLIDAY while an academic term is active.
+    if (activeTerm) {
+        const startParts = activeTerm.startDate
+            .split("-").map(Number);
 
-    const endUTC = Date.UTC(
-        endParts[0],
-        endParts[1] - 1,
-        endParts[2]
-    );
+        const endParts = activeTerm.endDate
+            .split("-").map(Number);
 
-    const daysFromStart = Math.floor(
-        (todayUTC - startUTC) / 86400000
-    );
-
-    const totalTermDays = Math.floor(
-        (endUTC - startUTC) / 86400000
-    ) + 1;
-
-    const startDay = new Date(startUTC).getUTCDay();
-
-    const daysUntilFirstSaturday =
-        (6 - startDay + 7) % 7;
-
-    const firstWeekDays = daysUntilFirstSaturday + 1;
-
-    const weekNumber = daysFromStart <= daysUntilFirstSaturday
-        ? 1
-        : 2 + Math.floor(
-            (daysFromStart - daysUntilFirstSaturday - 1) / 7
+        const startUTC = Date.UTC(
+            startParts[0],
+            startParts[1] - 1,
+            startParts[2]
         );
 
-    const totalWeeks = totalTermDays <= firstWeekDays
-        ? 1
-        : 1 + Math.ceil(
-            (totalTermDays - firstWeekDays) / 7
+        const endUTC = Date.UTC(
+            endParts[0],
+            endParts[1] - 1,
+            endParts[2]
         );
 
-    return `WEEK ${weekNumber} OF ${totalWeeks}`;
+        const daysFromStart = Math.floor(
+            (todayUTC - startUTC) / 86400000
+        );
+
+        const totalTermDays = Math.floor(
+            (endUTC - startUTC) / 86400000
+        ) + 1;
+
+        const startDay = new Date(startUTC).getUTCDay();
+
+        const daysUntilFirstSaturday =
+            (6 - startDay + 7) % 7;
+
+        const firstWeekDays = daysUntilFirstSaturday + 1;
+
+        const weekNumber =
+            daysFromStart <= daysUntilFirstSaturday
+                ? 1
+                : 2 + Math.floor(
+                    (daysFromStart - daysUntilFirstSaturday - 1) / 7
+                );
+
+        const totalWeeks = totalTermDays <= firstWeekDays
+            ? 1
+            : 1 + Math.ceil(
+                (totalTermDays - firstWeekDays) / 7
+            );
+
+        return `WEEK ${weekNumber} OF ${totalWeeks}`;
+    }
+
+    // No valid term dates means the calendar is not ready.
+    if (!configuredTerms.length) {
+        return "DATES PENDING";
+    }
+
+    const completedTerms = configuredTerms.filter(term =>
+        todayString > term.endDate
+    );
+
+    const upcomingTerms = configuredTerms.filter(term =>
+        todayString < term.startDate
+    );
+
+    // A holiday is recognised only after a term has ended.
+    if (completedTerms.length) {
+        return "HOLIDAY";
+    }
+
+    // Before the first term begins, do not call it a holiday.
+    if (upcomingTerms.length) {
+        return "UPCOMING";
+    }
+
+    return "DATES PENDING";
 }
 
 
