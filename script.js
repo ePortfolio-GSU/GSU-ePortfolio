@@ -1236,12 +1236,15 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!sidebar || !menuToggle) return;
 
     sidebar.classList.toggle("active", open);
+
     menuToggle.setAttribute("aria-expanded", String(open));
     menuToggle.setAttribute(
         "aria-label",
-        open ? "Close navigation menu" : "Open navigation menu"
+        "Toggle navigation menu"
     );
-    menuToggle.textContent = open ? "Close ✕" : "☰ Menu";
+
+    // Keep the Menu button unchanged on the navigation rail.
+    menuToggle.textContent = "☰ Menu";
 
     const quickIcons = document.querySelectorAll(
         "#sidebarQuickIcons button"
