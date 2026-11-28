@@ -3611,8 +3611,8 @@ body:has(.login-card) footer {
 
 .session-ongoing-section > span,
 .session-upcoming-section > span {
-    font-size: 9px;
-    line-height: 1.4;
+    font-size: 11px;
+    line-height: 1.45;
     overflow-wrap: anywhere;
 }
 
