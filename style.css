@@ -1534,12 +1534,12 @@ flex-basis: 48px;
     border-color: #38BDF8;
 }
 
-/* Full sidebar panel — scrolls above the fixed footer */
+/* Full sidebar panel — overlays the quick-access rail */
 .dashboard-page .dashboard-sidebar {
     position: absolute;
     top: 0;
     right: auto;
-    bottom: calc(48px + env(safe-area-inset-bottom, 0px));
+    bottom: 0;
     left: 0;
 
     width: 250px;
@@ -1577,7 +1577,7 @@ flex-basis: 48px;
         visibility .22s ease,
         opacity .22s ease;
 
-    /* Keep the final sidebar card above the footer */
+    /* Above quick icons, below Menu/Close and footer */
     z-index: 30;
 }
 /* Sidebar open state */
