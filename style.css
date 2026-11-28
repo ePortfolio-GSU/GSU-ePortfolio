@@ -1962,7 +1962,8 @@ body.dashboard-page .dashboard-header {
     position: relative;
     width: 100%;
     min-width: 0;
-    z-index: 1000;
+    overflow: visible;
+    z-index: 3000;
 }
 
 body.dashboard-page .mobile-menu-strip {
@@ -6230,7 +6231,7 @@ body.dashboard-page .dashboard-content {
         flex-wrap: nowrap;
         gap: 6px;
         min-width: 0;
-        overflow: hidden;
+        overflow: visible;
     }
 
     body.dashboard-page .dashboard-logo {
