@@ -2352,29 +2352,29 @@ body:has(.login-card) footer {
     letter-spacing: 1.3px;
 }
 
-/* LIVE INDICATOR — 3D RED WITH BLINKING RED DOT */
+/* LIVE INDICATOR — RED ACCENT WITH BACKLIGHT */
 
 .session-live-indicator {
     display: flex;
     align-items: center;
     gap: 7px;
     padding: 6px 10px;
-    border: 1px solid #FF5555;
+    border: 1px solid rgba(255, 45, 45, 0.9);
     border-radius: 20px;
     background: linear-gradient(
         145deg,
-        #FF3030 0%,
-        #D90000 45%,
-        #8B0000 100%
+        rgba(75, 10, 10, 0.95),
+        rgba(25, 8, 8, 0.98)
     );
-    color: #FFFFFF;
+    color: #FF4545;
     font-size: 10px;
     font-weight: 800;
     letter-spacing: 1px;
     box-shadow:
-        inset 0 1px 2px rgba(255, 255, 255, 0.45),
-        inset 0 -2px 3px rgba(70, 0, 0, 0.5),
-        0 2px 5px rgba(180, 0, 0, 0.4);
+        0 0 5px rgba(255, 0, 0, 0.55),
+        0 0 12px rgba(255, 0, 0, 0.35),
+        0 0 22px rgba(255, 0, 0, 0.18),
+        inset 0 0 7px rgba(255, 0, 0, 0.15);
 }
 
 .session-live-indicator span {
@@ -2382,28 +2382,21 @@ body:has(.login-card) footer {
     height: 7px;
     flex-shrink: 0;
     border-radius: 50%;
-    background: radial-gradient(
-        circle at 30% 25%,
-        #FFB3B3 0%,
-        #FF3030 35%,
-        #B00000 75%,
-        #650000 100%
-    );
+    background: #FF1717;
     box-shadow:
-        inset 0 1px 2px rgba(255, 255, 255, 0.65),
-        0 0 7px #FF2020;
-    animation: liveDotBlink 2s steps(2, end) infinite;
+        0 0 4px #FF1717,
+        0 0 9px #FF1717,
+        0 0 15px rgba(255, 0, 0, 0.8);
+    animation: liveDotBlink 1s steps(1, end) infinite;
 }
 
 @keyframes liveDotBlink {
     0%, 49% {
         opacity: 1;
-        filter: brightness(1.3);
     }
 
     50%, 100% {
-        opacity: 0.35;
-        filter: brightness(0.55);
+        opacity: 0.2;
     }
 }
 .session-card-actions {
