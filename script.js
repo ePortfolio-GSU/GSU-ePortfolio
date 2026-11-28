@@ -1273,7 +1273,7 @@ function updateSessionClock() {
     }).format(now).toUpperCase();
 
     dateElement.textContent =
-    `${weekLabel}\u00A0\u00A0\u00A0\u00A0${dayLabel} ${dateLabel}`;
+    `${weekLabel}\u00A0\u00A0\u00A0\u00A0\u00A0\u00A0${dayLabel} ${dateLabel}`;
 }
 // Initialize dashboard after the page loads
 document.addEventListener("DOMContentLoaded", function () {
