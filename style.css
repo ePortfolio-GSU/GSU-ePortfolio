@@ -3634,6 +3634,42 @@ body:has(.login-card) footer {
     white-space: nowrap;
 }
 
+/* NAVIGATE BUTTON — HEARTBEAT ANIMATION */
+
+.session-ongoing-button {
+    transform-origin: center;
+    animation: navigateHeartbeat 2s ease-in-out infinite;
+    will-change: transform;
+}
+
+@keyframes navigateHeartbeat {
+    0%, 35%, 100% {
+        transform: scale(1);
+    }
+
+    8% {
+        transform: scale(1.09);
+    }
+
+    16% {
+        transform: scale(1);
+    }
+
+    24% {
+        transform: scale(1.07);
+    }
+
+    32% {
+        transform: scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .session-ongoing-button {
+        animation: none;
+    }
+}
+
 /* Clock */
 
 .session-card-clock {
