@@ -3406,18 +3406,18 @@ body:has(.login-card) footer {
 .dashboard-page #dashboardCards {
     display: block !important;
     width: 100%;
-    max-width: 760px;
+    max-width: 700px;
     margin: 0 auto;
     min-width: 0;
 }
 
 .session-progress-card {
     width: 100%;
-    max-width: 760px;
+    max-width: 700px;
     box-sizing: border-box;
-    padding: 12px 14px;
+    padding: 10px 12px;
     margin: 0 auto;
-    border-radius: 11px;
+    border-radius: 10px;
 }
 
 /* Header */
@@ -3439,7 +3439,7 @@ body:has(.login-card) footer {
     width: 35px;
     height: 35px;
     flex-shrink: 0;
-    font-size: 21px;
+    font-size: 20px;
 }
 
 .session-card-brand h2 {
@@ -3455,27 +3455,27 @@ body:has(.login-card) footer {
 }
 
 .session-week-date {
-    font-size: 10px;
+    font-size: 12px;
     line-height: 1.4;
 }
 
 .session-live-indicator {
-    padding: 5px 8px;
-    font-size: 9px;
+    padding: 3px 6px;
+    font-size: 7px;
 }
 
 /* Academic year */
 
 .session-year-block {
-    margin-top: 7px;
+    margin-top: 5px;
 }
 
 .session-year-block span {
-    font-size: 8px;
+    font-size: 7px;
 }
 
 .session-year-block strong {
-    font-size: 16px;
+    font-size: 14px;
 }
 
 /* Horizontal progress bar */
@@ -3633,7 +3633,7 @@ body:has(.login-card) footer {
 }
 
 .session-card-clock strong {
-    font-size: 11px;
+    font-size: 15px;
 }
 
 /* Laptop and tablet */
